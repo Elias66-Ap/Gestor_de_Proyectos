@@ -10,16 +10,17 @@
 </head>
 
 <body>
-
+    @if(auth()->guard('usuario')->check())
     <div class="sidebar d-flex flex-column p-3">
         <div class="text-center mb-4">
             <img src="{{ asset('images/logo.png') }}" alt="Hamid" class="img-fluid mb-2" style="max-height:100px;">
             <div class="mt-3">
-                <img src="{{ asset('images/incognito.jpeg') }}" alt="Perfil" class="profile-img mb-1">
+                <img src="{{ asset('images/default.jpeg') }}" alt="Perfil" class="profile-img mb-1">
                 <div>Jose Perez</div>
-                <small>Administrador</small>
+                <small>{{ auth()->guard('usuario')->user()->rol}}</small>
             </div>
         </div>
+        @endif
         <hr class="text-white">
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item mb-2">
@@ -48,11 +49,17 @@
                 </a>
             </li>
         </ul>
+        
+        <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
+            @csrf
+        </form>
 
         <hr class="text-white mt-auto">
-        <a href="{{ route('logout') }}" class="nav-link d-flex align-items-center">
+        <a href="{{ route('logout') }}" class="nav-link d-flex align-items-center"
+            onclick="event.preventDefault(); document.getElementById('salirForm').submit();">
             <i class="bi bi-box-arrow-left me-2"></i> Cerrar sesión
         </a>
+
     </div>
 
     <div class="content">

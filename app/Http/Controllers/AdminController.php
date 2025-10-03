@@ -7,16 +7,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Controller; 
 
 
-class UsuarioController extends Controller
+class AdminController extends Controller
 {
 
     public function __construct(){
         $this->middleware('auth:usuario');
+
+    }
+
+    public function inicio(){
+        $user = auth()->guard('usuario')->user();
+        return view('layouts.app', compact('user'));
     }
 
     public function index(){
-        /*$pass = Hash::make('12345');
-        dd($pass);*/
         return view('admin.inicio');
     }
 }

@@ -9,25 +9,38 @@ use App\Models\Usuario;
 
 class LoginController extends Controller
 {
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('admin.inicio');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         $credenciales = $request->only('correo', 'passwordd');
 
         $user = \App\Models\Usuario::where('correo', $credenciales['correo'])->first();
 
-        if($user && Hash::check($credenciales['passwordd'],$user->passwordd)){
+        if ($user && Hash::check($credenciales['passwordd'], $user->passwordd)) {
             Auth::guard('usuario')->login($user);
-            return redirect()->intended('/admin/inicio');
+
+            switch ($user->rol) {
+                case 'Administrador':
+                    return redirect()->intended('/admin/inicio');
+                case 'Lider':
+                    return redirect()->intended('/lider/inicio');
+                case 'Colaborador':
+                    return redirect()->intended('/colab/inicio');
+                default:
+                    return redirect()->intended('/');
+            }
         }
 
         return back()->withErrors(['correo' => 'Las datos no coinciden con nuestros registros.']);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
         Auth::guard('usuario')->logout();
 

@@ -22,4 +22,16 @@ class Usuario extends Authenticatable
     ];
 
     public $timestamps = false;
+
+    public function esAdmin(){
+        return $this->rol === 'Administrador';
+    }
+
+    public function esLider(){
+        return $this->rol === 'Lider';
+    }
+
+    public function esColaborador(){
+        return $this->rol === 'Colaborador';
+    }
 }
