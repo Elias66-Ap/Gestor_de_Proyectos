@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('proyectos.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.proyecto') }}" class="nav-link d-flex align-items-center  {{ request()->routeIs('proyectos.*') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Proyectos
                 </a>
             </li>

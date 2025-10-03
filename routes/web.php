@@ -11,7 +11,12 @@ route::get('/', function () {
 
 route::get('/admin/colaboradores', function () {
     return view('admin.colaboradores');
-})->name('admin.colaboradores');  
+})->name('admin.colaboradores');
+
+route::get('/admin/proyecto', function () {
+    return view('admin.proyecto');
+})->name('admin.proyecto');
+
 
 Route::get('/admin/inicio', [UsuarioController::class, 'index'])->name('admin.inicio');
 

@@ -1,0 +1,12 @@
+.tareas-activas{
+    border: solid black 3px;
+    border-radius: 15px;
+    margin: 8px;
+    width: 200px;       /* todas con el mismo ancho */
+  height: 150px;
+}
+.cajas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
