@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -19,10 +20,12 @@ class LoginController extends Controller
 
         $credenciales = $request->only('correo', 'passwordd');
 
-        $user = \App\Models\Usuario::where('correo', $credenciales['correo'])->first();
+        $user = Usuario::where('correo', $credenciales['correo'])->first();
 
         if ($user && Hash::check($credenciales['passwordd'], $user->passwordd)) {
             Auth::guard('usuario')->login($user);
+
+            //dd(Auth::guard('usuario')->user());
 
             switch ($user->rol) {
                 case 'Administrador':
@@ -49,4 +52,8 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
+    
+
+
 }
