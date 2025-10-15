@@ -25,7 +25,15 @@ class LoginController extends Controller
         if ($user && Hash::check($credenciales['passwordd'], $user->passwordd)) {
             Auth::guard('usuario')->login($user);
 
-            //dd(Auth::guard('usuario')->user());
+            if ($user->estado == 0 && in_array($user->rol, ['Administrador','Lider', 'Colaborador'])) {
+                return redirect()->route('crear_perfil');
+            }
+
+            if($user->estado == 2){
+                Auth::guard('usuario')->logout();
+                return redirect()->route('inicio')->withErrors(['Tu cuenta esta desabilitada']);
+            }
+
 
             switch ($user->rol) {
                 case 'Administrador':
@@ -52,8 +60,4 @@ class LoginController extends Controller
 
         return redirect('/');
     }
-
-    
-
-
 }

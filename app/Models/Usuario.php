@@ -11,6 +11,7 @@ class Usuario extends Authenticatable
     protected $table = 'usuario';
 
     protected $fillable = [
+        'id',
         'correo',
         'rol',
         'passwordd',
@@ -33,5 +34,9 @@ class Usuario extends Authenticatable
 
     public function esColaborador(){
         return $this->rol === 'Colaborador';
+    }
+
+    public function perfil(){
+        return $this->hasOne(Perfil::class, 'id_usu');
     }
 }

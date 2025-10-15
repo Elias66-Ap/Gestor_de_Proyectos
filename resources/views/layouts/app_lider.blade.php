@@ -15,8 +15,12 @@
         <div class="text-center mb-4">
             <img src="{{ asset('images/logo.png') }}" alt="Hamid" class="img-fluid mb-2" style="max-height:100px;">
             <div class="mt-3">
-                <img src="{{ asset('images/default.jpeg') }}" alt="Perfil" class="profile-img mb-1">
-                <div>Sarela Perez</div>
+                <img src="{{ optional(auth()->guard('usuario')->user()->perfil)->imagen_url ?? asset('images/default.jpeg') }}"
+                    alt="Perfil" class="profile-img mb-1" style="width:80px; height:80px; object-fit:cover; border-radius:50%;">
+
+                <div>
+                    {{ optional(auth()->guard('usuario')->user()->perfil)->nombre }} {{ optional(auth()->guard('usuario')->user()->perfil)->apellido }}
+                </div>
                 <small>{{ auth()->guard('usuario')->user()->rol}}</small>
             </div>
         </div>
@@ -24,22 +28,22 @@
         <hr class="text-white">
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item mb-2">
-                <a href="{{ route('lider.inicio') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.inicio') ? 'active' : '' }}">
+                <a href="{{ route('lider.inicio') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.inicio') ? 'active' : '' }}">
                     <i class="bi bi-house-door me-2"></i> Inicio
                 </a>
             </li>
-            <li class="nav-item mb-2">
-                <a href="{{ route('admin.colaboradores') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.colaboradores*') ? 'active' : '' }}">
+            <!--<li class="nav-item mb-2">
+                <a href="{{ route('lider.colaboradores') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.colaboradores*') ? 'active' : '' }}">
                     <i class="bi bi-people me-2"></i> Colaboradores
                 </a>
-            </li>
+            </li>-->
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('equipos.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('proyectos.*') ? 'active' : '' }}">
+                <a href="{{route('lider.proyectos')}}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.proyectos') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Proyectos
                 </a>
             </li>
@@ -49,7 +53,7 @@
                 </a>
             </li>-->
         </ul>
-        
+
         <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
             @csrf
         </form>
@@ -63,7 +67,7 @@
     </div>
 
     <div class="content">
-        @yield('content')
+        @yield('content1')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

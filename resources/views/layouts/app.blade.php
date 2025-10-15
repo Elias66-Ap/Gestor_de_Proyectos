@@ -15,8 +15,12 @@
         <div class="text-center mb-4">
             <img src="{{ asset('images/logo.png') }}" alt="Hamid" class="img-fluid mb-2" style="max-height:100px;">
             <div class="mt-3">
-                <img src="{{ asset('images/default.jpeg') }}" alt="Perfil" class="profile-img mb-1">
-                <div>Jose Perez</div>
+                <img src="{{ optional(auth()->guard('usuario')->user()->perfil)->imagen_url ?? asset('images/default.jpeg') }}"
+                    alt="Perfil" class="profile-img mb-1" style="width:80px; height:80px; object-fit:cover; border-radius:50%;">
+
+                <div>
+                    {{ optional(auth()->guard('usuario')->user()->perfil)->nombre }} {{ optional(auth()->guard('usuario')->user()->perfil)->apellido }}
+                </div>
                 <small>{{ auth()->guard('usuario')->user()->rol}}</small>
             </div>
         </div>
@@ -49,7 +53,7 @@
                 </a>
             </li>
         </ul>
-        
+
         <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
             @csrf
         </form>

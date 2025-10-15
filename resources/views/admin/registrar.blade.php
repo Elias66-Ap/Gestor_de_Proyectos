@@ -34,7 +34,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="passwordd" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="passwordd" name="passwordd" placeholder="8 digitos" minlength="8" required>
+                        <input type="password" class="form-control" id="passwordd" name="passwordd" placeholder="" minlength="8" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordd_confirmation" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="passwordd_confirmation" name="passwordd_confirmation" placeholder="" minlength="8" required>
                     </div>
                     <div class="mb-3 text-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
@@ -46,3 +50,11 @@
         </div>
     </div>
 </div>
+@if ($errors->any())
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('modalAddColab'));
+        myModal.show();
+    });
+</script>
+@endif

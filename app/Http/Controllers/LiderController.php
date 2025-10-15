@@ -16,10 +16,18 @@ class LiderController extends Controller
 
     public function inicio(){
         $user = auth()->guard('usuario')->user();
-        return view('layouts.app_lider', compact('user'));
+        return view('lider.inicio', compact('user'));
     }
 
     public function index(){
         return view('lider.inicio');
+    }
+
+    public function proyectos(){
+        return view('lider.proyectos');
+    }
+
+    public function colaboradores(){
+        return view('lider.colaboradores');
     }
 }
