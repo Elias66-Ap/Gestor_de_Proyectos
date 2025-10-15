@@ -17,6 +17,9 @@ route::get('/admin/proyecto', function () {
     return view('admin.proyecto');
 })->name('admin.proyecto');
 
+route::get('/admin/perfil', function () {
+    return view('admin.perfil');
+})->name('admin.perfil');
 
 Route::get('/admin/inicio', [UsuarioController::class, 'index'])->name('admin.inicio');
 
