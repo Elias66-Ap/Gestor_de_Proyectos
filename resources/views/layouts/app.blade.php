@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2 position-relative">
-    <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('notificaciones') ? 'active' : '' }}">
+    <a href="{{ route('admin.notificaciones') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificaciones') ? 'active' : '' }}">
         <i class="bi bi-bell me-2"></i> Notificaciones
         <span id="contador-notificaciones" class="badge rounded-pill bg-danger ms-auto">
             3

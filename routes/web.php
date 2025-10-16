@@ -21,6 +21,10 @@ route::get('/admin/perfil', function () {
     return view('admin.perfil');
 })->name('admin.perfil');
 
+route::get('/admin/notificaciones', function () {
+    return view('admin.notificaciones');
+})->name('admin.notificaciones');
+
 Route::get('/admin/inicio', [UsuarioController::class, 'index'])->name('admin.inicio');
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
