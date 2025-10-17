@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\LiderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
@@ -11,6 +12,9 @@ use App\Http\Middleware\RolMiddleware;
 Route::get('/', function () {
     return view('login');
 })->name('inicio');
+
+Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Grupo de rutas para el administrador:
 Route::middleware(['auth:usuario', 'rol:Administrador'])->group(function () {
@@ -27,9 +31,16 @@ Route::middleware(['auth:usuario', 'rol:Lider'])->group(function () {
     Route::get('/lider/colaboradores',[LiderController::class, 'colaboradores'])->name('lider.colaboradores');
 });
 
+//Rutas para el colaborador
+Route::middleware(['auth:usuario', 'rol:Colaborador'])->group(function(){
+    Route::get('/colab/inicio', [ColaboradorController::class, 'inicio'])->name('colab.inicio');
+    Route::get('/colab/equipo', [ColaboradorController::class, 'equipo'])->name('colab.equipo');
+    Route::get('/colab.notificaciones',[ColaboradorController::class, 'notificacion'])->name('colab.notificaciones');
+    Route::get('/colab/perfil', [ColaboradorController::class, 'miPerfil'])->name('colab.perfil');
+    Route::get('/colab/tareas',[ColaboradorController::class, 'tareas'])->name('colab.tareas'); 
+    
+});
 
-Route::post('login', [LoginController::class, 'login'])->name('login');
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Mostrar formulario para crear perfil
 Route::get('crear_perfil', [PerfilController::class, 'crear'])
@@ -40,3 +51,4 @@ Route::get('crear_perfil', [PerfilController::class, 'crear'])
 Route::post('guardar', [PerfilController::class, 'guardar'])
      ->name('perfil.guardar')
      ->middleware('auth:usuario'); 
+
