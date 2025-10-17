@@ -3,7 +3,6 @@
 @section('content')
 <div class="container-fluid py-5" style="background-color: #f4f6fa;">
 
-    {{-- Encabezado --}}
     <div class="d-flex justify-content-between align-items-center mb-5">
         <div>
             <h2 class="fw-bold mb-1">📋 Mis Tareas</h2>
@@ -13,8 +12,6 @@
             <i class="bi bi-plus-circle me-2"></i> Nueva Tarea
         </button>
     </div>
-
-    {{-- Estadísticas rápidas --}}
     <div class="row g-4 mb-5">
         <div class="col-md-3">
             <div class="card border-0 shadow-sm rounded-4 text-center py-4">
@@ -42,7 +39,6 @@
         </div>
     </div>
 
-    {{-- Listado de tareas --}}
     <div class="row g-4">
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm rounded-4 p-3 tarea-card">
@@ -110,8 +106,6 @@
     </div>
 
 </div>
-
-{{-- Estilo hover --}}
 <style>
 .tarea-card:hover {
     transform: translateY(-3px);
