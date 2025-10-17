@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('equipos.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.equipos') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
             </li>

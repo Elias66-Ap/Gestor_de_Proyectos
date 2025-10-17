@@ -1,89 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container-fluid py-5" style="background-color: #f4f6fa;">
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil - Hamid</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
-
-</head>
-<body>
-  <div class="perfil-header">
-    <h1>Completa tu Perfil</h1>
-    <p>Por favor, completa tus datos antes de continuar.</p>
-  </div>
-
-  <div class="perfil-container">
-    <!-- FOTO -->
-    <div class="perfil-foto">
-      <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="foto-preview" id="preview" />
-      <input type="file" id="imagen" />
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="fw-bold mb-0">👤 Mi Perfil</h2>
+        <button class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-pencil-square me-2"></i> Editar Perfil
+        </button>
     </div>
 
-    <!-- FORMULARIO -->
-    <div class="perfil-form">
-      <div class="campo">
-        <label>Nombre *</label>
-        <i class="fa fa-user"></i>
-        <input type="text" placeholder="Tu nombre">
-      </div>
-      <div class="campo">
-        <label>Apellido *</label>
-        <i class="fa fa-user"></i>
-        <input type="text" placeholder="Tu apellido">
-      </div>
-      <div class="campo">
-        <label>Apodo</label>
-        <i class="fa fa-smile"></i>
-        <input type="text" placeholder="Tu apodo">
-      </div>
-      <div class="campo">
-        <label>Teléfono</label>
-        <i class="fa fa-phone"></i>
-        <input type="text" placeholder="Tu número">
-      </div>
-      <div class="campo">
-        <label>Correo</label>
-        <i class="fa fa-envelope"></i>
-        <input type="email" placeholder="tuemail@ejemplo.com">
-      </div>
-      <div class="campo">
-        <label>Dirección</label>
-        <i class="fa fa-map-marker-alt"></i>
-        <input type="text" placeholder="Tu dirección">
-      </div>
-      <div class="campo">
-        <label>Hobby</label>
-        <i class="fa fa-gamepad"></i>
-        <input type="text" placeholder="Tu dirección">
-      </div>
-      <div class="campo">
-        <label>Habilidades</label>
-        <i class="fa fa-tools"></i>
-        <input type="text" placeholder="Tu dirección">
-      </div>
-      <button class="btn-guardar">
-        <i class="fa fa-save"></i> Guardar Cambios
-      </button>
+    {{-- Sección de perfil centrada --}}
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-4">
+                <div class=text-center>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    document.getElementById('imagen').addEventListener('change', function (event) {
-      const [file] = event.target.files;
-      if (file) {
-        document.getElementById('preview').src = URL.createObjectURL(file);
-      }
-    });
-  </script>
-</body>
-</html>
+    {{-- Detalles personales --}}
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <h5 class="fw-bold mb-4">Detalles Personales</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Nombre</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Apellido</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Apodo</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Correo</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Teléfono</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Fecha de Nacimiento</label>
+\                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Hobby</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Habilidades</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
 
-
+{{-- Hover effect opcional --}}
+<style>
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+</style>
 @endsection

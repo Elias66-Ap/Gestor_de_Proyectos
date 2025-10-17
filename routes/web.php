@@ -25,6 +25,10 @@ route::get('/admin/notificaciones', function () {
     return view('admin.notificaciones');
 })->name('admin.notificaciones');
 
+route::get('/admin/equipos', function () {
+    return view('admin.equipos');
+})->name('admin.equipos');
+
 Route::get('/admin/inicio', [UsuarioController::class, 'index'])->name('admin.inicio');
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
