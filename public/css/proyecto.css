@@ -1,0 +1,242 @@
+/* ==== GLOBAL ==== */
+:root {
+    --color-primario: #2563eb;    /* Azul moderno */
+    --color-secundario: #16a34a;  /* Verde éxito */
+    --color-texto: #2d2d2d;
+    --color-bg: #f4f6fa;
+    --color-card: #ffffff;
+    --color-borde: #e2e8f0;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --radio: 12px;
+    --transicion: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+/* ==== HEADER ==== */
+.dashboard-header {
+    background: var(--color-primario);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: var(--sombra);
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+/* ==== TARJETAS RESUMEN ==== */
+.resumen-cajas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.card-resumen {
+    background: var(--color-card);
+    border: 1px solid var(--color-borde);
+    padding: 20px;
+    border-radius: var(--radio);
+    text-align: center;
+    box-shadow: var(--sombra);
+    transition: var(--transicion);
+}
+
+.card-resumen:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-resumen h3 {
+    font-size: 2.2rem;
+    color: var(--color-primario);
+    margin: 10px 0;
+}
+
+.card-resumen p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ==== CONTENEDOR ==== */
+.contenedor {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px 40px;
+}
+
+@media (max-width: 900px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==== SECCIÓN PROYECTOS ==== */
+.proyecto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.proyecto-header h2 {
+    font-size: 1.5rem;
+}
+
+.proyecto-header button {
+    background: var(--color-secundario);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radio);
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+.proyecto-header button:hover {
+    background: #15803d;
+    transform: scale(1.05);
+}
+
+.proyecto-header a {
+    margin-left: 10px;
+    color: var(--color-primario);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transicion);
+}
+
+.proyecto-header a:hover {
+    text-decoration: underline;
+}
+
+/* ==== CARD PROYECTO ==== */
+.card-proyecto {
+    background: var(--color-card);
+    border: 1px solid var(--color-borde);
+    padding: 15px 20px;
+    border-radius: var(--radio);
+    margin-bottom: 15px;
+    box-shadow: var(--sombra);
+    transition: var(--transicion);
+}
+
+.card-proyecto:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.info-proyecto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nombre-proyecto {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.estado {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+.en-progreso {
+    background-color: var(--color-secundario);
+}
+
+progress {
+    width: 100%;
+    height: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 8px 0;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e5e7eb;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--color-primario);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.estadisticas {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* ==== TAREAS PRÓXIMAS ==== */
+.tareas-vencidas {
+    background: var(--color-card);
+    border: 1px solid var(--color-borde);
+    padding: 20px;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.tareas-vencidas h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.card-tarea {
+    border-bottom: 1px solid var(--color-borde);
+    padding: 12px 0;
+    transition: var(--transicion);
+}
+
+.card-tarea:hover {
+    background-color: #f9fafb;
+    border-radius: var(--radio);
+    padding-left: 10px;
+}
+
+.info-tarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nombre-tarea {
+    font-weight: 500;
+}
+
+.estadisticas-2 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 5px;
+}

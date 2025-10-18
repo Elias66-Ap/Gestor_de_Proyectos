@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RolMiddleware
 {
-    
+
     public function handle(Request $request, Closure $next, ...$roles)
     {
         $user = Auth::guard('usuario')->user();
-        
+
         if(!$user){
             return redirect('/');
         }

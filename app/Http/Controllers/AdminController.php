@@ -32,6 +32,19 @@ class AdminController extends Controller
     {
         return view('admin.colaboradores');
     }
+    public function equipos()
+    {
+        return view('admin.equipos');
+    }
+    public function proyecto(){
+        return view('admin.proyecto');
+    }
+    public function perfil(){
+        return view('admin.perfi');
+    }
+    public function notificacion(){
+        return view('admin.notificacion');
+    }
 
     public function store(Request $request)
     {

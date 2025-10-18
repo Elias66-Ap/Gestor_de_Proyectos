@@ -38,18 +38,23 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('equipos.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.equipos') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('proyectos.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.proyecto') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.proyecto') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Proyectos
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('notificaciones') ? 'active' : '' }}">
-                    <i class="bi bi-bell me-2"></i> Notificaciones
+                <a href="{{ route('admin.perfil') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.perfil') ? 'active' : '' }}">
+                    <i class="bi bi-person-fill"></i>Perfil
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ route('admin.notificacion') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificacion') ? 'active' : '' }}">
+                    <i class="bi bi-bell me-2"></i>Notificaciones
                 </a>
             </li>
         </ul>
