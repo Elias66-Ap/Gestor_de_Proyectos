@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Usuario;
+use App\Models\Rendimiento;
 
 
 class AdminController extends Controller
@@ -36,20 +37,21 @@ class AdminController extends Controller
     {
         return view('admin.equipos');
     }
-    public function proyecto(){
+    public function proyecto()
+    {
         return view('admin.proyecto');
     }
-    public function perfil(){
+    public function perfil()
+    {
         return view('admin.perfi');
     }
-    public function notificacion(){
+    public function notificacion()
+    {
         return view('admin.notificacion');
     }
 
     public function store(Request $request)
     {
-        //dd($request->all());
-
         $validator = Validator::make($request->all(), [
             'correo' => 'required|string|max:200',
             'rol' => 'required|string|max:50',
@@ -59,18 +61,20 @@ class AdminController extends Controller
             'rol.required' => 'Debe seleccionar un rol.',
             'passwordd.required' => 'La contraseña es obligatoria.',
             'passwordd.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'passwordd.confirmed' => 'Las contraseñasb  no coincide.',
+            'passwordd.confirmed' => 'Las contraseñas no coincide.',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = new Usuario();
-        $user->correo = $request->correo;
-        $user->rol = $request->rol;
-        $user->passwordd = Hash::make($request->passwordd);
-        $user->save();
+        $user = Usuario::create([
+            'correo' => $request->correo,
+            'rol' => $request->rol,
+            'passwordd' => Hash::make($request->passwordd),
+        ]);
+
+        Rendimiento::create(['id_usu' => $user->id]);
 
         return redirect()->back()->with('success', 'Usuario registrado');
     }

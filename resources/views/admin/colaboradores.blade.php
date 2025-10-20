@@ -20,7 +20,7 @@
         </div>
         <div class="card-resumen">
             <!-- Botón para abrir el modal -->
-            <button data-bs-toggle="modal" data-bs-target="#modalAddColab">
+            <button data-bs-toggle="modal" data-bs-target="#modalAddColab2">
                 <i class="bi bi-person-plus me-2"></i>Añadir colaboradores
             </button>
         </div>
