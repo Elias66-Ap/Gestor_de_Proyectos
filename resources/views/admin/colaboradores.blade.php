@@ -55,8 +55,8 @@
                 <div>
                     <h6>{{ $user->rol }}</h6>
                 </div>
-                <div class="btn">
-                    <p>Bueno</p>
+                <div >
+                    <h6>{{ ($user ->rendimiento -> rendimiento)*100}} %</h6>
                 </div>
             </div>
             @endforeach

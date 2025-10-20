@@ -39,4 +39,7 @@ class Usuario extends Authenticatable
     public function perfil(){
         return $this->hasOne(Perfil::class, 'id_usu');
     }
+    public function rendimiento(){
+        return $this->hasOne(Rendimiento::class, 'id_usu');
+    }
 }

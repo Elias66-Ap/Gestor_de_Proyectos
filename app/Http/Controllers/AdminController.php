@@ -31,7 +31,10 @@ class AdminController extends Controller
 
     public function colaboradores()
     {
-        $usuario = Usuario::with('perfil')->whereHas('perfil')->get();
+$usuario = Usuario::with(['perfil', 'rendimiento'])
+    ->whereHas('perfil')
+    ->whereHas('rendimiento')
+    ->get();
         return view('admin.colaboradores', compact('usuario'));
     }
     public function equipos()
