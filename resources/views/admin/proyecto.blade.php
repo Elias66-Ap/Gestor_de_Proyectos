@@ -20,14 +20,6 @@
             <h3>8</h3>
             <p>+6 desde ayer</p>
         </div>
-        <div class="card-resumen">
-            <h5>Presupuesto</h5>
-            <h3>S/2500</h3>
-        </div>
-        <div class="card-resumen">
-            <h5>Gastado</h5>
-            <h3>S/500</h3>
-        </div>
     </div>
 
     <!-- Contenido principal -->

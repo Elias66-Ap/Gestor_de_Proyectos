@@ -37,6 +37,10 @@ Route::middleware(['auth:usuario', 'rol:Lider'])->group(function () {
     Route::get('/lider/inicio', [LiderController::class, 'index'])->name('lider.inicio');
     Route::get('/lider/proyecto', [LiderController::class, 'proyectos'])->name('lider.proyectos');
     Route::get('/lider/colaboradores', [LiderController::class, 'colaboradores'])->name('lider.colaboradores');
+    Route::get('/lider/perfil', [LiderController::class, 'perfil'])->name('lider.perfil');
+    Route::get('/lider/notificacion', [LiderController::class, 'notificacion'])->name('lider.notificacion');
+    Route::get('/lider/tareas', [LiderController::class, 'tareas'])->name('lider.tareas');
+    Route::get('/lider/equipo', [LiderController::class, 'equipo'])->name('lider.equipo');
 });
 
 //Rutas para el colaborador

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Routing\Controller; 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Usuario;
 
@@ -29,5 +29,17 @@ class LiderController extends Controller
 
     public function colaboradores(){
         return view('lider.colaboradores');
+    }
+    public function notificacion(){
+        return view('lider.notificacion');
+    }
+    public function perfil(){
+        return view('lider.perfil');
+    }
+    public function tareas(){
+        return view('lider.tareas');
+    }
+    public function equipo(){
+        return view('lider.equipo');
     }
 }

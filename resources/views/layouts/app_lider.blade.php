@@ -38,7 +38,7 @@
                 </a>
             </li>-->
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.equipos') ? 'active' : '' }}">
+                <a href="{{ route('lider.equipo') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
             </li>
@@ -47,11 +47,23 @@
                     <i class="bi bi-folder me-2"></i> Proyectos
                 </a>
             </li>
-            <!--<li class="nav-item mb-2">
-                <a href="#" class="nav-link d-flex align-items-center {{ request()->routeIs('notificaciones') ? 'active' : '' }}">
-                    <i class="bi bi-bell me-2"></i> Notificaciones
+            <li class="nav-item mb-2">
+                <a href="{{route('lider.tareas')}}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.tareas') ? 'active' : '' }}">
+                    <i class="bi bi-list-task me-2"></i> Tareas
                 </a>
-            </li>-->
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ route('lider.notificacion') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificacion') ? 'active' : '' }}">
+                    <i class="bi bi-chat-left-dots me-2"></i>Mensajes<span id="contador-notificaciones" class="badge rounded-pill bg-danger ms-auto">
+            3
+        </span>
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ route('lider.perfil') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.perfil') ? 'active' : '' }}">
+                    <i class="bi bi-person me-2"></i> Perfil
+                </a>
+            </li>
         </ul>
 
         <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
@@ -61,7 +73,7 @@
         <hr class="text-white mt-auto">
         <a href="{{ route('logout') }}" class="nav-link d-flex align-items-center"
             onclick="event.preventDefault(); document.getElementById('salirForm').submit();">
-            <i class="bi bi-box-arrow-left me-2"></i> Cerrar sesión
+            <i class="bi bi-box-arrow-left ms-3 me-2"></i> Cerrar sesión
         </a>
 
     </div>

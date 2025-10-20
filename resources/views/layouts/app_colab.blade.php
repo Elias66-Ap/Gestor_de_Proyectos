@@ -70,7 +70,7 @@
         <hr class="text-white mt-auto">
         <a href="{{ route('logout') }}" class="nav-link d-flex align-items-center"
             onclick="event.preventDefault(); document.getElementById('salirForm').submit();">
-            <i class="bi bi-box-arrow-left me-2"></i> Cerrar sesión
+            <i class="bi bi-box-arrow-left ms-3 me-2"></i> Cerrar sesión
         </a>
     </div>
     <div class="content">
