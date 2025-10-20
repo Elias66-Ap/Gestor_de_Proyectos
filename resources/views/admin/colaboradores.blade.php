@@ -20,8 +20,8 @@
         </div>
         <div class="card-resumen">
             <!-- Botón para abrir el modal -->
-            <button data-bs-toggle="modal" data-bs-target="#modalColaborador">
-                Añadir<br>colaboradores
+            <button data-bs-toggle="modal" data-bs-target="#modalAddColab">
+                <i class="bi bi-person-plus me-2"></i>Añadir colaboradores
             </button>
         </div>
     </div>
@@ -64,45 +64,7 @@
     </div>
 </main>
 
-<!-- Modal para añadir colaboradores -->
-<div class="modal fade" id="modalColaborador" tabindex="-1" aria-labelledby="modalColaboradorLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="modalColaboradorLabel">Añadir Colaborador</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form>
-        <div class="modal-body">
-            <div class="mb-3">
-                <label for="nombreColaborador" class="form-label">Nombre completo</label>
-                <input type="text" class="form-control" id="nombreColaborador" placeholder="Ej. Juan Pérez">
-            </div>
-            <div class="mb-3">
-                <label for="apodoColaborador" class="form-label">Apodo</label>
-                <input type="text" class="form-control" id="apodoColaborador" placeholder="Ej. Juanito">
-            </div>
-            <div class="mb-3">
-                <label for="rolColaborador" class="form-label">Rol</label>
-                <select class="form-select" id="rolColaborador">
-                    <option value="Líder">Líder</option>
-                    <option value="Colaborador">Colaborador</option>
-                    <option value="Invitado">Invitado</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="correoColaborador" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" id="correoColaborador" placeholder="correo@ejemplo.com">
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

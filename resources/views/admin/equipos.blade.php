@@ -9,9 +9,7 @@
             <h2 class="fw-bold mb-1">👥Equipo | HamidSAC</h2>
             <p class="text-muted mb-0">Aquí puedes ver a los miembros de tu equipo y sus roles.</p>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm">
-            <i class="bi bi-person-plus me-2"></i> Agregar miembro
-        </button>
+
     </div>
 
     {{-- Tarjetas de miembros del equipo --}}

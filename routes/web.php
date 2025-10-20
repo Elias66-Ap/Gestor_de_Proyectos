@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('login');
 })->name('inicio');
 
+Route::get('/tablero', function () {
+    return view('tablero');
+})->name('tablero');
+
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 

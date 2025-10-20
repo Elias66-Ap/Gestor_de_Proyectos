@@ -48,13 +48,15 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="{{ route('admin.perfil') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.perfil') ? 'active' : '' }}">
-                    <i class="bi bi-person-fill"></i>Perfil
+                <a href="{{ route('admin.notificacion') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificacion') ? 'active' : '' }}">
+                    <i class="bi bi-chat-left-dots me-2"></i>Mensajes<span id="contador-notificaciones" class="badge rounded-pill bg-danger ms-auto">
+            3
+        </span>
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="{{ route('admin.notificacion') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificacion') ? 'active' : '' }}">
-                    <i class="bi bi-bell me-2"></i>Notificaciones
+                <a href="{{ route('admin.perfil') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.perfil') ? 'active' : '' }}">
+                    <i class="bi bi-person me-2"></i> Perfil
                 </a>
             </li>
         </ul>
