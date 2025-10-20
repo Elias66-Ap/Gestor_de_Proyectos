@@ -1,60 +1,89 @@
 @extends('layouts.app_colab')
 
 @section('content')
-<div class="container-fluid py-5" style="background-color: #f4f6fa;">
 
-    {{-- Encabezado --}}
-    <div class="d-flex justify-content-between align-items-center mb-5">
-        <div>
-            <h2 class="fw-bold mb-1">🔔 Notificaciones</h2>
-            <p class="text-muted mb-0">Mantente al día con las nuevas tareas asignadas y actualizaciones de tu equipo.</p>
-        </div>
-        <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm">
-            <i class="bi bi-check2-all me-2"></i> Marcar todas como leídas
+<head>
+    <link rel="stylesheet" href="{{ asset('css/notificaciones.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<div class="notificaciones-wrapper">
+    <div class="notificaciones-header">
+        <h2>Mensajes</h2>
+        <button class="btn-marcar-leidas" data-bs-toggle="modal" data-bs-target="#modalMensaje">
+            <i class="bi bi-envelope-plus me-2"></i>Nuevo mensaje
         </button>
     </div>
 
-    {{-- Lista de notificaciones --}}
-    <div class="list-group">
-        @foreach([
-            ['mensaje'=>'Se te ha asignado la tarea "Diseñar login responsive".','fecha'=>'16/10/2025','tipo'=>'tarea','leida'=>false],
-            ['mensaje'=>'Se te ha asignado la tarea "Actualizar documentación técnica".','fecha'=>'15/10/2025','tipo'=>'tarea','leida'=>true],
-            ['mensaje'=>'Se te ha asignado la tarea "Corregir bug en módulo de reportes".','fecha'=>'14/10/2025','tipo'=>'tarea','leida'=>false],
-            ['mensaje'=>'Tarea "Revisar API microservicios" marcada como completada.','fecha'=>'12/10/2025','tipo'=>'info','leida'=>true],
-        ] as $notif)
-        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center shadow-sm mb-3 rounded-4 notification-card"
-             style="background-color: {{ $notif['leida'] ? '#ffffff' : '#e3f2fd' }}; transition: transform 0.3s, box-shadow 0.3s;">
-            <div class="d-flex align-items-center">
-                <i class="bi {{ $notif['tipo']=='tarea' ? 'bi-list-check' : 'bi-info-circle' }} me-3 fs-4 text-{{ $notif['leida'] ? 'secondary' : 'primary' }}"></i>
-                <div>
-                    <p class="mb-1">{{ $notif['mensaje'] }}</p>
-                    <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ $notif['fecha'] }}</small>
+    {{-- Tabs Recibidos / Enviados --}}
+    <ul class="nav nav-tabs mb-4" id="mensajeTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="recibidos-tab" data-bs-toggle="tab" data-bs-target="#recibidos" type="button" role="tab">
+                📥 Recibidos
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="enviados-tab" data-bs-toggle="tab" data-bs-target="#enviados" type="button" role="tab">
+                📤 Enviados
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="mensajeTabsContent">
+        {{-- Sección Recibidos --}}
+        <div class="tab-pane fade show active" id="recibidos" role="tabpanel" aria-labelledby="recibidos-tab">
+            <div class="notificaciones-lista">
+                <div class="notificacion-item no-leida">
+                    <div class="icono"><i class="bi bi-envelope-fill"></i></div>
+                    <div class="contenido">
+                        <h5>Nuevo mensaje de Amaya</h5>
+                        <p>“Hola equipo, recuerden la reunión de mañana.”</p>
+                        <span class="fecha">Hace 2 minutos</span>
+                    </div>
+                    <button class="btn-accion">Ver</button>
+                </div>
+
+                <div class="notificacion-item leida">
+                    <div class="icono"><i class="bi bi-envelope-open-fill"></i></div>
+                    <div class="contenido">
+                        <h5>Mensaje de Sergio</h5>
+                        <p>“Buen trabajo con el sprint 2 👏”</p>
+                        <span class="fecha">Hace 1 hora</span>
+                    </div>
+                    <button class="btn-accion">Ver</button>
                 </div>
             </div>
-            @if(!$notif['leida'])
-            <span class="badge bg-primary rounded-pill animate-pulse">Nuevo</span>
-            @endif
         </div>
-        @endforeach
-    </div>
 
+        {{-- Sección Enviados --}}
+        <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
+            <div class="notificaciones-lista">
+                <div class="notificacion-item leida">
+                    <div class="icono"><i class="bi bi-send-check-fill"></i></div>
+                    <div class="contenido">
+                        <h5>Mensaje enviado a Amaya</h5>
+                        <p>“Revisar el avance del módulo de login.”</p>
+                        <span class="fecha">Hace 30 minutos</span>
+                    </div>
+                    <button class="btn-accion">Ver</button>
+                </div>
+
+                <div class="notificacion-item leida">
+                    <div class="icono"><i class="bi bi-send-check-fill"></i></div>
+                    <div class="contenido">
+                        <h5>Mensaje enviado a Sergio</h5>
+                        <p>“Subí los cambios al repositorio.”</p>
+                        <span class="fecha">Ayer</span>
+                    </div>
+                    <button class="btn-accion">Ver</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-{{-- Hover y animación pulse --}}
-<style>
-.notification-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
 
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
-}
+{{-- Bootstrap JS --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-.animate-pulse {
-    animation: pulse 1.5s infinite;
-}
-</style>
 @endsection

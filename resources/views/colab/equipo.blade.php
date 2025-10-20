@@ -9,9 +9,7 @@
             <h2 class="fw-bold mb-1">👥 Mi Equipo</h2>
             <p class="text-muted mb-0">Aquí puedes ver a los miembros de tu equipo y sus roles.</p>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm">
-            <i class="bi bi-person-plus me-2"></i> Agregar miembro
-        </button>
+
     </div>
 
     {{-- Tarjetas de miembros del equipo --}}
@@ -25,9 +23,9 @@
         <div class="col-md-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 text-center p-3 team-card" style="transition: transform 0.3s, box-shadow 0.3s;">
                 <div class="position-relative d-inline-block mb-3">
-                    <img src="{{ $miembro['avatar'] }}" 
+                    <img src="{{ $miembro['avatar'] }}"
                          class="rounded-circle" width="80" height="80" alt="{{ $miembro['name'] }}">
-                    <span class="position-absolute bottom-0 end-0 rounded-circle border border-white" 
+                    <span class="position-absolute bottom-0 end-0 rounded-circle border border-white"
                         style="width: 15px; height: 15px; background-color: {{ $miembro['estado']=='online' ? '#28a745' : '#6c757d' }};"></span>
                 </div>
                 <h6 class="fw-bold mb-1">{{ $miembro['name'] }}</h6>

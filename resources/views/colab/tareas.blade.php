@@ -8,9 +8,7 @@
             <h2 class="fw-bold mb-1">📋 Mis Tareas</h2>
             <p class="text-muted mb-0">Aquí puedes ver todas tus tareas asignadas y su progreso.</p>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm">
-            <i class="bi bi-plus-circle me-2"></i> Nueva Tarea
-        </button>
+
     </div>
     <div class="row g-4 mb-5">
         <div class="col-md-3">
