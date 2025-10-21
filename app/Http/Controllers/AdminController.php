@@ -64,8 +64,9 @@ class AdminController extends Controller
 
     public function perfil()
     {
-
-        return view('admin.perfi');
+        $user = auth()->guard('usuario')->user();
+        $user->load('perfil', 'rendimiento');
+        return view('admin.perfi', compact('user'));
     }
 
     public function notificacion()

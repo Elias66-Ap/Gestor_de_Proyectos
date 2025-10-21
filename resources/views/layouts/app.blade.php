@@ -50,8 +50,8 @@
             <li class="nav-item mb-2">
                 <a href="{{ route('admin.notificacion') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.notificacion') ? 'active' : '' }}">
                     <i class="bi bi-chat-left-dots me-2"></i>Mensajes<span id="contador-notificaciones" class="badge rounded-pill bg-danger ms-auto">
-            3
-        </span>
+                        3
+                    </span>
                 </a>
             </li>
             <li class="nav-item mb-2">
@@ -60,6 +60,16 @@
                 </a>
             </li>
         </ul>
+
+        <li class="nav-item">
+            <a class="nav-link text-white {{ $activePage == 'billing' ? ' active bg-gradient-primary' : '' }}  "
+                href="{{ route('billing') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons opacity-10">receipt_long</i>
+                </div>
+                <span class="nav-link-text ms-1">Billing</span>
+            </a>
+        </li>
 
         <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
             @csrf
