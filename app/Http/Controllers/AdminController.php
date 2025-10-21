@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use App\Models\Usuario;
 use App\Models\Rendimiento;
 
@@ -31,12 +32,17 @@ class AdminController extends Controller
 
     public function colaboradores()
     {
-$usuario = Usuario::with(['perfil', 'rendimiento'])
-    ->whereHas('perfil')
-    ->whereHas('rendimiento')
-    ->get();
-        return view('admin.colaboradores', compact('usuario'));
+        $response = Http::get('http://127.0.0.1:8000/api/usuarios');
+
+        if ($response->successful()) {
+            $usuarios = $response->json()['data'] ?? $response->json();
+        }else{
+            $usuarios = [];
+        }
+
+        return view('admin.colaboradores', compact('usuarios'));
     }
+
     public function equipos()
     {
         return view('admin.equipos');

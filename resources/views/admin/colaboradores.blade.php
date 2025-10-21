@@ -10,13 +10,13 @@
     <div class="resumen-cajas">
         <div class="card-resumen">
             <h5>Tareas activas</h5>
-            <h3>80</h3>
-            <p>+15 esta semana</p>
+            <h3 id="tar_activas">0</h3>
+            <p id="tar_semana">+1 esta semana</p>
         </div>
         <div class="card-resumen">
             <h5>Tareas completadas</h5>
-            <h3>230</h3>
-            <p>+30 este mes</p>
+            <h3 id="tar_completadas">0</h3>
+            <p>+3 este mes</p>
         </div>
         <div class="card-resumen">
             <button data-bs-toggle="modal" data-bs-target="#modalAddColab">
@@ -43,20 +43,20 @@
         </div>
 
         <div id="listaColaboradores">
-            @foreach($usuario as $user )
+            @foreach($usuarios as $user)
             <div class="tabla fila-colaborador">
                 <div>
-                    <h6>{{ $user->perfil->nombre }}</h6>
-                    <p>{{ $user->perfil->apellido }}</p>
+                    <h6>{{ $user['perfil']['nombre'] ?? 'N/A' }}</h6>
+                    <p>{{ $user['perfil']['apellido'] ?? '' }}</p>
                 </div>
                 <div>
-                    <h6>{{ $user->correo }}</h6>
+                    <h6>{{ $user['correo'] ?? 'N/A' }}</h6>
                 </div>
                 <div>
-                    <h6>{{ $user->rol }}</h6>
+                    <h6>{{ $user['rol'] ?? 'N/A' }}</h6>
                 </div>
-                <div >
-                    <h6>{{ ($user ->rendimiento -> rendimiento)*100}} %</h6>
+                <div>
+                    <h6>{{ isset($user['rendimiento']['rendimiento']) ? ($user['rendimiento']['rendimiento']*100) . ' %' : '0 %' }}</h6>
                 </div>
             </div>
             @endforeach
@@ -64,25 +64,7 @@
     </div>
 </main>
 
-<script>
-    document.getElementById('buscarColaborador').addEventListener('input', function () {
-        const filtro = this.value.toLowerCase();
-        const filas = document.querySelectorAll('.fila-colaborador');
-
-        filas.forEach(fila => {
-            const nombre = fila.querySelector('div h6').textContent.toLowerCase();
-            const apellido = fila.querySelector('div p').textContent.toLowerCase();
-            const correo = fila.querySelectorAll('div h6')[1].textContent.toLowerCase();
-
-            // Mostrar la fila si coincide con nombre, apellido o correo
-            if (nombre.includes(filtro) || apellido.includes(filtro) || correo.includes(filtro)) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
-            }
-        });
-    });
-</script>
+<script src="{{ asset('js/colab.js') }}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @include('admin.registrar')

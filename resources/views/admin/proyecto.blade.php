@@ -12,12 +12,12 @@
     <div class="resumen-cajas">
         <div class="card-resumen">
             <h5>Tareas activas</h5>
-            <h3>80</h3>
+            <h3 id="tar_activas">0</h3>
             <p>+15 esta semana</p>
         </div>
         <div class="card-resumen">
             <h5>Tareas completadas</h5>
-            <h3>8</h3>
+            <h3 id="tar_completadas">0</h3>
             <p>+6 desde ayer</p>
         </div>
     </div>
@@ -71,9 +71,8 @@
     </div>
 </main>
 
-
-
-<!-- Bootstrap Modal JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/tareas.js') }}"></script>
+
 @include('admin.registrar-proyecto')
 @endsection
