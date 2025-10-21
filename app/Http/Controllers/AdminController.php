@@ -13,10 +13,12 @@ use App\Models\Rendimiento;
 
 class AdminController extends Controller
 {
+    protected $url;
 
     public function __construct()
     {
         $this->middleware('auth:usuario');
+        $this->url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
     }
 
     public function inicio()
@@ -32,11 +34,11 @@ class AdminController extends Controller
 
     public function colaboradores()
     {
-        $response = Http::get('http://127.0.0.1:8000/api/usuarios');
+        $response = Http::get($this->url.'/usuarios');
 
         if ($response->successful()) {
             $usuarios = $response->json()['data'] ?? $response->json();
-        }else{
+        } else {
             $usuarios = [];
         }
 
@@ -49,12 +51,23 @@ class AdminController extends Controller
     }
     public function proyecto()
     {
-        return view('admin.proyecto');
+        $response = Http::get($this->url . '/proyectos');
+
+        if ($response->successful()) {
+            $proyectos = $response->json()['data'] ?? $response->json();
+        } else {
+            $proyectos = [];
+        }
+
+        return view('admin.proyecto', compact('proyectos'));
     }
+
     public function perfil()
     {
+
         return view('admin.perfi');
     }
+
     public function notificacion()
     {
         return view('admin.notificacion');

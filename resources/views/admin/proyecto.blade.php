@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <head>
     <link rel="stylesheet" href="{{ asset('css/proyecto.css') }}">
     <!-- Bootstrap Modal CSS -->
@@ -22,9 +23,7 @@
         </div>
     </div>
 
-    <!-- Contenido principal -->
     <div class="contenedor">
-        <!-- Sección Proyectos -->
         <div class="proyecto">
             <div class="proyecto-header">
                 <h2>Proyectos</h2>
@@ -37,26 +36,28 @@
             </div>
 
             <!-- Proyecto individual -->
-            @for ($i = 0; $i < 4; $i++)
+            @foreach ($proyectos as $pro )
+
+
             <div class="card-proyecto">
                 <div class="info-proyecto">
-                    <span class="nombre-proyecto">App móvil E-commerce</span>
+                    <span class="nombre-proyecto">{{$pro['nombre']}}</span>
                     <span class="estado en-progreso">En progreso</span>
                 </div>
-                <progress min="0" max="100" value="75"></progress>
+                <progress min="0" max="100" value="{{$pro['progreso']}}">En progreso</progress>
                 <div class="estadisticas">
-                    <p>75 % completado</p>
-                    <p>5 miembros | Entrega 15 Feb 2025</p>
+                    <p>{{ $pro['progreso'] }} % completado</p>
+                    <p>5 miembros | {{$pro['fecha_entrega']}}</p>
                 </div>
             </div>
-            @endfor
+            @endforeach
         </div>
 
         <!-- Sección Tareas próximas -->
         <div class="tareas-vencidas">
             <h3>Tareas próximas a vencer</h3>
             @for ($i = 0; $i < 5; $i++)
-            <div class="card-tarea">
+                <div class="card-tarea">
                 <div class="info-tarea">
                     <span class="nombre-tarea">App móvil E-commerce</span>
                     <span class="estado en-progreso">En progreso</span>
@@ -65,9 +66,9 @@
                     <p>75% completado</p>
                     <p>25/11/25</p>
                 </div>
-            </div>
-            @endfor
         </div>
+        @endfor
+    </div>
     </div>
 </main>
 
