@@ -12,33 +12,6 @@
 
     </div>
 
-    {{-- Rendimiento --}}
-    <div class="row g-4 mt-4 mb-5">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4 bg-white">
-                <h5 class="fw-bold text-success mb-2">📈 Rendimiento General</h5>
-                <h2 class="fw-bold text-success">87%</h2>
-                <p class="text-muted mb-0">Tu productividad promedio esta semana</p>
-            </div>
-        </div>
-    </div>
-
-    {{-- Estadísticas rápidas --}}
-    <div class="row g-4 mb-5">
-        @foreach([
-            ['title'=>'Proyectos activos','value'=>4,'color'=>'primary','icon'=>'bi-folder'],
-            ['title'=>'Tareas asignadas','value'=>7,'color'=>'success','icon'=>'bi-check-circle'],
-            ['title'=>'Próximas entregas','value'=>3,'color'=>'danger','icon'=>'bi-calendar3']
-        ] as $stat)
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4 bg-white" style="transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="bi {{ $stat['icon'] }} fs-2 text-{{ $stat['color'] }} mb-2"></i>
-                <h6 class="text-muted mb-1">{{ $stat['title'] }}</h6>
-                <h3 class="fw-bold text-{{ $stat['color'] }}">{{ $stat['value'] }}</h3>
-            </div>
-        </div>
-        @endforeach
-    </div>
 
     {{-- Tareas y Proyectos --}}
     <div class="row g-4">

@@ -50,17 +50,19 @@ class AdminController extends Controller
         return view('admin.equipos');
     }
     public function proyecto()
-    {
-        $response = Http::get($this->url . '/proyectos');
+{
+    $response = Http::get($this->url . '/proyectos');
 
-        if ($response->successful()) {
-            $proyectos = $response->json()['data'] ?? $response->json();
-        } else {
-            $proyectos = [];
-        }
-
-        return view('admin.proyecto', compact('proyectos'));
+    if ($response->successful()) {
+        $json = $response->json();
+        $proyectos = $json['proyectos'] ?? [];
+    } else {
+        $proyectos = [];
     }
+
+    return view('admin.proyecto', compact('proyectos'));
+}
+
 
     public function perfil()
     {

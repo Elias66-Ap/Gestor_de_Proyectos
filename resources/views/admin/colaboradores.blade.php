@@ -4,9 +4,13 @@
 <head>
     <link rel="stylesheet" href="{{ asset('css/colaboradores.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {{-- Estilos de DataTables --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 
 <main>
+    {{-- Cajas resumen --}}
     <div class="resumen-cajas">
         <div class="card-resumen">
             <h5>Tareas activas</h5>
@@ -25,47 +29,70 @@
         </div>
     </div>
 
+    {{-- Tabla de colaboradores --}}
     <div class="prueba">
         <h1>Colaboradores</h1>
-        <div class="contenedor">
-            <input type="search" id="buscarColaborador" placeholder="Buscar colaborador...">
-            <div class="sub-contenedor">
-                <a href="#">Líderes</a>
-                <a href="#">Colaboradores</a>
-            </div>
-        </div>
 
-        <div class="tabla encabezado">
-            <h3>Nombre</h3>
-            <h3>Correo</h3>
-            <h3>Rol</h3>
-            <h3>Rendimiento</h3>
-        </div>
-
-        <div id="listaColaboradores">
-            @foreach($usuarios as $user)
-            <div class="tabla fila-colaborador">
-                <div>
-                    <h6>{{ $user['perfil']['nombre'] ?? 'N/A' }}</h6>
-                    <p>{{ $user['perfil']['apellido'] ?? '' }}</p>
-                </div>
-                <div>
-                    <h6>{{ $user['correo'] ?? 'N/A' }}</h6>
-                </div>
-                <div>
-                    <h6>{{ $user['rol'] ?? 'N/A' }}</h6>
-                </div>
-                <div>
-                    <h6>{{ isset($user['rendimiento']['rendimiento']) ? ($user['rendimiento']['rendimiento']*100) . ' %' : '0 %' }}</h6>
-                </div>
-            </div>
-            @endforeach
-        </div>
+        <table id="tablaColaboradores" class="table table-striped table-bordered align-middle text-center mt-4">
+            <thead class="table-light">
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Rendimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($usuarios as $user)
+                <tr>
+                    <td>
+                        <img
+                            src="{{ isset($user['perfil']['imagen'])
+                                ? asset('storage/' . $user['perfil']['imagen'])
+                                : asset('images/default.jpeg') }}"
+                            alt="Foto de {{ $user['perfil']['nombre'] ?? 'usuario' }}"
+                            style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+                    </td>
+                    <td>
+                        <strong>{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
+                        <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
+                    </td>
+                    <td>{{ $user['correo'] ?? 'N/A' }}</td>
+                    <td>{{ $user['rol'] ?? 'N/A' }}</td>
+                    <td>
+                        {{ isset($user['rendimiento']['rendimiento'])
+                            ? ($user['rendimiento']['rendimiento'] * 100) . ' %'
+                            : '0 %' }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </main>
 
+{{-- Scripts --}}
 <script src="{{ asset('js/colab.js') }}"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{{-- Dependencias DataTables --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#tablaColaboradores').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+        },
+        pageLength: 5,
+        lengthChange: false,
+        order: [[1, 'asc']]
+    });
+});
+</script>
+
 @include('admin.registrar')
 @endsection
