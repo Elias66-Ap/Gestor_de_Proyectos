@@ -25,7 +25,7 @@ class LoginController extends Controller
         if ($user && Hash::check($credenciales['passwordd'], $user->passwordd)) {
             Auth::guard('usuario')->login($user);
 
-            if ($user->estado == 0 && in_array($user->rol, ['Administrador','Lider', 'Colaborador'])) {
+            if ($user->tiene_perfil == 0 && in_array($user->rol, ['Administrador','Lider', 'Colaborador'])) {
                 return redirect()->route('crear_perfil');
             }
 

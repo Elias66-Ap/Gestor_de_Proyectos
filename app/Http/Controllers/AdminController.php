@@ -29,7 +29,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.inicio');
+        $user = auth()->guard('usuario')->user();
+        return view('admin.inicio', compact('user'));
     }
 
     public function colaboradores()

@@ -16,7 +16,7 @@
                 <i class="bi bi-people fs-3 text-primary mb-2"></i>
                 <h6 class="text-muted">Usuarios Totales</h6>
                 <h4 class="fw-bold text-dark" id="total_usu">0</h4>
-                <small class="text-success fw-semibold"><i class="bi bi-graph-up"></i> +5% este mes</small>
+                <small class="text-success fw-semibold" id="tot_usu"><i class="bi bi-graph-up"></i> +5% este mes</small>
             </div>
         </div>
         <div class="col-md-2">
@@ -24,7 +24,7 @@
                 <i class="bi bi-clipboard-check fs-3 text-success mb-2"></i>
                 <h6 class="text-muted">Tareas Completadas</h6>
                 <h4 class="fw-bold text-dark" id="tar_completadas">0</h4>
-                <small class="text-success fw-semibold"><i class="bi bi-graph-up"></i> +12% semana</small>
+                <small class="text-success fw-semibold" id="tar_comp"><i class="bi bi-graph-up"></i> +12% semana</small>
             </div>
         </div>
         <div class="col-md-2">
@@ -32,7 +32,7 @@
                 <i class="bi bi-hourglass-split fs-3 text-warning mb-2"></i>
                 <h6 class="text-muted">Tareas Pendientes</h6>
                 <h4 class="fw-bold text-dark" id="tar_pendientes">128</h4>
-                <small class="text-danger fw-semibold"><i class="bi bi-graph-down"></i> -3 hoy</small>
+                <small class="text-danger fw-semibold" id="tar_pend"><i class="bi bi-graph-down"></i> -3 hoy</small>
             </div>
         </div>
         <div class="col-md-2">
@@ -40,7 +40,7 @@
                 <i class="bi bi-diagram-3 fs-3 text-info mb-2"></i>
                 <h6 class="text-muted">Proyectos Activos</h6>
                 <h4 class="fw-bold text-dark" id="pro_activos">14</h4>
-                <small class="text-success fw-semibold"><i class="bi bi-graph-up"></i> +2 nuevos</small>
+                <small class="text-success fw-semibold" id="pro_act"><i class="bi bi-graph-up"></i> 0 nuevos</small>
             </div>
         </div>
         <div class="col-md-2">
@@ -48,7 +48,7 @@
                 <i class="bi bi-check2-circle fs-3 text-secondary mb-2"></i>
                 <h6 class="text-muted">Proyectos Terminados</h6>
                 <h4 class="fw-bold text-dark" id="pro_completados">27</h4>
-                <small class="text-success fw-semibold"><i class="bi bi-graph-up"></i> +4 mes</small>
+                <small class="text-success fw-semibold" id="pro_com"><i class="bi bi-graph-up"></i> 0 mes</small>
             </div>
         </div>
         <div class="col-md-2">
@@ -56,7 +56,6 @@
                 <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
                 <h6 class="text-muted">Productividad Promedio</h6>
                 <h4 class="fw-bold text-dark" id="promedio_rendimiento">89%</h4>
-                <small class="text-success fw-semibold"><i class="bi bi-graph-up"></i> +6%</small>
             </div>
         </div>
     </div>

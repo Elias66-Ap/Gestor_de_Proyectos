@@ -15,6 +15,7 @@ class Usuario extends Authenticatable
         'correo',
         'rol',
         'passwordd',
+        'tiene_perfil',
         'estado',
     ];
 
@@ -37,9 +38,10 @@ class Usuario extends Authenticatable
     }
 
     public function perfil(){
-        return $this->hasOne(Perfil::class, 'id_usu');
+        return $this->hasOne(Perfil::class, 'id_usu', "id");
     }
+
     public function rendimiento(){
-        return $this->hasOne(Rendimiento::class, 'id_usu');
+        return $this->hasOne(Rendimiento::class, 'id_usu', "id");
     }
 }
