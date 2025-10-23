@@ -104,10 +104,14 @@
 
 {{-- ==== ESTILOS ==== --}}
 <style>
-    body { background-color: #f8fafc; }
+    body {
+        background-color: #f8fafc;
+    }
+
     .card {
         transition: all 0.3s ease;
     }
+
     .card:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -121,34 +125,81 @@
 {{-- ==== GRÁFICOS ==== --}}
 <script>
     // Usuarios por mes
-    new Chart(document.getElementById('usuariosChart'), {
-        type: 'line',
-        data: {
-            labels: ['May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
-            datasets: [{
-                label: 'Usuarios',
-                data: [120, 180, 220, 260, 310, 400],
-                borderColor: '#4e73df',
-                backgroundColor: 'rgba(78, 115, 223, 0.2)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: { plugins: { legend: { display: false } } }
-    });
+    async function cargarChartUsuarios() {
+        try {
+            const res = await fetch('http://127.0.0.1:8000/api/usuarios/por/mes');
+            const json = await res.json();
+
+            if (json.status === 'success') {
+                const ctx = document.getElementById('usuariosChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: json.labels,
+                        datasets: [{
+                            label: 'Usuarios',
+                            data: json.data,
+                            borderColor: '#4e73df',
+                            backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Error cargando chart:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarChartUsuarios);
 
     // Proyectos activos vs terminados
-    new Chart(document.getElementById('proyectosChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Activos', 'Terminados', 'En pausa'],
-            datasets: [{
-                data: [14, 27, 3],
-                backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e']
-            }]
-        },
-        options: { plugins: { legend: { position: 'bottom' } } }
-    });
+    async function cargarChartProyectos() {
+        try {
+            const res = await fetch('http://127.0.0.1:8000/api/dashboard/proyectos');
+            const json = await res.json();
+
+            if (json.status === 'success') {
+                const ctx = document.getElementById('proyectosChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Activos', 'Terminados', 'En pausa'],
+                        datasets: [{
+                            data: [
+                                json.data.activos,
+                                json.data.completados,
+                                json.data.pausa
+                            ],
+                            backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e']
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Error cargando chart:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarChartProyectos);
+
 
     // Productividad
     new Chart(document.getElementById('productividadChart'), {
@@ -163,8 +214,17 @@
             }]
         },
         options: {
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true, max: 100 } }
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
         }
     });
 
@@ -205,4 +265,5 @@
 
 <script src="{{ asset('js/tareas.js') }}"></script>
 <script src="{{ asset('js/usuarios.js') }}"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
