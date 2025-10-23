@@ -152,6 +152,5 @@
         }
     });
 </script>
-<script src="{{ asset('js/tareas.js') }}"></script>
-<script src="{{ asset('js/usuarios.js') }}"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

@@ -1,6 +1,6 @@
 async function cargarDashboard() {
     try {
-        const res = await fetch('http://127.0.0.1:8000/api/dashboard/');
+        const res = await fetch('http://127.0.0.1:8000/api/dashboard/inicio');
         const { status, data } = await res.json();
 
         if (status === 'success') {
