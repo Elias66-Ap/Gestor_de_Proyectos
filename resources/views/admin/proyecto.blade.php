@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="{{ asset('css/proyecto.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .card-proyecto-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 
 <main>
@@ -35,24 +42,26 @@
             </div>
 
             @foreach ($proyectos as $pro)
-            <div class="card-proyecto">
-                <div class="info-proyecto">
-                    <span class="nombre-proyecto">{{ $pro['nombre'] }}</span>
-                    <span class="estado en-progreso">En progreso</span>
+            <a href="{{ route('tablero.proyecto', $pro['id']) }}" class="card-proyecto-link">
+                <div class="card-proyecto">
+                    <div class="info-proyecto">
+                        <span class="nombre-proyecto">{{ $pro['nombre'] }}</span>
+                        <span class="estado en-progreso">En progreso</span>
+                    </div>
+                    <progress min="0" max="100" value="{{ $pro['progreso'] }}">En progreso</progress>
+                    <div class="estadisticas">
+                        <p>{{ $pro['progreso'] }} % completado</p>
+                        <p>5 miembros | {{ $pro['fecha_entrega'] }}</p>
+                    </div>
                 </div>
-                <progress min="0" max="100" value="{{ $pro['progreso'] }}">En progreso</progress>
-                <div class="estadisticas">
-                    <p>{{ $pro['progreso'] }} % completado</p>
-                    <p>5 miembros | {{ $pro['fecha_entrega'] }}</p>
-                </div>
-            </div>
+            </a>
             @endforeach
         </div>
 
         <div class="tareas-vencidas">
             <h3>Tareas próximas a vencer</h3>
             @for ($i = 0; $i < 5; $i++)
-            <div class="card-tarea">
+                <div class="card-tarea">
                 <div class="info-tarea">
                     <span class="nombre-tarea">App móvil E-commerce</span>
                     <span class="estado en-progreso">En progreso</span>
@@ -61,9 +70,9 @@
                     <p>75% completado</p>
                     <p>25/11/25</p>
                 </div>
-            </div>
-            @endfor
         </div>
+        @endfor
+    </div>
     </div>
 
     <!-- DASHBOARD DE GRÁFICOS -->
@@ -84,7 +93,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/tareas.js') }}"></script>
 
 <script>
     // === GRÁFICO 1: BARRAS ===
@@ -101,7 +109,11 @@
         options: {
             responsive: true,
             aspectRatio: 1,
-            scales: { y: { beginAtZero: true } }
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
     });
 

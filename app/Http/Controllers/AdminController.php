@@ -105,4 +105,17 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Usuario registrado');
     }
+
+    public function verProyecto($id){
+
+        $response = Http::get($this->url. "/proyectos/{$id}");
+
+        if($response->successful()){
+            $proyecto = $response->json()['proyecto'] ?? $response->json();
+        }else{
+            $proyecto = [];
+        }
+
+        return view('/tablero', compact('proyecto'));
+    }
 }

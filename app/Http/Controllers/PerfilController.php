@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class PerfilController extends Controller
@@ -85,5 +86,32 @@ class PerfilController extends Controller
             default:
                 return redirect()->route('inicio');
         }
+    }
+
+    public function editarPerfil(Request $request, $id){
+
+        $nuevo = $request->only([
+            'nombre',
+            'apellido',
+            'apodo',
+            'fecha_nacimiento',
+            'hobby',
+            'habilidades',
+        ]);
+
+        $url = env('URL_sERVER_API', 'http://localhost:8000');
+
+        $response = Http::put($url."/perfiles/{$id}", $nuevo);
+        $data = $response->json();
+
+        if($response->status() === 422 && isset($data['errors'])){
+            return redirect()->back()->withErrors($data['errors'])->withInput();
+        }
+
+        if($response->successful()){
+            return redirect()->back()->with('success', 'Perfil Actualizado');
+        }
+
+        return redirect()->back()->with('error', 'Error al actualizar perfil');
     }
 }

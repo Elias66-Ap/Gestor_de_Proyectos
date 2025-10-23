@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid py-5" style="background-color: #f4f6fa;">
+@if (session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
+@if (session('error'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+<div class="container-fluid py-5" style="background-color: #f4f6fa;">
   {{-- Encabezado --}}
   <div class="d-flex justify-content-between align-items-center mb-5">
     <h2 class="fw-bold mb-0">Mi Perfil</h2>
@@ -85,40 +91,38 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
 
-      <form>
+      <form action="{{ route('editar.perfil', $user->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
         <div class="modal-body">
           <div class="row g-3">
             <div class="col-md-6">
               <label for="nombre" class="form-label fw-semibold">Nombre</label>
-              <input type="text" class="form-control rounded-pill" id="nombre" value="{{ $user->perfil->nombre ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="nombre" name="nombre" value="{{ $user->perfil->nombre ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="apellido" class="form-label fw-semibold">Apellido</label>
-              <input type="text" class="form-control rounded-pill" id="apellido" value="{{ $user->perfil->apellido ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="apellido" name="apellido" value="{{ $user->perfil->apellido ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="apodo" class="form-label fw-semibold">Apodo</label>
-              <input type="text" class="form-control rounded-pill" id="apodo" value="{{ $user->perfil->apodo ?? '-' }}">
-            </div>
-            <div class="col-md-6">
-              <label for="correo" class="form-label fw-semibold">Correo</label>
-              <input type="email" class="form-control rounded-pill" id="correo" value="{{ $user->correo ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="apodo" name="apodo" value="{{ $user->perfil->apodo ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="telefono" class="form-label fw-semibold">Teléfono</label>
-              <input type="text" class="form-control rounded-pill" id="telefono" value="{{ $user->perfil->telefono ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="telefono" name="telefono" value="{{ $user->perfil->telefono ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="nacimiento" class="form-label fw-semibold">Fecha de Nacimiento</label>
-              <input type="date" class="form-control rounded-pill" id="nacimiento" value="{{ $user->perfil->fecha_nacimiento ?? '-' }}">
+              <input type="date" class="form-control rounded-pill" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $user->perfil->fecha_nacimiento ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="hobby" class="form-label fw-semibold">Hobby</label>
-              <input type="text" class="form-control rounded-pill" id="hobby" value="{{ $user->perfil->hobby ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="hobby" name="hobby" value="{{ $user->perfil->hobby ?? '-' }}">
             </div>
             <div class="col-md-6">
               <label for="habilidades" class="form-label fw-semibold">Habilidades</label>
-              <input type="text" class="form-control rounded-pill" id="habilidades" value="{{ $user->perfil->habilidades ?? '-' }}">
+              <input type="text" class="form-control rounded-pill" id="habilidades" name="habilidades" value="{{ $user->perfil->habilidades ?? '-' }}">
             </div>
           </div>
         </div>

@@ -13,9 +13,6 @@ Route::get('/', function () {
     return view('login');
 })->name('inicio');
 
-Route::get('/tablero', function () {
-    return view('tablero');
-})->name('tablero');
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -53,12 +50,10 @@ Route::middleware(['auth:usuario', 'rol:Colaborador'])->group(function () {
 });
 
 
-// Mostrar formulario para crear perfil
-Route::get('crear_perfil', [PerfilController::class, 'crear'])
-    ->name('crear_perfil')
-    ->middleware('auth:usuario'); // Solo usuarios autenticados
-
-// Guardar el perfil
-Route::post('guardar', [PerfilController::class, 'guardar'])
-    ->name('perfil.guardar')
-    ->middleware('auth:usuario');
+//Rutas globales
+Route::middleware('auth:usuario')->group(function () {
+    Route::get('crear_perfil', [PerfilController::class, 'crear'])->name('crear_perfil');
+    Route::post('guardar', [PerfilController::class, 'guardar'])->name('perfil.guardar');
+    Route::patch('editar_perfil/{id}',[PerfilController::class, 'editarPerfil'])->name('editar.perfil');
+    Route::get('tablero/{id}', [AdminController::class, 'verProyecto'])->name('tablero.proyecto');
+});
