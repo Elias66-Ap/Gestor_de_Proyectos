@@ -61,29 +61,45 @@
     </div>
 
     {{-- ==== GRÁFICOS ==== --}}
-    <div class="row g-4">
+    <div class="row g-4 mb-4">
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 rounded-4 p-3">
                 <h6 class="fw-bold text-center mb-3">Usuarios Registrados (Últimos 6 meses)</h6>
-                <canvas id="usuariosChart"></canvas>
+                <canvas id="usuariosChart" height="180"></canvas>
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 rounded-4 p-3">
                 <h6 class="fw-bold text-center mb-3">Proyectos Activos vs Terminados</h6>
-                <canvas id="proyectosChart"></canvas>
+                <canvas id="proyectosChart" height="180"></canvas>
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 rounded-4 p-3">
                 <h6 class="fw-bold text-center mb-3">Productividad General</h6>
-                <canvas id="productividadChart"></canvas>
+                <canvas id="productividadChart" height="180"></canvas>
             </div>
         </div>
     </div>
 
+    {{-- ==== NUEVOS GRÁFICOS ==== --}}
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 p-3">
+                <h6 class="fw-bold text-center mb-3">Tareas Completadas (Últimos 6 meses)</h6>
+                <canvas id="tareasCompletadasChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-4 p-3">
+                <h6 class="fw-bold text-center mb-3">Tareas Pendientes (Últimos 6 meses)</h6>
+                <canvas id="tareasPendientesChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
 {{-- ==== ESTILOS ==== --}}
@@ -151,7 +167,42 @@
             scales: { y: { beginAtZero: true, max: 100 } }
         }
     });
+
+    // Tareas completadas
+    new Chart(document.getElementById('tareasCompletadasChart'), {
+        type: 'line',
+        data: {
+            labels: ['May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Completadas',
+                data: [150, 200, 250, 300, 350, 400],
+                borderColor: '#1cc88a',
+                backgroundColor: 'rgba(28, 200, 138, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { plugins: { legend: { display: false } } }
+    });
+
+    // Tareas pendientes
+    new Chart(document.getElementById('tareasPendientesChart'), {
+        type: 'line',
+        data: {
+            labels: ['May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Pendientes',
+                data: [80, 100, 120, 90, 110, 95],
+                borderColor: '#f6c23e',
+                backgroundColor: 'rgba(246, 194, 62, 0.3)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { plugins: { legend: { display: false } } }
+    });
 </script>
+
 <script src="{{ asset('js/tareas.js') }}"></script>
 <script src="{{ asset('js/usuarios.js') }}"></script>
 @endsection
