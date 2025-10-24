@@ -35,7 +35,7 @@ class AdminController extends Controller
 
     public function colaboradores()
     {
-        $response = Http::get($this->url.'/usuarios');
+        $response = Http::get($this->url . '/usuarios');
 
         if ($response->successful()) {
             $usuarios = $response->json()['data'] ?? $response->json();
@@ -51,18 +51,18 @@ class AdminController extends Controller
         return view('admin.equipos');
     }
     public function proyecto()
-{
-    $response = Http::get($this->url . '/proyectos');
+    {
+        $response = Http::get($this->url . '/proyectos');
 
-    if ($response->successful()) {
-        $json = $response->json();
-        $proyectos = $json['proyectos'] ?? [];
-    } else {
-        $proyectos = [];
+        if ($response->successful()) {
+            $json = $response->json();
+            $proyectos = $json['proyectos'] ?? [];
+        } else {
+            $proyectos = [];
+        }
+
+        return view('admin.proyecto', compact('proyectos'));
     }
-
-    return view('admin.proyecto', compact('proyectos'));
-}
 
 
     public function perfil()
@@ -106,16 +106,55 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Usuario registrado');
     }
 
-    public function verProyecto($id){
+    public function verProyecto($id)
+    {
 
-        $response = Http::get($this->url. "/proyectos/{$id}");
+        $response = Http::get($this->url . "/proyectos/{$id}");
 
-        if($response->successful()){
+        if ($response->successful()) {
             $proyecto = $response->json()['proyecto'] ?? $response->json();
-        }else{
+        } else {
             $proyecto = [];
         }
 
         return view('/tablero', compact('proyecto'));
+    }
+
+    public function crearProyecto(Request $request)
+    {
+        $user = auth()->guard('usuario')->user();
+
+        $fecha = $request->fecha_entrega
+            ? \Carbon\Carbon::parse($request->fecha_entrega)->format('Y-m-d H:i:s')
+            : null;
+
+        $ids = $request->id_usuarios ?? [];
+
+        if ($request->filled('id_usuarios')) {
+            $ids = array_map('intval', $request->id_usuarios);
+        }
+
+        $data = [
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'fecha_entrega' => $fecha,
+            'id_creador' => $user->id,
+            'id_usuarios' => $ids // array de IDs
+        ];
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->post($this->url . '/proyectos', $data);
+
+        //dd($data);
+        dd($response->body());
+
+        if ($response->successful()) {
+            return redirect()->back()->with('success', 'Proyecto creado exitosamente');
+        } else {
+            $errors = $response->json('errors', []);
+            return redirect()->back()->withErrors($errors)->withInput();
+        }
     }
 }
