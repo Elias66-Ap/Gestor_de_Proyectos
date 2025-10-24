@@ -98,6 +98,7 @@ class PerfilController extends Controller
             'fecha_nacimiento',
             'hobby',
             'habilidades',
+            'imagen',
         ]);
 
         $url = env('URL_sERVER_API', 'http://localhost:8000');

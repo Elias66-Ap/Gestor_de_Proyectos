@@ -27,6 +27,7 @@ Route::middleware(['auth:usuario', 'rol:Administrador'])->group(function () {
     Route::get('/admin/perfil', [AdminController::class, 'perfil'])->name('admin.perfil');
     Route::get('/admin/notificacion', [AdminController::class, 'notificacion'])->name('admin.notificacion');
     Route::post('register', [AdminController::class, 'store'])->name('register');
+    Route::post('/crear/proyecto', [AdminController::class, 'crearProyecto'])->name('crear.proyecto');
 });
 
 //Grupo de rutas para el Lider:
