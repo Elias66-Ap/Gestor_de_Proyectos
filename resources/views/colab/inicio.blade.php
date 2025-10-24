@@ -12,12 +12,70 @@
 
     </div>
 
+    <div class="row g-4 mb-5">
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm rounded-4 text-center py-4">
+      <i class="bi bi-list-check text-primary fs-2 mb-2"></i>
+      <h6 class="text-muted mb-1">Tareas totales</h6>
+      <h3 class="fw-bold text-primary">12</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm rounded-4 text-center py-4">
+      <i class="bi bi-hourglass-split text-warning fs-2 mb-2"></i>
+      <h6 class="text-muted mb-1">Pendientes</h6>
+      <h3 class="fw-bold text-warning">4</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm rounded-4 text-center py-4">
+      <i class="bi bi-check-circle text-success fs-2 mb-2"></i>
+      <h6 class="text-muted mb-1">Completadas</h6>
+      <h3 class="fw-bold text-success">7</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm rounded-4 text-center py-4">
+      <i class="bi bi-calendar-event text-danger fs-2 mb-2"></i>
+      <h6 class="text-muted mb-1">Próximas entregas</h6>
+      <h3 class="fw-bold text-danger">1</h3>
+    </div>
+  </div>
+</div>
 
     {{-- Tareas y Proyectos --}}
     <div class="row g-4">
 
         {{-- Tareas asignadas --}}
+
+
+        {{-- Proyectos del colaborador --}}
         <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-4 text-primary">📁 Proyectos donde participas</h5>
+
+                    @foreach([
+                        ['nombre'=>'CRM empresarial','progreso'=>60],
+                        ['nombre'=>'API microservicios','progreso'=>80],
+                        ['nombre'=>'App móvil E-commerce','progreso'=>45],
+                    ] as $p)
+                    <div class="mb-4 project-card" style="transition: transform 0.3s, box-shadow 0.3s;">
+                        <div class="fw-semibold">{{ $p['nombre'] }}</div>
+                        <div class="progress my-2" style="height: 8px; border-radius: 10px;">
+                            <div class="progress-bar bg-primary" style="width: {{ $p['progreso'] }}%; transition: width 1s;"></div>
+                        </div>
+                        <div class="text-muted small">{{ $p['progreso'] }}% completado</div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-body">
                     <h5 class="fw-bold mb-4">🗂️ Tareas asignadas</h5>
@@ -39,30 +97,6 @@
                             <span>{{ $t['progreso'] }}% completado</span>
                             <span><i class="bi bi-calendar3 me-1"></i>{{ $t['fecha'] }}</span>
                         </div>
-                    </div>
-                    @endforeach
-
-                </div>
-            </div>
-        </div>
-
-        {{-- Proyectos del colaborador --}}
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-body">
-                    <h5 class="fw-bold mb-4 text-primary">📁 Proyectos donde participas</h5>
-
-                    @foreach([
-                        ['nombre'=>'CRM empresarial','progreso'=>60],
-                        ['nombre'=>'API microservicios','progreso'=>80],
-                        ['nombre'=>'App móvil E-commerce','progreso'=>45],
-                    ] as $p)
-                    <div class="mb-4 project-card" style="transition: transform 0.3s, box-shadow 0.3s;">
-                        <div class="fw-semibold">{{ $p['nombre'] }}</div>
-                        <div class="progress my-2" style="height: 8px; border-radius: 10px;">
-                            <div class="progress-bar bg-primary" style="width: {{ $p['progreso'] }}%; transition: width 1s;"></div>
-                        </div>
-                        <div class="text-muted small">{{ $p['progreso'] }}% completado</div>
                     </div>
                     @endforeach
 

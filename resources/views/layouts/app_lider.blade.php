@@ -37,11 +37,11 @@
                     <i class="bi bi-people me-2"></i> Colaboradores
                 </a>
             </li>-->
-            <li class="nav-item mb-2">
+            <!-- <li class="nav-item mb-2">
                 <a href="{{ route('lider.equipo') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item mb-2">
                 <a href="{{route('lider.proyectos')}}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.proyectos') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Proyectos

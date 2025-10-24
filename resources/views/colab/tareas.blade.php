@@ -10,33 +10,6 @@
         </div>
 
     </div>
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4">
-                <h6 class="text-muted mb-1">Tareas totales</h6>
-                <h3 class="fw-bold text-primary">12</h3>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4">
-                <h6 class="text-muted mb-1">Pendientes</h6>
-                <h3 class="fw-bold text-warning">4</h3>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4">
-                <h6 class="text-muted mb-1">Completadas</h6>
-                <h3 class="fw-bold text-success">7</h3>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 text-center py-4">
-                <h6 class="text-muted mb-1">Próximas entregas</h6>
-                <h3 class="fw-bold text-danger">1</h3>
-            </div>
-        </div>
-    </div>
-
     <div class="row g-4">
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm rounded-4 p-3 tarea-card">

@@ -11,65 +11,142 @@
 
 <main>
     {{-- Cajas resumen --}}
-    <div class="resumen-cajas">
-        <div class="card-resumen">
-            <h5>Tareas activas</h5>
-            <h3 id="tar_activas">0</h3>
-            <p id="tar_semana">+1 esta semana</p>
-        </div>
-        <div class="card-resumen">
-            <h5>Tareas completadas</h5>
-            <h3 id="tar_completadas">0</h3>
-            <p>+3 este mes</p>
-        </div>
-        <div class="card-resumen">
-            <button data-bs-toggle="modal" data-bs-target="#modalAddColab">
-                <i class="bi bi-person-plus me-2"></i>Añadir colaboradores
-            </button>
-        </div>
+    <div class="resumen-cajas my-5 d-flex justify-content-center">
+  <div class="card-resumen bg-white shadow-sm border-0 rounded-4 p-4 d-flex align-items-center justify-content-between w-75 flex-wrap">
+
+    <!-- Sección izquierda: ícono + texto -->
+    <div class="d-flex align-items-center mb-3 mb-md-0">
+      <i class="bi bi-person-plus display-5 text-primary me-4"></i>
+      <div>
+        <h4 class="fw-bold mb-1 text-dark">Agregar nuevos usuarios</h4>
+        <p class="text-muted mb-0">Gestiona fácilmente el ingreso de nuevos colaboradores al sistema.</p>
+      </div>
     </div>
+
+    <!-- Sección derecha: botón -->
+    <button class="btn btn-primary px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#modalAddColab">
+      <i class="bi bi-person-plus-fill me-2"></i> Añadir usuario
+    </button>
+  </div>
+</div>
 
     {{-- Tabla de colaboradores --}}
-    <div class="prueba">
-        <h1>Colaboradores</h1>
+    <div class="prueba container my-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">Usuarios</h2>
+    <p class="text-muted">Lista de usuarios registrados y su rendimiento actual</p>
+  </div>
 
-        <table id="tablaColaboradores" class="table table-striped table-bordered align-middle text-center mt-4">
-            <thead class="table-light">
-                <tr>
-                    <th>Foto</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                    <th>Rendimiento</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($usuarios as $user)
-                <tr>
-                    <td>
-                        <img
-                            src="{{ isset($user['perfil']['imagen'])
-                                ? asset('storage/' . $user['perfil']['imagen'])
-                                : asset('images/default.jpeg') }}"
-                            alt="Foto de {{ $user['perfil']['nombre'] ?? 'usuario' }}"
-                            style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
-                    </td>
-                    <td>
-                        <strong>{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
-                        <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
-                    </td>
-                    <td>{{ $user['correo'] ?? 'N/A' }}</td>
-                    <td>{{ $user['rol'] ?? 'N/A' }}</td>
-                    <td>
-                        {{ isset($user['rendimiento']['rendimiento'])
-                            ? ($user['rendimiento']['rendimiento'] * 100) . ' %'
-                            : '0 %' }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+  <div class="table-responsive shadow rounded-4 overflow-hidden">
+    <table id="tablaColaboradores" class="table align-middle text-center mb-0">
+      <thead class="bg-primary text-white">
+        <tr>
+          <th scope="col">Foto</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Rendimiento</th>
+        </tr>
+      </thead>
+      <tbody class="table-light">
+        @foreach($usuarios as $user)
+          @php
+            $porcentaje = isset($user['rendimiento']['rendimiento'])
+              ? $user['rendimiento']['rendimiento'] * 100
+              : 0;
+
+            if ($porcentaje <= 25) {
+                $color = 'bg-danger'; // rojo
+            } elseif ($porcentaje <= 75) {
+                $color = 'bg-primary'; // azul
+            } else {
+                $color = 'bg-success'; // verde
+            }
+          @endphp
+
+          <tr class="hover-row">
+            <td>
+              <img
+                src="{{ isset($user['perfil']['imagen'])
+                    ? asset('storage/' . $user['perfil']['imagen'])
+                    : asset('images/default.jpeg') }}"
+                alt="Foto de {{ $user['perfil']['nombre'] ?? 'usuario' }}"
+                class="rounded-circle border border-2 border-primary-subtle shadow-sm"
+                style="width: 55px; height: 55px; object-fit: cover;">
+            </td>
+
+            <td>
+              <strong>{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
+              <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
+            </td>
+
+            <td class="text-muted">{{ $user['correo'] ?? 'N/A' }}</td>
+
+            <td>
+              <span class="badge bg-secondary px-3 py-2 rounded-pill">
+                {{ $user['rol'] ?? 'N/A' }}
+              </span>
+            </td>
+
+            <td>
+              <div class="progress" style="height: 8px;">
+                <div
+                  class="progress-bar {{ $color }}"
+                  role="progressbar"
+                  style="width: {{ $porcentaje }}%;"
+                  aria-valuenow="{{ $porcentaje }}"
+                  aria-valuemin="0"
+                  aria-valuemax="100">
+                </div>
+              </div>
+              <small class="text-muted">{{ $porcentaje }} %</small>
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .hover-row:hover {
+    background-color: #f3f6ff !important;
+    transition: background-color 0.3s ease;
+  }
+
+  .table thead th {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .card-resumen {
+    transition: all 0.3s ease;
+  }
+
+  .card-resumen:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary {
+    background-color: #4e73df;
+    border: none;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background-color: #3759c9;
+  }
+
+  @media (max-width: 768px) {
+    .card-resumen {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+
 </main>
 
 {{-- Scripts --}}

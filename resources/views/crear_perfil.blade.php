@@ -160,6 +160,14 @@
             <label for="habilidades" class="form-label">Habilidades</label>
             <textarea name="habilidades" class="form-control" rows="2">{{ old('habilidades') }}</textarea>
           </div>
+          <div class="col-md-6">
+            <label for="passwordd" class="form-label">Contraseña</label>
+            <input type="password" name="passwordd" class="form-control" rows="2">{{ old('passwordd') }}</input>
+          </div>
+          <div class="col-md-6">
+            <label for="passwordd_confirmation" class="form-label">Confirmar contraseña</label>
+            <input type="password" name="passwordd_confirmation" class="form-control" rows="2">{{ old('passwordd_confirmation') }}</input>
+          </div>
         </div>
 
         <div class="mt-4">

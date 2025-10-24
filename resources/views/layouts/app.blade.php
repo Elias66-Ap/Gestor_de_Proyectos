@@ -34,14 +34,14 @@
             </li>
             <li class="nav-item mb-2">
                 <a href="{{ route('admin.colaboradores') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.colaboradores*') ? 'active' : '' }}">
-                    <i class="bi bi-people me-2"></i> Colaboradores
+                    <i class="bi bi-people me-2"></i> Usuarios
                 </a>
             </li>
-            <li class="nav-item mb-2">
+            <!-- <li class="nav-item mb-2">
                 <a href="{{ route('admin.equipos') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.equipos') ? 'active' : '' }}">
                     <i class="bi bi-kanban me-2"></i> Equipos
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item mb-2">
                 <a href="{{ route('admin.proyecto') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('admin.proyecto') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Proyectos

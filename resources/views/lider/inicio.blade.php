@@ -10,7 +10,7 @@
     </div>
 
     {{-- ==== RESUMEN SUPERIOR ==== --}}
-    <div class="row gx-5 gy-4 mb-5 justify-content-center">
+    <div class="row gx-1 gy-1 mb-5 justify-content-around">
         {{-- Tareas completadas --}}
         <div class="col-md-2 col-sm-6">
             <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
@@ -58,6 +58,17 @@
                 </small>
             </div>
         </div>
+
+         <div class="col-md-2 col-sm-6">
+            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+                <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
+                <h6 class="text-muted">Productividad promedio</h6>
+                <h4 class="fw-bold text-dark" id="promedio_rendimiento">27%</h4>
+                <small class="text-success fw-semibold">
+                        <i class="bi bi-graph-up"></i> +1
+                </small>
+            </div>
+        </div>
     </div>
 
     {{-- ==== GRÁFICOS ==== --}}
@@ -83,10 +94,53 @@
             </div>
         </div>
     </div>
+
+</div>
+<div class="text-center mb-5">
+    <h2 class="fw-bold">Accesos rápidos</h2>
+</div>
+<div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
+
+
+    <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
+        <button id="boton" class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#modalProyecto">
+            <i class="bi bi-plus-circle me-2"></i>Nuevo proyecto
+        </button>
+    </div>
+
+    <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
+        <button class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#modalMensaje">
+            <i class="bi bi-envelope-plus me-2"></i>Nuevo mensaje
+        </button>
+    </div>
 </div>
 
 {{-- ==== ESTILOS ==== --}}
 <style>
+    .resumen-cajas {
+    margin-top: 20px;
+}
+
+.card-resumen {
+    width: 240px;
+    transition: all 0.3s ease;
+}
+
+.card-resumen:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-resumen button {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.card-resumen button:hover {
+    transform: scale(1.05);
+}
     body {
         background-color: #f8fafc;
     }
@@ -177,9 +231,12 @@
         options: { plugins: { legend: { display: false } } }
     });
 </script>
+@include('lider.nuevo-mensaje')
 
 {{-- ==== ARCHIVOS EXTERNOS ==== --}}
 <script src="{{ asset('js/tareas.js') }}"></script>
 <script src="{{ asset('js/usuarios.js') }}"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
+@include('lider.registrar-proyecto')
+

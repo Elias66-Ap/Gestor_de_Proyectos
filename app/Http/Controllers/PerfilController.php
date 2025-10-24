@@ -73,6 +73,7 @@ class PerfilController extends Controller
             'imagen' => $imagenPath,
         ]);
 
+
         $user->estado = 1;
         $user->save();
 
