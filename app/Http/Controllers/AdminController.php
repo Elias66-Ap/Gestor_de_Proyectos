@@ -67,8 +67,9 @@ class AdminController extends Controller
 
     public function perfil()
     {
-        $user = auth()->guard('usuario')->user();
-        $user->load('perfil', 'rendimiento');
+        $usuario = auth()->guard('usuario')->user();
+        $user = Usuario::with('perfil', 'rendimiento')->where('id',$usuario->id)->first();
+
         return view('admin.perfi', compact('user'));
     }
 
@@ -124,9 +125,8 @@ class AdminController extends Controller
     {
         $user = auth()->guard('usuario')->user();
 
-        $fecha = $request->fecha_entrega
-            ? \Carbon\Carbon::parse($request->fecha_entrega)->format('Y-m-d H:i:s')
-            : null;
+        //$fecha = $request->fecha_entrega
+        //$fecha = \Carbon\Carbon::parse($request->fecha_entrega)->format('Y-m-d H:i:s');
 
         $ids = $request->id_usuarios ?? [];
 
@@ -137,18 +137,17 @@ class AdminController extends Controller
         $data = [
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'fecha_entrega' => $fecha,
+            'fecha_entrega' => $request->fecha,
             'id_creador' => $user->id,
             'id_usuarios' => $ids // array de IDs
         ];
+
+        dd($request->fecha);
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ])->post($this->url . '/proyectos', $data);
-
-        //dd($data);
-        dd($response->body());
 
         if ($response->successful()) {
             return redirect()->back()->with('success', 'Proyecto creado exitosamente');

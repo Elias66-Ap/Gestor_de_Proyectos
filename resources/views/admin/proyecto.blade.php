@@ -57,7 +57,7 @@
                     <progress min="0" max="100" value="{{ $pro['progreso'] }}">En progreso</progress>
                     <div class="estadisticas">
                         <p>{{ $pro['progreso'] }} % completado</p>
-                        <p>5 miembros | {{ $pro['fecha_entrega'] }}</p>
+                        <p>{{$pro['miembros_count']}} miembros | {{ $pro['fecha_entrega'] }}</p>
                     </div>
                 </div>
             </a>
@@ -81,7 +81,6 @@
     </div>
     </div>
 
-    <!-- DASHBOARD DE GRÁFICOS -->
     <section class="dashboard-graficos mt-5">
         <h2 class="text-center mb-4">📊 Dashboard de Actividad</h2>
         <div class="row justify-content-center">

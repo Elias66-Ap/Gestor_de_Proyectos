@@ -19,7 +19,7 @@
           </div>
           <div class="mb-3">
             <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
-            <input type="datetime-local" class="form-control" id="fecha_entrega" name="fecha_entrega">
+            <input type="text" class="form-control" id="fecha_entrega" name="fecha_entrega">
           </div>
           <div class="mb-3">
             <label for="lider" class="form-label">Lider</label>
@@ -43,6 +43,8 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <script>
   async function cargarLideres() {
     const select = document.getElementById('lider');
@@ -134,34 +136,15 @@
       chip.appendChild(btn);
       contenedor.appendChild(chip);
     });
+
   }
 
-  /*document.getElementById('formProyecto').addEventListener('submit', function(e) {
-    const lider = document.getElementById('lider');
-    const colaboradores = document.getElementById('colaboradores');
-
-    const usuarios = [];
-
-    if (lider.value) usuarios.push(lider.value);
-
-    Array.from(colaboradores.selectedOptions).forEach(opt => {
-      if (!usuarios.includes(opt.value)) {
-        usuarios.push(opt.value);
-      }
-    });
-
-    // Crear inputs ocultos para cada usuario
-    // Primero eliminar inputs previos
-    document.querySelectorAll('input[name="id_usuarios[]"]').forEach(i => i.remove());
-
-    usuarios.forEach(u => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'id_usuarios[]'; // IMPORTANTE: nombre con []
-      input.value = u;
-      this.appendChild(input);
-    });
-  });*/
+  flatpickr("#fecha_entrega", {
+    dateFormat: "Y-m-d H-i",
+    enableTime: true,
+    minDate: new Date().fp_incr(30), // hoy
+    time_24hr: true,
+  });
 
   // Escuchar cambios en el select
   document.getElementById('colaboradores').addEventListener('change', actualizarSeleccionados);
