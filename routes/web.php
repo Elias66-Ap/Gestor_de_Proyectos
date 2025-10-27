@@ -20,7 +20,6 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 //Grupo de rutas para el administrador:
 Route::middleware(['auth:usuario', 'rol:Administrador'])->group(function () {
     Route::get('/admin/inicio', [AdminController::class, 'index'])->name('admin.inicio');
-
     Route::get('/admin/colaboradores', [AdminController::class, 'colaboradores'])->name('admin.colaboradores');
     Route::get('/admin/equipos', [AdminController::class, 'equipos'])->name('admin.equipos');
     Route::get('/admin/proyecto', [AdminController::class, 'proyecto'])->name('admin.proyecto');
