@@ -42,23 +42,28 @@
     </div>
 
     <div class="contenedor">
-
-    {{-- ======= SECCIÓN DE PROYECTOS ======= --}}
-    <div class="proyecto bg-white p-4 rounded-4 shadow-sm">
-        <div class="proyecto-header d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold mb-0">Proyectos</h2>
-
-            <div class="d-flex align-items-center gap-3">
-                <div class="filtros d-flex gap-2">
-                    <a href="#" class="filtro active" data-filtro="fecha">Fecha</a>
-                    <a href="#" class="filtro" data-filtro="progreso">Progreso</a>
+    @foreach ($proyectos as $pro)
+        <a href="{{ route('tablero.proyecto', $pro['id']) }}" class="card-proyecto-link">
+            <div class="card-proyecto">
+                <div class="info-proyecto">
+                    <span class="nombre-proyecto">{{ $pro['nombre'] }}</span>
+                    <span class="estado en-progreso">En progreso</span>
                 </div>
-
-                <button id="boton" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalProyecto">
-                    <i class="bi bi-plus-circle me-1"></i> Nuevo
-                </button>
+                <progress min="0" max="100" value="{{ $pro['progreso'] }}">En progreso</progress>
+                <div class="estadisticas">
+                    <p>{{ $pro['progreso'] }} % completado</p>
+                    <p>{{ $pro['miembros_count'] }} miembros | {{ $pro['fecha_entrega'] }}</p>
+                </div>
             </div>
-        </div>
+        </a>
+    @endforeach
+
+    <!-- Botón para registrar nuevo proyecto -->
+    <button id="boton" class="btn btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalProyecto">
+        <i class="bi bi-plus-circle me-1"></i> Nuevo
+    </button>
+</div>
+
 
         {{-- LISTADO DE PROYECTOS --}}
         <div id="lista-proyectos">
@@ -151,8 +156,21 @@
 
 </style>
 
-    <!-- DASHBOARD DE GRÁFICOS -->
 
+    <section class="dashboard-graficos mt-5">
+        <h2 class="text-center mb-4">📊 Dashboard de Actividad</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <canvas id="grafico1"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="grafico2"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="grafico3"></canvas>
+            </div>
+        </div>
+    </section>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

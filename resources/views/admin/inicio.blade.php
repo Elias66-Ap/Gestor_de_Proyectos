@@ -270,8 +270,6 @@ document.addEventListener('DOMContentLoaded', cargarChartProyectos);
 </script>
 @include('admin.nuevo-mensaje')
 
-<script src="{{ asset('js/tareas.js') }}"></script>
-<script src="{{ asset('js/usuarios.js') }}"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
 @include('admin.registrar')

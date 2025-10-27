@@ -37,6 +37,14 @@
     <p class="text-muted">Lista de usuarios registrados y su rendimiento actual</p>
   </div>
 
+  {{-- 🔹 Filtros de visualización --}}
+  <div class="text-center mb-4 filtros">
+    <button class="btn btn-outline-primary filtro active" data-filtro="todos">Todos</button>
+    <button class="btn btn-outline-secondary filtro" data-filtro="lider">Solo líderes</button>
+    <button class="btn btn-outline-secondary filtro" data-filtro="colaborador">Solo colaboradores</button>
+    <button class="btn btn-outline-success filtro" data-filtro="mejor">Mejor rendimiento</button>
+  </div>
+
   <div class="table-responsive shadow rounded-4 overflow-hidden">
     <table id="tablaColaboradores" class="table align-middle text-center mb-0">
       <thead class="bg-primary text-white">
@@ -49,64 +57,64 @@
         </tr>
       </thead>
       <tbody class="table-light">
-        @foreach($usuarios as $user)
-          @php
-            $porcentaje = isset($user['rendimiento']['rendimiento'])
-              ? $user['rendimiento']['rendimiento'] * 100
-              : 0;
+  @foreach($usuarios as $user)
+    @if(isset($user['rol']) && in_array($user['rol'], ['Colaborador', 'Lider']))
+      @php
+        $porcentaje = isset($user['rendimiento']['rendimiento'])
+          ? $user['rendimiento']['rendimiento'] * 100
+          : 0;
 
-            if ($porcentaje <= 25) {
-                $color = 'bg-danger'; // rojo
-            } elseif ($porcentaje <= 75) {
-                $color = 'bg-primary'; // azul
-            } else {
-                $color = 'bg-success'; // verde
-            }
-          @endphp
+        if ($porcentaje <= 25) {
+            $color = 'bg-danger'; // rojo
+        } elseif ($porcentaje <= 75) {
+            $color = 'bg-primary'; // azul
+        } else {
+            $color = 'bg-success'; // verde
+        }
+      @endphp
 
-          <tr class="hover-row">
-            <td>
-              <img
-                src="{{ isset($user['perfil']['imagen'])
-                    ? asset('storage/' . $user['perfil']['imagen'])
-                    : asset('images/default.jpeg') }}"
-                alt="Foto de {{ $user['perfil']['nombre'] ?? 'usuario' }}"
-                class="rounded-circle border border-2 border-primary-subtle shadow-sm"
-                style="width: 55px; height: 55px; object-fit: cover;">
-            </td>
+      <tr class="hover-row">
+        <td>
+          <img
+            src="{{ isset($user['perfil']['imagen'])
+                ? asset('storage/' . $user['perfil']['imagen'])
+                : asset('images/default.jpeg') }}"
+            alt="Foto de {{ $user['perfil']['nombre'] ?? 'usuario' }}"
+            class="rounded-circle border border-2 border-primary-subtle shadow-sm"
+            style="width: 55px; height: 55px; object-fit: cover;">
+        </td>
 
-            <td>
-              <strong>{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
-              <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
-            </td>
+        <td>
+          <strong>{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
+          <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
+        </td>
 
-            <td class="text-muted">{{ $user['correo'] ?? 'N/A' }}</td>
+        <td class="text-muted">{{ $user['correo'] ?? 'N/A' }}</td>
 
-            <td>
-              <span class="badge bg-secondary px-3 py-2 rounded-pill">
-                {{ $user['rol'] ?? 'N/A' }}
-              </span>
-            </td>
+        <td>
+          <span class="badge bg-secondary px-3 py-2 rounded-pill">
+            {{ $user['rol'] ?? 'N/A' }}
+          </span>
+        </td>
 
-            <td>
-              <div class="progress" style="height: 8px;">
-                <div
-                  class="progress-bar {{ $color }}"
-                  role="progressbar"
-                  style="width: {{ $porcentaje }}%;"
-                  aria-valuenow="{{ $porcentaje }}"
-                  aria-valuemin="0"
-                  aria-valuemax="100">
-                </div>
-              </div>
-              <small class="text-muted">{{ $porcentaje }} %</small>
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
-</div>
+        <td>
+          <div class="progress" style="height: 8px;">
+            <div
+              class="progress-bar {{ $color }}"
+              role="progressbar"
+              style="width: {{ $porcentaje }}%;"
+              aria-valuenow="{{ $porcentaje }}"
+              aria-valuemin="0"
+              aria-valuemax="100">
+            </div>
+          </div>
+          <small class="text-muted">{{ $porcentaje }} %</small>
+        </td>
+      </tr>
+    @endif
+  @endforeach
+</tbody>
+
 
 <style>
   .hover-row:hover {
@@ -169,6 +177,48 @@ $(document).ready(function() {
         order: [[1, 'asc']]
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const botones = document.querySelectorAll('.filtro');
+    const filas = document.querySelectorAll('#tablaColaboradores tbody tr');
+
+    botones.forEach(boton => {
+      boton.addEventListener('click', () => {
+        // Quitar la clase activa de todos
+        botones.forEach(b => b.classList.remove('active', 'btn-primary'));
+        botones.forEach(b => b.classList.add('btn-outline-secondary'));
+
+        // Activar el botón actual
+        boton.classList.add('active', 'btn-primary');
+        boton.classList.remove('btn-outline-secondary');
+
+        const filtro = boton.getAttribute('data-filtro');
+
+        filas.forEach(fila => {
+          const rol = fila.querySelector('td:nth-child(4) span').textContent.trim().toLowerCase();
+          const rendimiento = parseFloat(
+            fila.querySelector('td:last-child small').textContent.replace('%', '').trim()
+          );
+
+          // Mostrar todos
+          if (filtro === 'todos') {
+            fila.style.display = '';
+          }
+          // Solo líderes
+          else if (filtro === 'lider') {
+            fila.style.display = rol === 'lider' ? '' : 'none';
+          }
+          // Solo colaboradores
+          else if (filtro === 'colaborador') {
+            fila.style.display = rol === 'colaborador' ? '' : 'none';
+          }
+          // Mejor rendimiento (> 75%)
+          else if (filtro === 'mejor') {
+            fila.style.display = rendimiento > 75 ? '' : 'none';
+          }
+        });
+      });
+    });
+  });
 </script>
 
 @include('admin.registrar')

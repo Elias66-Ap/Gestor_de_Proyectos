@@ -141,24 +141,12 @@
             <input type="text" name="apellido" class="form-control" value="{{ old('apellido') }}" required>
           </div>
           <div class="col-md-6">
-            <label for="apodo" class="form-label">Apodo</label>
+            <label for="apodo" class="form-label">Alias</label>
             <input type="text" name="apodo" class="form-control" value="{{ old('apodo') }}">
           </div>
           <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="text" name="telefono" class="form-control" value="{{ old('telefono') }}">
-          </div>
-          <div class="col-md-6">
-            <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-            <input type="date" name="fecha_nacimiento" class="form-control" value="{{ old('fecha_nacimiento') }}">
-          </div>
-          <div class="col-md-6">
-            <label for="hobby" class="form-label">Hobby</label>
-            <textarea name="hobby" class="form-control" rows="2">{{ old('hobby') }}</textarea>
-          </div>
-          <div class="col-12">
-            <label for="habilidades" class="form-label">Habilidades</label>
-            <textarea name="habilidades" class="form-control" rows="2">{{ old('habilidades') }}</textarea>
           </div>
           <div class="col-md-6">
             <label for="passwordd" class="form-label">Contraseña</label>
@@ -168,7 +156,54 @@
             <label for="passwordd_confirmation" class="form-label">Confirmar contraseña</label>
             <input type="password" name="passwordd_confirmation" class="form-control" rows="2">{{ old('passwordd_confirmation') }}</input>
           </div>
+          <div class="col-md-6">
+            <label for="hobby" class="form-label">Hobby</label>
+            <textarea name="hobby" class="form-control" rows="2">{{ old('hobby') }}</textarea>
+          </div>
         </div>
+        <div>
+            <label class="form-label fw-semibold">Habilidades Técnicas</label>
+            <div class="row">
+              <!-- Lenguajes -->
+              <div class="col-md-4">
+                <p class="fw-semibold mb-2 text-primary">Lenguajes</p>
+                @foreach(['JavaScript', 'Python', 'PHP', 'Java', 'C#', 'TypeScript'] as $lenguaje)
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $lenguaje }}"
+                      id="{{ strtolower($lenguaje) }}"
+                      {{ in_array($lenguaje, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="{{ strtolower($lenguaje) }}">{{ $lenguaje }}</label>
+                  </div>
+                @endforeach
+              </div>
+
+              <!-- Frameworks -->
+              <div class="col-md-4">
+                <p class="fw-semibold mb-2 text-primary">Frameworks</p>
+                @foreach(['Laravel', 'Angular', 'React', 'Vue.js', 'Spring Boot'] as $fw)
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $fw }}"
+                      id="{{ strtolower(str_replace(' ', '', $fw)) }}"
+                      {{ in_array($fw, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="{{ strtolower(str_replace(' ', '', $fw)) }}">{{ $fw }}</label>
+                  </div>
+                @endforeach
+              </div>
+
+              <!-- Herramientas -->
+              <div class="col-md-4">
+                <p class="fw-semibold mb-2 text-primary">Herramientas</p>
+                @foreach(['Git / GitHub', 'Docker', 'MySQL', 'Figma', 'Postman'] as $tool)
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $tool }}"
+                      id="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}"
+                      {{ in_array($tool, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}">{{ $tool }}</label>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
 
         <div class="mt-4">
           <button type="submit" class="btn btn-custom w-100">Guardar Perfil</button>
