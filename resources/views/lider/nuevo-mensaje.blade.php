@@ -18,14 +18,17 @@
                 <option selected>Ninguno...</option>
                 <option>Amaya - Colaborador</option>
                 <option>Sergio - Líder</option>
+                <option>Sergio - Colaborador</option>
+                <option>Pepito - Colaborador</option>
+                <option>Juan - Colaborador</option>
               </select>
             </div>
             <div class="col-md-5">
               <label for="area" class="form-label">Área</label>
               <select id="area" class="form-select">
                 <option selected>Ninguno...</option>
-                <option>Back-end</option>
-                <option>Front-end</option>
+                <option>App movil E=eccomerce</option>
+                <option>Sistema de inventario</option>
               </select>
             </div>
             <div class="col-md-2 d-flex align-items-end">
@@ -43,10 +46,10 @@
           </div>
 
           <!-- Fecha programada (opcional) -->
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="fechaEnvio" class="form-label">Programar envío (opcional)</label>
             <input type="datetime-local" class="form-control" id="fechaEnvio">
-          </div>
+          </div> -->
 
           <!-- Mensaje -->
           <div class="mb-3">

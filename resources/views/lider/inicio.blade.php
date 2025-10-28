@@ -60,16 +60,7 @@
         </div>
 
         {{-- Productividad promedio --}}
-        <div class="col-md-2 col-sm-6">
-            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
-                <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
-                <h6 class="text-muted">Productividad promedio</h6>
-                <h4 class="fw-bold text-dark" id="promedio_rendimiento">27%</h4>
-                <small class="text-success fw-semibold">
-                    <i class="bi bi-graph-up"></i> +1
-                </small>
-            </div>
-        </div>
+
     </div>
 
     {{-- ==== GRÁFICOS ==== --}}
@@ -116,23 +107,13 @@
         </div>
 
         {{-- Productividad --}}
-        <div class="col-12 mt-4">
-            <div class="card shadow-sm border-0 rounded-4 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">📊 Productividad Promedio por Turno</h5>
-                    <select id="selectProductividad" class="form-select w-auto">
-                        <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
-                        <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
-                        <option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option>
-                        <option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option>
-                    </select>
-                </div>
-                <canvas id="graficoProductividad" height="130"></canvas>
-            </div>
-        </div>
+
     </div>
 
 </div>
+<div class="text-center mb-5">
+            <h2 class="fw-bold">Accesos rápidos</h2>
+        </div>
 <div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
     <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
         <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#modalAddColab">
@@ -208,9 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // IDs y elementos
   const tareasEl = document.getElementById('tareasChart');
   const proyEl = document.getElementById('proyectosChart');
-  const prodEl = document.getElementById('graficoProductividad');
 
-  if (!tareasEl || !proyEl || !prodEl) {
+  if (!tareasEl || !proyEl) {
     console.error('Canvas faltante: revisa que existan tareasChart, proyectosChart y graficoProductividad');
     return;
   }
@@ -268,22 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---- Chart: Productividad (barra líder vs colaborador) ----
-  const chartProd = new Chart(prodEl.getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: ['Líder','Colaborador'],
-      datasets: [{
-        label: 'Productividad (%)',
-        data: [ datosPorMes.productividad[4].lider, datosPorMes.productividad[4].colaborador ],
-        backgroundColor: ['rgba(54,162,235,0.8)','rgba(255,206,86,0.8)']
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: { y: { beginAtZero: true, max: 100 } },
-      plugins: { legend: { display: false } }
-    }
-  });
+
 
   // ---- Selectores ----
   const selectTareas = document.getElementById('selectTareas') || document.getElementById('mesSelector'); // admito ambos nombres

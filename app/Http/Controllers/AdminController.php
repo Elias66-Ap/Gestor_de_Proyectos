@@ -52,15 +52,28 @@ class AdminController extends Controller
     }
     public function proyecto()
     {
+        // $response = Http::get($this->url . '/proyectos');
+
+        // if ($response->successful()) {
+        //     $json = $response->json();
+        //     $proyectos = $json['proyectos'] ?? [];
+        // } else {
+        //     $proyectos = [];
+        // }
         $response = Http::get($this->url . '/proyectos');
 
         if ($response->successful()) {
             $json = $response->json();
             $proyectos = $json['proyectos'] ?? [];
+
+            foreach ($proyectos as &$pro) {
+                $pro['miembros_count'] = isset($pro['miembros'])
+                    ? count($pro['miembros'])
+                    : 0;
+            }
         } else {
             $proyectos = [];
-        }
-
+    }
         return view('admin.proyecto', compact('proyectos'));
     }
 

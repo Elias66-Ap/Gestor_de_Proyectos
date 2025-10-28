@@ -18,6 +18,9 @@
                 <option selected>Ninguno...</option>
                 <option>Amaya - Colaborador</option>
                 <option>Sergio - Líder</option>
+                <option>Sergio - Colaborador</option>
+                <option>Pepito - Colaborador</option>
+                <option>Juan - Colaborador</option>
               </select>
             </div>
             <div class="col-md-5">
@@ -26,15 +29,7 @@
                 <option selected>Ninguno...</option>
                 <option>App movil E=eccomerce</option>
                 <option>Sistema de inventario</option>
-                <option>Plataforma Educativa</option>
-                <option>Web de Reservas</option>
               </select>
-            </div>
-            <div class="col-md-2 d-flex align-items-end">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="todos">
-                <label class="form-check-label" for="todos">Todos</label>
-              </div>
             </div>
           </div>
 

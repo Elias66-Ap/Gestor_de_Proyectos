@@ -15,6 +15,11 @@
       <p>En desarrollo</p>
     </div>
     <div class="card-resumen">
+      <h5>Proyectos en pausa</h5>
+      <h3 id="activosCount">2</h3>
+      <p>Pausado</p>
+    </div>
+    <div class="card-resumen">
       <h5>Proyectos completados</h5>
       <h3 id="completadosCount">0</h3>
       <p>Finalizados</p>
