@@ -147,6 +147,7 @@
       </div>
 
       <!-- ==== FORMULARIO ==== -->
+       <form action="{{ route('editar.perfil') }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PATCH')
 
