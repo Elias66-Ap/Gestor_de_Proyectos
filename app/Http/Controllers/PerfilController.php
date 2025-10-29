@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,19 +38,36 @@ class PerfilController extends Controller
         return view('crear_perfil', compact('user'));
     }
 
-    public function guardar(Request $request)
+    public function completarPerfil(Request $request)
     {
-        $user = Auth::guard('usuario')->user();
+        $usuario = Auth::guard('usuario')->user();
+        $id = $usuario->id;
+
+        $user = Usuario::find($id);
 
         $validator = Validator::make($request->all(), [
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nombre' => 'required|string|max:100',
             'apellido' => 'nullable|string|max:200',
             'apodo' => 'nullable|string|max:100',
             'telefono' => 'nullable|string|max:15',
             'fecha_nacimiento' => 'nullable|date',
             'hobby' => 'nullable|string',
-            'habilidades' => 'nullable|string',
+            'habilidades' => 'nullable|array',
+            'habilidades.*' => 'string|max:100',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'passwordd' => 'nullable|string|min:8|confirmed',
+        ],[
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.max' => 'El nombre no debe exceder los 100 caracteres.',
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif.',
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.max' => 'El nombre no debe exceder los 100 caracteres.',
+            'apellido.max' => 'El apellido no debe exceder los 200 caracteres.',
+            'apodo.max' => 'El apodo no debe exceder los 100 caracteres.',
+            'telefono.max' => 'El telefono no debe exceder los 15 caracteres.',
+            'passwordd.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'passwordd.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
         if ($validator->fails()) {
@@ -57,7 +75,7 @@ class PerfilController extends Controller
         }
 
         $imagenPath = null;
-        if($request->hasFile('imagen')){
+        if ($request->hasFile('imagen')) {
             $imagenPath = $request->file('imagen')->store('perfil', 'public');
         }
 
@@ -69,12 +87,15 @@ class PerfilController extends Controller
             'telefono' => $request->telefono,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'hobby' => $request->hobby,
-            'habilidades' => $request->habilidades,
+            'habilidades' => $request->has('habilidades') ? implode(',', $request->habilidades) : null,
             'imagen' => $imagenPath,
         ]);
 
+        if ($request->filled('passwordd')) {
+            $user->passwordd = Hash::make($request->passwordd);
+        }
 
-        $user->estado = 1;
+        $user->tiene_perfil = 1;
         $user->save();
 
         switch ($user->rol) {
@@ -89,31 +110,56 @@ class PerfilController extends Controller
         }
     }
 
-    public function editarPerfil(Request $request, $id){
+    public function editarPerfil(Request $request)
+    {
 
-        $nuevo = $request->only([
-            'nombre',
-            'apellido',
-            'apodo',
-            'fecha_nacimiento',
-            'hobby',
-            'habilidades',
-            'imagen',
-        ]);
+        $usuario = Auth::guard('usuario')->user();
+        $id = $usuario->id;
 
-        $url = env('URL_sERVER_API', 'http://localhost:8000');
+        $perfil = Perfil::where('id_usu', '=',$id)->first();
 
-        $response = Http::put($url."/perfiles/{$id}", $nuevo);
-        $data = $response->json();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nombre' => 'required|string|max:100',
+                'apellido' => 'nullable|string|max:200',
+                'apodo' => 'nullable|string|max:100',
+                'telefono' => 'nullable|string|min:9',
+                'fecha_nacimiento' => 'nullable|date',
+                'hobby' => 'nullable|string',
+                'habilidades' => 'nullable|array',
+                'habilidades.*' => 'string|max:100',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ],
+            [
+                'nombre.required' => 'El nombre es obligatorio.',
+                'nombre.max' => 'El nombre no debe exceder los 100 caracteres.',
+                'apellido.max' => 'El apellido no debe exceder los 200 caracteres.',
+                'apodo.max' => 'El apodo no debe exceder los 100 caracteres.',
+                'telefono.min' => 'Numero de telefono incorrecto.',
+                'imagen.image' => 'El archivo debe ser una imagen.',
+                'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif.',
+            ]
+        );
 
-        if($response->status() === 422 && isset($data['errors'])){
-            return redirect()->back()->withErrors($data['errors'])->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if($response->successful()){
-            return redirect()->back()->with('success', 'Perfil Actualizado');
+        if($request->hasFile('imagen')){
+            $imagenPath = $request->file('imagen')->store('perfil', 'public');
+            $perfil->imagen = $imagenPath;
         }
 
-        return redirect()->back()->with('error', 'Error al actualizar perfil');
+        $perfil->nombre = $request->nombre;
+        $perfil->apellido = $request->apellido;
+        $perfil->apodo = $request->apodo;
+        $perfil->telefono = $request->telefono;
+        $perfil->fecha_nacimiento = $request->fecha_nacimiento;
+        $perfil->hobby = $request->hobby;
+        $perfil->habilidades = $request->has('habilidades') ? implode(',', $request->habilidades) : null;
+        $perfil->save();
+
+        return redirect()->back()->with('success', 'Perfil actualizado correctamente.');
     }
 }

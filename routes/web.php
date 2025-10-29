@@ -53,7 +53,7 @@ Route::middleware(['auth:usuario', 'rol:Colaborador'])->group(function () {
 //Rutas globales
 Route::middleware('auth:usuario')->group(function () {
     Route::get('crear_perfil', [PerfilController::class, 'crear'])->name('crear_perfil');
-    Route::post('guardar', [PerfilController::class, 'guardar'])->name('perfil.guardar');
-    Route::patch('editar_perfil/{id}',[PerfilController::class, 'editarPerfil'])->name('editar.perfil');
+    Route::post('guardar', [PerfilController::class, 'completarPerfil'])->name('perfil.guardar');
+    Route::patch('editar_perfil',[PerfilController::class, 'editarPerfil'])->name('editar.perfil');
     Route::get('tablero/{id}', [AdminController::class, 'verProyecto'])->name('tablero.proyecto');
 });

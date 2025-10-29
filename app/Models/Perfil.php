@@ -19,6 +19,7 @@ class Perfil extends Model
         'habilidades',
         'imagen',
     ];
+    protected $primaryKey = 'id_usu';
 
     public $timestamps = false;
 

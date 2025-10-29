@@ -52,14 +52,7 @@ class AdminController extends Controller
     }
     public function proyecto()
     {
-        // $response = Http::get($this->url . '/proyectos');
-
-        // if ($response->successful()) {
-        //     $json = $response->json();
-        //     $proyectos = $json['proyectos'] ?? [];
-        // } else {
-        //     $proyectos = [];
-        // }
+        
         $response = Http::get($this->url . '/proyectos');
 
         if ($response->successful()) {
@@ -81,9 +74,16 @@ class AdminController extends Controller
     public function perfil()
     {
         $usuario = auth()->guard('usuario')->user();
-        $user = Usuario::with('perfil', 'rendimiento')->where('id',$usuario->id)->first();
 
-        return view('admin.perfi', compact('user'));
+        $response = Http::get($this->url . "/mi-perfil/{$usuario->id}");
+
+        if($response->successful()){
+            $user = $response->json()['data'] ?? null;
+            
+            return view('admin.perfi', compact('user'));
+        }
+
+        return redirect()->back()->withErrors(['error' => 'No se pudo obtener el perfil.']);
     }
 
     public function notificacion()

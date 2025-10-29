@@ -8,6 +8,7 @@
 @if (session('error'))
 <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
+
 <div class="container-fluid py-5" style="background-color: #f4f6fa;">
   {{-- Encabezado --}}
   <div class="d-flex justify-content-between align-items-center mb-5">
@@ -24,13 +25,13 @@
     <div class="col-lg-4">
       <div class="card border-0 shadow-sm rounded-4 text-center p-4">
         <div class="text-center">
-          <img src="{{ $user->perfil->imagen_url ?? asset('images/default.jpeg') }}"
+          <img src="{{ !empty($user['perfil']['imagen']) ? asset('storage/' . $user['perfil']['imagen']) : asset('images/default.jpeg') }}"
             alt="Perfil" class="rounded-circle mb-3" style="width:120px; height:120px; object-fit:cover;">
         </div>
         <h5 class="fw-bold mb-1">
-          {{ $user->perfil->nombre ?? '-' }} {{ $user->perfil->apellido ?? '-' }}
+          {{ $user['perfil']['nombre'] ?? '-' }} {{ $user['perfil']['apellido']  ?? '-' }}
         </h5>
-        <p class="text-muted mb-0">{{ $user->rol ?? '-' }}</p>
+        <p class="text-muted mb-0">{{ $user['rol']  ?? '-' }}</p>
       </div>
     </div>
   </div>
@@ -43,31 +44,31 @@
         <div class="row mb-3">
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Nombre</label>
-            <div class="fw-semibold">{{ $user->perfil->nombre ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['nombre'] ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Apellido</label>
-            <div class="fw-semibold">{{ $user->perfil->apellido ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['nombre']  ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Alias</label>
-            <div class="fw-semibold">{{ $user->perfil->apodo ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['apodo']  ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Correo</label>
-            <div class="fw-semibold">{{ $user->correo ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['correo']  ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Teléfono</label>
-            <div class="fw-semibold">{{ $user->perfil->telefono ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['telefono'] ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Hobby</label>
-            <div class="fw-semibold">{{ $user->perfil->hobby ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['hobby']  ?? '-' }}</div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label text-muted">Habilidades</label>
-            <div class="fw-semibold">{{ $user->perfil->habilidades ?? '-' }}</div>
+            <div class="fw-semibold">{{ $user['perfil']['habilidades']  ?? '-' }}</div>
           </div>
         </div>
       </div>
@@ -75,14 +76,14 @@
   </div>
 
 </div>
-  {{-- BOTÓN CAMBIAR CONTRASEÑA --}}
-  <div class="text-center mt-5">
-    <button class="btn btn-outline-danger rounded-pill px-4 py-2 shadow-sm"
-      data-bs-toggle="modal"
-      data-bs-target="#modalCambiarContraseña">
-      <i class="bi bi-shield-lock me-2"></i> Cambiar Contraseña
-    </button>
-  </div>
+{{-- BOTÓN CAMBIAR CONTRASEÑA --}}
+<div class="text-center mt-5">
+  <button class="btn btn-outline-danger rounded-pill px-4 py-2 shadow-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#modalCambiarContraseña">
+    <i class="bi bi-shield-lock me-2"></i> Cambiar Contraseña
+  </button>
+</div>
 </div>
 
 {{-- ==== MODAL CAMBIAR CONTRASEÑA ==== --}}
@@ -96,35 +97,35 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
 
-        @csrf
-        @method('PATCH')
-        <div class="modal-body">
-  <div class="mb-3">
-    <label for="contraseña_actual" class="form-label fw-semibold">Contraseña Actual</label>
-    <input type="password" name="contraseña_actual" id="contraseña_actual"
-      class="form-control rounded-pill" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="nueva_contraseña" class="form-label fw-semibold">Nueva Contraseña</label>
-    <input type="password" name="nueva_contraseña" id="nueva_contraseña"
-      class="form-control rounded-pill"
-      required
-      pattern="[A-Za-z0-9]{8,}"
-      title="Debe tener al menos 8 caracteres (letras o números).">
-    <small class="text-muted">Debe tener al menos 8 caracteres (puede incluir letras y números).</small>
-  </div>
-
-  <div class="mb-3">
-    <label for="confirmar_contraseña" class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
-    <input type="password" name="confirmar_contraseña" id="confirmar_contraseña"
-      class="form-control rounded-pill" required>
-  </div>
-</div>
-        <div class="modal-footer border-0">
-          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar</button>
+      @csrf
+      @method('PATCH')
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="contraseña_actual" class="form-label fw-semibold">Contraseña Actual</label>
+          <input type="password" name="contraseña_actual" id="contraseña_actual"
+            class="form-control rounded-pill" required>
         </div>
+
+        <div class="mb-3">
+          <label for="nueva_contraseña" class="form-label fw-semibold">Nueva Contraseña</label>
+          <input type="password" name="nueva_contraseña" id="nueva_contraseña"
+            class="form-control rounded-pill"
+            required
+            pattern="[A-Za-z0-9]{8,}"
+            title="Debe tener al menos 8 caracteres (letras o números).">
+          <small class="text-muted">Debe tener al menos 8 caracteres (puede incluir letras y números).</small>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmar_contraseña" class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
+          <input type="password" name="confirmar_contraseña" id="confirmar_contraseña"
+            class="form-control rounded-pill" required>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar</button>
+      </div>
       </form>
     </div>
   </div>
@@ -144,7 +145,7 @@
       </div>
 
       <!-- ==== FORMULARIO ==== -->
-      <form action="{{ route('editar.perfil', $user->id) }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('editar.perfil') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -158,11 +159,10 @@
               <div class="d-flex flex-column align-items-center">
                 <img
                   id="previewImagen"
-                  src="{{ isset($user->perfil->imagen) ? asset('storage/' . $user->perfil->imagen) : asset('images/default.jpeg') }}"
+                  src="{{ isset($user['perfil']['imagen']) ? asset('storage/' . $user['perfil']['imagen']) : asset('images/default.jpeg') }}"
                   alt="Foto de perfil actual"
                   class="rounded-circle border border-3 border-primary shadow-sm mb-3"
-                  style="width: 180px; height: 180px; object-fit: cover;"
-                >
+                  style="width: 180px; height: 180px; object-fit: cover;">
 
                 <input type="file" class="form-control form-control-sm rounded-pill w-75" id="imagen" name="imagen" accept="image/*">
                 <small class="text-muted mt-2">Formatos permitidos: JPG, PNG, JPEG</small>
@@ -175,31 +175,31 @@
                 <div class="col-md-6">
                   <label for="nombre" class="form-label fw-semibold">Nombre</label>
                   <input type="text" class="form-control rounded-pill" id="nombre" name="nombre"
-                    value="{{ $user->perfil->nombre ?? '' }}">
+                    value="{{ $user['perfil']['nombre']  ?? '' }}">
                 </div>
 
                 <div class="col-md-6">
                   <label for="apellido" class="form-label fw-semibold">Apellido</label>
                   <input type="text" class="form-control rounded-pill" id="apellido" name="apellido"
-                    value="{{ $user->perfil->apellido ?? '' }}">
+                    value="{{ $user['perfil']['apellido']  ?? '' }}">
                 </div>
 
                 <div class="col-md-6">
                   <label for="apodo" class="form-label fw-semibold">Alias</label>
                   <input type="text" class="form-control rounded-pill" id="apodo" name="apodo"
-                    value="{{ $user->perfil->apodo ?? '' }}">
+                    value="{{ $user['perfil']['apodo']  ?? '' }}">
                 </div>
 
                 <div class="col-md-6">
                   <label for="telefono" class="form-label fw-semibold">Teléfono</label>
                   <input type="text" class="form-control rounded-pill" id="telefono" name="telefono"
-                    value="{{ $user->perfil->telefono ?? '' }}">
+                    value="{{ $user['perfil']['telefono']  ?? '' }}">
                 </div>
 
                 <div class="col-md-6">
                   <label for="hobby" class="form-label fw-semibold">Hobby</label>
                   <input type="text" class="form-control rounded-pill" id="hobby" name="hobby"
-                    value="{{ $user->perfil->hobby ?? '' }}">
+                    value="{{ $user['perfil']['hobby']  ?? '' }}">
                 </div>
               </div>
             </div>
@@ -215,12 +215,12 @@
               <div class="col-md-4">
                 <p class="fw-semibold mb-2 text-primary">Lenguajes</p>
                 @foreach(['JavaScript', 'Python', 'PHP', 'Java', 'C#', 'TypeScript'] as $lenguaje)
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $lenguaje }}"
-                      id="{{ strtolower($lenguaje) }}"
-                      {{ in_array($lenguaje, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="{{ strtolower($lenguaje) }}">{{ $lenguaje }}</label>
-                  </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $lenguaje }}"
+                    id="{{ strtolower($lenguaje) }}"
+                    {{ in_array($lenguaje, old('habilidades', explode(',', $user['perfil']['habilidades'] ?? ''))) ? 'checked' : '' }}>
+                  <label class="form-check-label" for="{{ strtolower($lenguaje) }}">{{ $lenguaje }}</label>
+                </div>
                 @endforeach
               </div>
 
@@ -228,12 +228,12 @@
               <div class="col-md-4">
                 <p class="fw-semibold mb-2 text-primary">Frameworks</p>
                 @foreach(['Laravel', 'Angular', 'React', 'Vue.js', 'Spring Boot'] as $fw)
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $fw }}"
-                      id="{{ strtolower(str_replace(' ', '', $fw)) }}"
-                      {{ in_array($fw, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="{{ strtolower(str_replace(' ', '', $fw)) }}">{{ $fw }}</label>
-                  </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $fw }}"
+                    id="{{ strtolower(str_replace(' ', '', $fw)) }}"
+                    {{ in_array($fw, old('habilidades', explode(',', $user['perfil']['habilidades']  ?? ''))) ? 'checked' : '' }}>
+                  <label class="form-check-label" for="{{ strtolower(str_replace(' ', '', $fw)) }}">{{ $fw }}</label>
+                </div>
                 @endforeach
               </div>
 
@@ -241,12 +241,12 @@
               <div class="col-md-4">
                 <p class="fw-semibold mb-2 text-primary">Herramientas</p>
                 @foreach(['Git / GitHub', 'Docker', 'MySQL', 'Figma', 'Postman'] as $tool)
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $tool }}"
-                      id="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}"
-                      {{ in_array($tool, old('habilidades', explode(',', $user->perfil->habilidades ?? ''))) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}">{{ $tool }}</label>
-                  </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="habilidades[]" value="{{ $tool }}"
+                    id="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}"
+                    {{ in_array($tool, old('habilidades', explode(',', $user['perfil']['habilidades']  ?? ''))) ? 'checked' : '' }}>
+                  <label class="form-check-label" for="{{ strtolower(str_replace([' ', '/'], '', $tool)) }}">{{ $tool }}</label>
+                </div>
                 @endforeach
               </div>
             </div>
