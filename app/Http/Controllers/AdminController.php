@@ -52,7 +52,7 @@ class AdminController extends Controller
     }
     public function proyecto()
     {
-        
+
         $response = Http::get($this->url . '/proyectos');
 
         if ($response->successful()) {
@@ -66,7 +66,7 @@ class AdminController extends Controller
             }
         } else {
             $proyectos = [];
-    }
+        }
         return view('admin.proyecto', compact('proyectos'));
     }
 
@@ -77,9 +77,9 @@ class AdminController extends Controller
 
         $response = Http::get($this->url . "/mi-perfil/{$usuario->id}");
 
-        if($response->successful()){
+        if ($response->successful()) {
             $user = $response->json()['data'] ?? null;
-            
+
             return view('admin.perfi', compact('user'));
         }
 
@@ -88,8 +88,23 @@ class AdminController extends Controller
 
     public function notificacion()
     {
-        return view('admin.notificacion');
+        $usuario = auth()->guard('usuario')->user();
+        $id = $usuario->id;
+
+        $response = Http::get($this->url . "/mensajes-usuario/{$id}");
+
+        if ($response->successful()) {
+            $data = $response->json()['data'] ?? [];
+            // combinamos ambos arrays
+            $enviados = $data['enviados'] ?? [];
+            $recibidos = $data['recibidos'] ?? [];
+
+            return view('admin.notificacion', compact('enviados', 'recibidos'));
+        }
+
+        return redirect()->back()->withErrors(['error' => 'No se pudieron obtener los mensajes.']);
     }
+
 
     public function store(Request $request)
     {

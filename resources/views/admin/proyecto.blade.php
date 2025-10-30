@@ -44,24 +44,16 @@
     </div>
 
     @foreach($proyectos as $proyecto)
-
-
-
     <div class="card shadow-sm border-0 rounded-4 mb-4 overflow-hidden" id="tarjeta-{{ $proyecto['id'] }}">
       <div class="card-body p-4">
-
-        {{-- Encabezado del proyecto --}}
         <div class="d-flex justify-content-between align-items-start mb-3">
           <div>
             <h5 class="fw-bold mb-1 text-dark">{{ $proyecto['nombre'] }}</h5>
-
           </div>
           <button class="btn btn-sm btn-outline-secondary rounded-pill">
             <i class="bi bi-three-dots"></i>
           </button>
         </div>
-
-        {{-- Descripción breve --}}
         <p class="text-muted mb-4" style="line-height: 1.5; max-width: 700px;">
           {{ \Illuminate\Support\Str::limit(
           $proyecto['descripcion_breve'] ?? $proyecto['descripcion'] ?? 'Sin descripción breve disponible.',
@@ -72,7 +64,6 @@
           @endif
         </p>
 
-        {{-- Datos del proyecto --}}
         <div class="row g-4 align-items-center mb-3">
           <div class="col-6 col-md-3">
             <small class="text-secondary">📅 Fecha inicio</small><br>
@@ -100,14 +91,10 @@
             <small class="d-block mt-1 text-secondary">{{ $proyecto['progreso'] }}%</small>
           </div>
         </div>
-
       </div>
     </div>
     @endforeach
-
-
   </div>
-
 </main>
 
 <!-- MODAL -->
