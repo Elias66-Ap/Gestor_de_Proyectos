@@ -59,7 +59,7 @@ class AdminController extends Controller
             $json = $response->json();
             $proyectos = $json['proyectos'] ?? [];
 
-            foreach ($proyectos as &$pro) {
+            foreach ($proyectos as $pro) {
                 $pro['miembros_count'] = isset($pro['miembros'])
                     ? count($pro['miembros'])
                     : 0;

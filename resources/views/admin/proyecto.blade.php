@@ -1,128 +1,119 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/proyecto.css') }}">
+@endsection
+
 @section('content')
-<head>
-  <link rel="stylesheet" href="{{ asset('css/proyecto.css') }}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<main class="container py-4">
 
-<main>
-  <!-- Tarjetas de resumen -->
-  <div class="resumen-cajas">
-    <div class="card-resumen">
-      <h5>Proyectos activos</h5>
-      <h3 id="activosCount">0</h3>
-      <p>En desarrollo</p>
+  <!-- TARJETAS DE RESUMEN -->
+  <div class="resumen-cajas d-flex justify-content-between flex-wrap mb-4">
+    <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
+      <h6 class="text-muted">Proyectos activos</h6>
+      <h2 id="proy_activos" class="fw-bold text-primary">0</h2>
+      <p class="text-secondary small mb-0">En desarrollo</p>
     </div>
-    <div class="card-resumen">
-      <h5>Proyectos en pausa</h5>
-      <h3 id="activosCount">2</h3>
-      <p>Pausado</p>
+    <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
+      <h6 class="text-muted">Proyectos en pausa</h6>
+      <h2 id="proy_pausa" class="fw-bold text-warning">0</h2>
+      <p class="text-secondary small mb-0">Pausado</p>
     </div>
-    <div class="card-resumen">
-      <h5>Proyectos completados</h5>
-      <h3 id="completadosCount">0</h3>
-      <p>Finalizados</p>
+    <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
+      <h6 class="text-muted">Proyectos completados</h6>
+      <h2 id="proy_completados" class="fw-bold text-success">0</h2>
+      <p class="text-secondary small mb-0">Finalizados</p>
     </div>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- CONTENEDOR PRINCIPAL -->
   <div class="contenedor">
-    <!-- Sección Proyectos -->
-    <div class="proyecto">
-      <div class="proyecto-header">
-        <h2>Proyectos</h2>
-        <button id="boton" data-bs-toggle="modal" data-bs-target="#modalProyecto">+ Nuevo</button>
 
-        <!-- Filtros -->
-        <div class="filtros">
-          <a href="#" id="filtroFecha">📅 Fecha</a>
-          <a href="#" id="filtroProgreso">📈 Progreso</a>
-        </div>
+    <!-- ENCABEZADO -->
+    <div class="proyecto-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold text-dark mb-0">Proyectos</h2>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="#" id="filtroFecha" class="text-decoration-none text-secondary hover-underline">📅 Fecha</a>
+        <a href="#" id="filtroProgreso" class="text-decoration-none text-secondary hover-underline">📈 Progreso</a>
+        <button id="boton" data-bs-toggle="modal" data-bs-target="#modalProyecto"
+          class="btn btn-primary rounded-pill px-4 py-2 shadow-sm">
+          + Nuevo
+        </button>
       </div>
-
-      <!-- Lista de proyectos -->
-      <div id="listaProyectos"></div>
     </div>
 
-    <!-- Sección Tareas próximas -->
-    <div class="tareas-vencidas">
-      <h3>Tareas próximas a vencer</h3>
-      @for ($i = 0; $i < 5; $i++)
-      <div class="card-tarea">
-        <div class="info-tarea">
-          <span class="nombre-tarea">App móvil E-commerce</span>
-          <span class="estado en-progreso">En progreso</span>
+    @foreach($proyectos as $proyecto)
+
+
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4 overflow-hidden" id="tarjeta-{{ $proyecto['id'] }}">
+      <div class="card-body p-4">
+
+        {{-- Encabezado del proyecto --}}
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h5 class="fw-bold mb-1 text-dark">{{ $proyecto['nombre'] }}</h5>
+
+          </div>
+          <button class="btn btn-sm btn-outline-secondary rounded-pill">
+            <i class="bi bi-three-dots"></i>
+          </button>
         </div>
-        <div class="estadisticas-2">
-          <p>75% completado</p>
-          <p>25/11/25</p>
+
+        {{-- Descripción breve --}}
+        <p class="text-muted mb-4" style="line-height: 1.5; max-width: 700px;">
+          {{ \Illuminate\Support\Str::limit(
+          $proyecto['descripcion_breve'] ?? $proyecto['descripcion'] ?? 'Sin descripción breve disponible.',
+          160
+      ) }}
+          @if(strlen($proyecto['descripcion_breve'] ?? '') > 160)
+          <a href="#" class="text-decoration-none small text-primary">Ver más</a>
+          @endif
+        </p>
+
+        {{-- Datos del proyecto --}}
+        <div class="row g-4 align-items-center mb-3">
+          <div class="col-6 col-md-3">
+            <small class="text-secondary">📅 Fecha inicio</small><br>
+            <strong>{{ $proyecto['fecha_inicio'] ? \Carbon\Carbon::parse($proyecto['fecha_inicio'])->format('d M Y') : '—' }}</strong>
+          </div>
+          <div class="col-6 col-md-3">
+            <small class="text-secondary">⏰ Fecha entrega</small><br>
+            <strong>{{ $proyecto['fecha_entrega'] ? \Carbon\Carbon::parse($proyecto['fecha_entrega'])->format('d M Y') : '—' }}</strong>
+          </div>
+          <div class="col-6 col-md-3">
+            <small class="text-secondary">👥 Miembros</small><br>
+            <strong>{{ $proyecto['miembros_count'] ?? 0 }}</strong>
+          </div>
+          <div class="col-6 col-md-3 text-md-end">
+            <small class="text-secondary">Progreso</small>
+            <div class="mt-2">
+              <progress
+                value="{{ $proyecto['progreso'] }}"
+                max="100"
+                class="w-100"
+                style="height: 10px;">
+                {{ $proyecto['progreso'] }}%
+              </progress>
+            </div>
+            <small class="d-block mt-1 text-secondary">{{ $proyecto['progreso'] }}%</small>
+          </div>
         </div>
+
       </div>
-      @endfor
     </div>
+    @endforeach
+
+
   </div>
+
 </main>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-  const proyectos = [
-    { nombre: 'App móvil E-commerce', descripcion: 'Aplicación de compras en línea.', lider: 'Job Parco', colaboradores: 8, progreso: 75, fecha: '2025-01-15' },
-    { nombre: 'Sistema de Inventario', descripcion: 'Gestión de stock en tiempo real.', lider: 'Sergio Bombilla', colaboradores: 8, progreso: 95, fecha: '2025-01-20' },
-    { nombre: 'Plataforma Educativa', descripcion: 'Portal de cursos en línea.', lider: 'Dina Boluarte', colaboradores: 8, progreso: 40, fecha: '2025-03-05' },
-    { nombre: 'Web de Reservas', descripcion: 'Sistema de reservas de hoteles.', lider: 'Juan Perez', colaboradores: 8, progreso: 90, fecha: '2025-02-01' }
-  ];
-
-  const lista = document.getElementById('listaProyectos');
-  const activosCount = document.getElementById('activosCount');
-  const completadosCount = document.getElementById('completadosCount');
-
-  function renderProyectos(data) {
-    lista.innerHTML = '';
-    data.forEach(p => {
-      const estado = p.progreso === 100 ? 'completado' : 'en-progreso';
-      const card = document.createElement('div');
-      card.className = 'card-proyecto mt-3';
-      card.innerHTML = `
-        <div class="info-proyecto">
-          <span class="nombre-proyecto">${p.nombre}</span>
-          <span class="estado ${estado}">${p.progreso === 100 ? 'Completado' : 'En progreso'}</span>
-        </div>
-        <p class="mt-2 text-muted">${p.descripcion}</p>
-        <p><strong>Líder:</strong> ${p.lider} || <strong>Colaboradores:</strong> ${p.colaboradores}</p>
-        <progress min="0" max="100" value="${p.progreso}"></progress>
-        <div class="estadisticas">
-          <p>${p.progreso}% completado</p>
-          <p>Entrega ${new Date(p.fecha).toLocaleDateString('es-PE')}</p>
-        </div>
-      `;
-      lista.appendChild(card);
-    });
-
-    const activos = data.filter(p => p.progreso < 100).length;
-    const completados = data.filter(p => p.progreso === 100).length;
-    activosCount.textContent = activos;
-    completadosCount.textContent = completados;
-  }
-
-  // Render inicial
-  renderProyectos(proyectos);
-
-  // Filtros
-  document.getElementById('filtroFecha').addEventListener('click', e => {
-    e.preventDefault();
-    const ordenados = [...proyectos].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    renderProyectos(ordenados);
-  });
-
-  document.getElementById('filtroProgreso').addEventListener('click', e => {
-    e.preventDefault();
-    const ordenados = [...proyectos].sort((a, b) => b.progreso - a.progreso);
-    renderProyectos(ordenados);
-  });
-</script>
-
+<!-- MODAL -->
 @include('admin.registrar-proyecto')
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/proyectos.js') }}"></script>
 @endsection
