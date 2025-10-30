@@ -5,7 +5,16 @@
 @endsection
 
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 <main class="container py-4">
+
+
 
   <!-- TARJETAS DE RESUMEN -->
   <div class="resumen-cajas d-flex justify-content-between flex-wrap mb-4">

@@ -1,49 +1,85 @@
-<!-- Modal Crear Proyecto -->
 <div class="modal fade" id="modalProyecto" tabindex="-1" aria-labelledby="modalProyectoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+      <!-- Encabezado -->
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="modalProyectoLabel">Crear nuevo proyecto</h5>
+        <div class="d-flex align-items-center w-100">
+          <i class="bi bi-folder2-open fs-4 me-2"></i>
+          <div>
+            <h5 class="modal-title fw-bold mb-0" id="modalProyectoLabel">Nuevo Proyecto</h5>
+            <small class="text-white-50">Complete los campos para registrar un nuevo proyecto</small>
+          </div>
+        </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="formProyecto" action="{{ route('crear.proyecto') }}" method="POST">
+
+      <form id="formProyecto" action="{{ route('crear.proyecto') }}" method="POST" class="bg-light">
         @csrf
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="nombreProyecto" class="form-label">Nombre del proyecto</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Plataforma web">
-          </div>
-          <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripcion</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion">
-          </div>
-          <div class="mb-3">
-            <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
-            <input type="text" class="form-control" id="fecha_entrega" name="fecha_entrega">
-          </div>
-          <div class="mb-3">
-            <label for="lider" class="form-label">Lider</label>
-            <select id="lider" name="id_usuarios[]" onclick="cargarLideres()" class="form-select">
-              <option value="" selected>Seleccione un lider</optiom>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="colaboradores" class="form-label">Colaborador</label>
-            <select id="colaboradores" name="id_usuarios[]" onclick="cargarColaboradores()" class="form-select" placeholder="Eliga los colaboradores" multiple size="5">
-            </select>
+        <div class="modal-body px-4 py-4">
+
+          <!-- Nombre -->
+          <div class="mb-4">
+            <label for="nombre" class="form-label fw-semibold text-secondary">Nombre del proyecto</label>
+            <input type="text" class="form-control form-control-lg" id="nombre" name="nombre"
+                   placeholder="Ej. Plataforma web corporativa" required>
           </div>
 
-          <div id="colaboradores-seleccionados" class="mt-2"></div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+          <!-- Descripción breve -->
+          <div class="mb-4">
+            <label for="descripcion_breve" class="form-label fw-semibold text-secondary">Descripción breve</label>
+            <textarea class="form-control" id="descripcion_breve" name="descripcion_breve" rows="2"
+                      placeholder="Describe brevemente el propósito del proyecto"></textarea>
           </div>
+
+          <!-- Descripción detallada -->
+          <div class="mb-4">
+            <label for="descripcion_detalle" class="form-label fw-semibold text-secondary">Descripción detallada</label>
+            <textarea class="form-control" id="descripcion_detalle" name="descripcion_detalle" rows="4"
+                      placeholder="Incluye alcance, fases y requerimientos específicos"></textarea>
+          </div>
+
+          <!-- Fecha de entrega -->
+          <div class="mb-4">
+            <label for="fecha_entrega" class="form-label fw-semibold text-secondary">Fecha de entrega</label>
+            <div class="input-group">
+              <span class="input-group-text bg-secondary text-white"><i class="bi bi-calendar-event"></i></span>
+              <input type="text" class="form-control" id="fecha_entrega" name="fecha_entrega"
+                     placeholder="Selecciona fecha y hora">
+            </div>
+          </div>
+
+          <!-- Líder -->
+          <div class="mb-4">
+            <label for="lider" class="form-label fw-semibold text-secondary">Líder del proyecto</label>
+            <div class="input-group">
+              <span class="input-group-text bg-secondary text-white"><i class="bi bi-person-badge"></i></span>
+              <select id="lider" name="id_lider" onclick="cargarLideres()" class="form-select">
+                <option value="" selected>Seleccione un líder</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer bg-white border-top">
+          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary px-4">
+            <i class="bi bi-check-circle me-1"></i> Guardar proyecto
+          </button>
+        </div>
+
       </form>
     </div>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
 
 <script>
   async function cargarLideres() {
@@ -79,78 +115,17 @@
     }
   }
 
-  async function cargarColaboradores() {
-    const select = document.getElementById('colaboradores');
-
-    if (select.dataset.cargado === "true") return;
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/colaboradores");
-      const result = await response.json();
-
-      if (result.status === "error") {
-        select.innerHTML = `<option value="">${result.message}</option>`;
-        return;
-      }
-
-      select.innerHTML = ''; // limpiar select
-
-      result.data.forEach(colaborador => {
-        if (colaborador.perfil) {
-          const option = document.createElement('option');
-          option.value = colaborador.id;
-          option.textContent = colaborador.perfil.nombre + " " + colaborador.perfil.apellido;
-          select.appendChild(option);
-        }
-      });
-
-      select.dataset.cargado = "true";
-
-    } catch (error) {
-      console.error("Error cargando colaboradores:", error);
-      select.innerHTML = '<option value="">Error al cargar colaboradores</option>';
-    }
-  }
-
-  // Función para mostrar los seleccionados como chips con opción de eliminar
-  function actualizarSeleccionados() {
-    const select = document.getElementById('colaboradores');
-    const contenedor = document.getElementById('colaboradores-seleccionados');
-    contenedor.innerHTML = ''; // limpiar contenedor
-
-    Array.from(select.selectedOptions).forEach(option => {
-      const chip = document.createElement('span');
-      chip.className = 'badge bg-primary me-1';
-      chip.textContent = option.textContent;
-
-      // Botón de eliminar
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'btn-close btn-close-white btn-sm ms-1';
-      btn.setAttribute('aria-label', 'Cerrar');
-      btn.onclick = () => {
-        option.selected = false; // quitar selección
-        actualizarSeleccionados(); // actualizar chips
-      };
-
-      chip.appendChild(btn);
-      contenedor.appendChild(chip);
-    });
-
-  }
-
   flatpickr("#fecha_entrega", {
-    dateFormat: "Y-m-d H-i",
+    dateFormat: "Y-m-d H:i",
     enableTime: true,
     minDate: new Date().fp_incr(30), // hoy
     time_24hr: true,
+    minuteIncrement: 1,
+    locale: "es",
   });
 
-  // Escuchar cambios en el select
-  document.getElementById('colaboradores').addEventListener('change', actualizarSeleccionados);
 
   document.addEventListener('DOMContentLoaded', () => {
     cargarLideres();
-    cargarColaboradores();
   });
 </script>

@@ -156,21 +156,14 @@ class AdminController extends Controller
         //$fecha = $request->fecha_entrega
         //$fecha = \Carbon\Carbon::parse($request->fecha_entrega)->format('Y-m-d H:i:s');
 
-        $ids = $request->id_usuarios ?? [];
-
-        if ($request->filled('id_usuarios')) {
-            $ids = array_map('intval', $request->id_usuarios);
-        }
-
         $data = [
             'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'fecha_entrega' => $request->fecha,
+            'descripcion_breve' => $request->descripcion_breve,
+            'descripcion_detalle' => $request->descripcion_detalle,
+            'fecha_entrega' => $request->fecha_entrega,
             'id_creador' => $user->id,
-            'id_usuarios' => $ids // array de IDs
+            'id_lider' => $request->id_lider,
         ];
-
-        dd($request->fecha);
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
