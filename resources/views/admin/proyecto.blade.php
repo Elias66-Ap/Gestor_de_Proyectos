@@ -110,6 +110,72 @@
 @include('admin.registrar-proyecto')
 
 <!-- SCRIPTS -->
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const modal = new bootstrap.Modal(document.getElementById('modalDetallesProyecto'));
+
+  document.querySelectorAll('.card .btn-outline-secondary').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = e.target.closest('.card');
+
+      const nombre = card.querySelector('h5.fw-bold').innerText;
+      const descripcion = card.querySelector('p.text-muted').innerText;
+
+      document.getElementById('nombreProyectoModal').innerText = nombre;
+      document.getElementById('descripcionProyectoModal').innerText = descripcion;
+
+      modal.show();
+    });
+  });
+});
+
+
+//PAUSAR PROYECTO
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.addEventListener("click", async (e) => {
+    if (e.target.closest(".btn-pausar-proyecto")) {
+      const button = e.target.closest(".btn-pausar-proyecto");
+      const idProyecto = button.dataset.id;
+
+      if (!confirm("¿Seguro que quieres pausar este proyecto?")) return;
+
+      try {
+        const response = await fetch(`/api/proyectos/${idProyecto}/pausar`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ estado: "pausado" }),
+        });
+
+        const result = await response.json();
+
+        if (result.status === "success") {
+          const tarjeta = document.querySelector(`#tarjeta-${idProyecto}`);
+          const barra = tarjeta?.querySelector("progress");
+          if (barra) {
+            barra.classList.remove("text-primary", "text-success");
+            barra.classList.add("text-warning");
+            barra.style.setProperty("--progress-color", "#ffc107");
+            barra.style.accentColor = "#ffc107";
+          }
+
+          alert("Proyecto pausado correctamente");
+        } else {
+          alert("No se pudo pausar el proyecto");
+        }
+
+      } catch (error) {
+        console.error(error);
+        alert("Error al pausar el proyecto");
+      }
+    }
+  });
+});
+
+
+ </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('js/proyectos.js') }}"></script>
+@include('admin.ver-mas-proyectos')
 @endsection
