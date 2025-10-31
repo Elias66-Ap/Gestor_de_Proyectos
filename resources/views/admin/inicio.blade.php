@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+            <div class="card shadow-sm border-0 rounded-4 p-4 text-center">
                 <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
                 <h6 class="text-muted">Productividad Promedio</h6>
                 <h4 class="fw-bold text-dark" id="promedio_rendimiento">0%</h4>
@@ -99,7 +99,7 @@
         <div class="col-12 mt-4">
             <div class="card shadow-sm border-0 rounded-4 p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">📊 Productividad Promedio por Turno</h5>
+                    <h5 class="fw-bold mb-0">📊 Productividad Promedio por Rol</h5>
                     <select id="selectProductividad" class="form-select w-auto">
                         <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
                         <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
@@ -118,8 +118,8 @@
 
         <div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
             <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-                <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#modalAddColab">
-                    <i class="bi bi-person-plus me-2"></i>Añadir colaboradores
+                <button class="btn btn-outline-primary" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#modalAddColab">
+                    <i class="bi bi-person-plus me-2"></i>Añadir colaborador
                 </button>
             </div>
 
@@ -342,11 +342,11 @@ document.addEventListener('DOMContentLoaded', () => {
 }); // DOMContentLoaded
 </script>
 
-
+@include('admin.registrar')
+@include('admin.registrar-proyecto')
 {{-- ==== LIBRERÍAS ==== --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
 @include('admin.nuevo-mensaje')
 @endsection
-@include('admin.registrar')
-@include('admin.registrar-proyecto')
+

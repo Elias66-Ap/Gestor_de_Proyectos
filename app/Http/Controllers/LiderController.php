@@ -11,8 +11,10 @@ use App\Models\Usuario;
 
 class LiderController extends Controller
 {
+    protected $url;
     public function __construct(){
         $this->middleware('auth:usuario');
+        $this->url=env('URL_SERVER_API','127.0.0.1:8000' );
     }
 
     public function inicio(){
@@ -24,8 +26,24 @@ class LiderController extends Controller
         return view('lider.inicio');
     }
 
-    public function proyectos(){
-        return view('lider.proyectos');
+    public function proyectos()
+    {
+
+        $response = Http::get($this->url . '/proyectos');
+
+        if ($response->successful()) {
+            $json = $response->json();
+            $proyectos = $json['proyectos'] ?? [];
+
+            foreach ($proyectos as $pro) {
+                $pro['miembros_count'] = isset($pro['miembros'])
+                    ? count($pro['miembros'])
+                    : 0;
+            }
+        } else {
+            $proyectos = [];
+        }
+        return view('lider.proyectos', compact('proyectos'));
     }
 
     public function colaboradores(){
