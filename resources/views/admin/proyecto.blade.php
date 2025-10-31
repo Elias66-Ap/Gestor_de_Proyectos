@@ -76,11 +76,11 @@
         <div class="row g-4 align-items-center mb-3">
           <div class="col-6 col-md-3">
             <small class="text-secondary">📅 Fecha inicio</small><br>
-            <strong>{{ $proyecto['fecha_inicio'] ? \Carbon\Carbon::parse($proyecto['fecha_inicio'])->format('d M Y') : '—' }}</strong>
+            <strong>{{ $proyecto['fecha_inicio'] ? \Carbon\Carbon::parse($proyecto['fecha_inicio'])->translatedFormat('d F Y') : '—' }}</strong>
           </div>
           <div class="col-6 col-md-3">
             <small class="text-secondary">⏰ Fecha entrega</small><br>
-            <strong>{{ $proyecto['fecha_entrega'] ? \Carbon\Carbon::parse($proyecto['fecha_entrega'])->format('d M Y') : '—' }}</strong>
+            <strong>{{ $proyecto['fecha_entrega'] ? \Carbon\Carbon::parse($proyecto['fecha_inicio'])->translatedFormat('d F Y') : '—' }}</strong>
           </div>
           <div class="col-6 col-md-3">
             <small class="text-secondary">👥 Miembros</small><br>

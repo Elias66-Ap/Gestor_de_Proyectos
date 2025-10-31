@@ -26,7 +26,6 @@ class MensajeController extends Controller
                 'Accept' => 'application/json',
             ])->post($url . '/mensajes', $data);
 
-            dd($response->json());
 
             if ($response->successful()) {
                 return redirect()->back()->with('success', 'Mensaje enviado correctamente.');

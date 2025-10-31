@@ -35,8 +35,6 @@
 
     <div class="tab-content" id="mensajeTabsContent">
         {{-- Sección Recibidos --}}
-
-
         <div class="tab-pane fade show active" id="recibidos" role="tabpanel" aria-labelledby="recibidos-tab">
             <div class="notificaciones-lista">
 

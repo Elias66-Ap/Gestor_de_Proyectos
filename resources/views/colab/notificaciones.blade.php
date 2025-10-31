@@ -33,50 +33,47 @@
         {{-- Sección Recibidos --}}
         <div class="tab-pane fade show active" id="recibidos" role="tabpanel" aria-labelledby="recibidos-tab">
             <div class="notificaciones-lista">
-                <div class="notificacion-item no-leida">
+                @foreach ($recibidos as $rec)
+                @php
+                $fecha = \Carbon\Carbon::parse($rec['fecha_envio']);
+                @endphp
+                <div class="notificacion-item"> {{-- leida/no-leida --}}
                     <div class="icono"><i class="bi bi-envelope-fill"></i></div>
                     <div class="contenido">
-                        <h5>Nuevo mensaje de Amaya</h5>
-                        <p>“Hola equipo, recuerden la reunión de mañana.”</p>
-                        <span class="fecha">Hace 2 minutos</span>
+                        <h5>{{ $rec['remitente']['nombre'] ?? " "}}
+                            {{ $rec['remitente']['apellido'] ?? " "}}
+                        </h5>
+                        <p>{{ $rec['contenido'] }}</p>
+                        <span class="fecha">{{ $fecha->locale('es')->diffForHumans();}}</span>
                     </div>
                     <button class="btn-accion">Ver</button>
                 </div>
 
-                <div class="notificacion-item leida">
-                    <div class="icono"><i class="bi bi-envelope-open-fill"></i></div>
-                    <div class="contenido">
-                        <h5>Mensaje de Sergio</h5>
-                        <p>“Buen trabajo con el sprint 2 👏”</p>
-                        <span class="fecha">Hace 1 hora</span>
-                    </div>
-                    <button class="btn-accion">Ver</button>
-                </div>
+                @endforeach
+
+
+
+
             </div>
         </div>
 
         {{-- Sección Enviados --}}
         <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
             <div class="notificaciones-lista">
+                @foreach ( $enviados as $env )
+                @php
+                $fecha = \Carbon\Carbon::parse($env['fecha_envio']);
+                @endphp
                 <div class="notificacion-item leida">
                     <div class="icono"><i class="bi bi-send-check-fill"></i></div>
                     <div class="contenido">
-                        <h5>Mensaje enviado a Amaya</h5>
-                        <p>“Revisar el avance del módulo de login.”</p>
-                        <span class="fecha">Hace 30 minutos</span>
+                        <h5>Mensaje enviado a {{ $env['destinatario']['nombre'] }} {{ $env['destinatario']['apellido'] }}</h5>
+                        <p>{{ $env['contenido'] ?? "" }}</p>
+                        <span class="fecha">{{ $fecha->locale('es')->diffForHumans(); }}</span>
                     </div>
                     <button class="btn-accion">Ver</button>
                 </div>
-
-                <div class="notificacion-item leida">
-                    <div class="icono"><i class="bi bi-send-check-fill"></i></div>
-                    <div class="contenido">
-                        <h5>Mensaje enviado a Sergio</h5>
-                        <p>“Subí los cambios al repositorio.”</p>
-                        <span class="fecha">Ayer</span>
-                    </div>
-                    <button class="btn-accion">Ver</button>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
