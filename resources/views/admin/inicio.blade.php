@@ -23,31 +23,31 @@
             <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
                 <i class="bi bi-hourglass-split fs-3 text-warning mb-2"></i>
                 <h6 class="text-muted">Tareas Pendientes</h6>
-                <h4 class="fw-bold text-dark" id="tar_pendientes">128</h4>
-                <small class="text-danger fw-semibold" id="tar_pend"><i class="bi bi-graph-down"></i> -3 hoy</small>
+                <h4 class="fw-bold text-dark" id="tar_pendientes">0</h4>
+                <small class="text-danger fw-semibold" id="tar_pend"><i class="bi bi-graph-down"></i> -</small>
             </div>
         </div>
         <div class="col-md-2">
             <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
                 <i class="bi bi-diagram-3 fs-3 text-info mb-2"></i>
                 <h6 class="text-muted">Proyectos Activos</h6>
-                <h4 class="fw-bold text-dark" id="pro_activos">14</h4>
-                <small class="text-success fw-semibold" id="pro_act"><i class="bi bi-graph-up"></i> 0 nuevos</small>
+                <h4 class="fw-bold text-dark" id="pro_activos">0</h4>
+                <small class="text-success fw-semibold" id="pro_act"><i class="bi bi-graph-up"></i> -</small>
             </div>
         </div>
         <div class="col-md-2">
             <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
                 <i class="bi bi-check2-circle fs-3 text-secondary mb-2"></i>
                 <h6 class="text-muted">Proyectos Terminados</h6>
-                <h4 class="fw-bold text-dark" id="pro_completados">27</h4>
-                <small class="text-success fw-semibold" id="pro_com"><i class="bi bi-graph-up"></i> 0 mes</small>
+                <h4 class="fw-bold text-dark" id="pro_completados">0</h4>
+                <small class="text-success fw-semibold" id="pro_com"><i class="bi bi-graph-up"></i> -</small>
             </div>
         </div>
         <div class="col-md-2">
             <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
                 <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
                 <h6 class="text-muted">Productividad Promedio</h6>
-                <h4 class="fw-bold text-dark" id="promedio_rendimiento">89%</h4>
+                <h4 class="fw-bold text-dark" id="promedio_rendimiento">0%</h4>
             </div>
         </div>
     </div>
@@ -347,6 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
 @include('admin.nuevo-mensaje')
+@endsection
 @include('admin.registrar')
 @include('admin.registrar-proyecto')
-@endsection

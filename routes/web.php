@@ -7,6 +7,7 @@ use App\Http\Controllers\LiderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Middleware\RolMiddleware;
+use App\Http\Controllers\MensajeController;
 
 
 Route::get('/', function () {
@@ -56,4 +57,5 @@ Route::middleware('auth:usuario')->group(function () {
     Route::post('guardar', [PerfilController::class, 'completarPerfil'])->name('perfil.guardar');
     Route::patch('editar_perfil',[PerfilController::class, 'editarPerfil'])->name('editar.perfil');
     Route::get('tablero/{id}', [AdminController::class, 'verProyecto'])->name('tablero.proyecto');
+    Route::post('/enviar-mensaje', [MensajeController::class, 'enviarMensaje'])->name('enviar.mensaje');
 });
