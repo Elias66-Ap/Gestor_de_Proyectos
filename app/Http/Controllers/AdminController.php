@@ -153,9 +153,6 @@ class AdminController extends Controller
     {
         $user = auth()->guard('usuario')->user();
 
-        //$fecha = $request->fecha_entrega
-        //$fecha = \Carbon\Carbon::parse($request->fecha_entrega)->format('Y-m-d H:i:s');
-
         $data = [
             'nombre' => $request->nombre,
             'descripcion_breve' => $request->descripcion_breve,

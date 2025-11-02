@@ -18,8 +18,18 @@ class ColaboradorController extends Controller
 
     public function inicio()
     {
-        $user = auth()->guard('usuario')->user();
-        return view('colab.inicio', compact('user'));
+        $id = auth()->guard('usuario')->id();
+
+        $response = Http::get($this->url . "/proyectos-usuario/{$id}");
+
+        if($response->successful()){
+            $proyectos = $response->json()['proyectos'] ?? [];
+            $tareas = $response->json()['tareas'] ?? [];
+
+            return view('colab.inicio', compact('proyectos', 'tareas'));
+        }
+        
+        return back()->withErrors(['error' => 'No se pudieron obtener los proyectos y tareas.']);
     }
 
     public function equipo()
@@ -49,7 +59,17 @@ class ColaboradorController extends Controller
     public function miPerfil()
     {
         $user = auth()->guard('usuario')->user();
-        return view('colab.perfil', compact('user'));
+        $id = $user->id;
+
+        $response = Http::get($this->url . "/mi-perfil/{$id}");
+
+        if ($response->successful()) {
+            $user = $response->json()['data'] ?? null;
+
+            return view('colab/perfil', compact('user'));
+        }
+
+        return redirect()->back()->withErrors(['error' => 'No se pudo obtener el perfil.']);
     }
 
     public function tareas()

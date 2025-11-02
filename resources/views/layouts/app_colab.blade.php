@@ -7,6 +7,7 @@
     <title>Colaboradores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css')  }}" rel="stylesheet">
+    @yield('styles')
 </head>
 
 <body>
@@ -78,6 +79,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    @yield('scripts')
 </body>
 
 </html>

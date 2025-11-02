@@ -19,7 +19,6 @@
             <div class="mt-3">
                 <img src="{{ optional(auth()->guard('usuario')->user()->perfil)->imagen_url ?? asset('images/default.jpeg') }}"
                     alt="Perfil" class="profile-img mb-1" style="width:80px; height:80px; object-fit:cover; border-radius:50%;">
-
                 <div>
                     {{ optional(auth()->guard('usuario')->user()->perfil)->nombre }} {{ optional(auth()->guard('usuario')->user()->perfil)->apellido }}
                 </div>

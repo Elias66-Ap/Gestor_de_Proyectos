@@ -14,7 +14,9 @@
         @foreach ($tareas as $tar )
 
         @php
-        $prioridad = null;
+        $fecha = Carbon\Carbon::parse($tar['fecha_vencimiento'])->translatedFormat('d M Y'); 
+
+        $prioridad = '';
 
         if ($tar['prioridad'] === 'Alta') {
         $prioridad = 'danger';
@@ -25,6 +27,24 @@
         } else {
         $prioridad = 'primary';
         }
+
+        $progreso = 0;
+        $prio_color='';
+
+        if($tar['estado'] === 'Por hacer'){
+        $progreso = 10;
+        $prio_color = 'danger';
+        }elseif($tar['estado'] === 'En proceso'){
+        $progreso = 50;
+        $prio_color = 'warning';
+        }elseif($tar['estado'] === 'Revision'){
+        $progreso = 75;
+        $prio_color = 'primary';
+        }elseif($tar['estado'] === 'Hecho'){
+        $progreso=100;
+        $prio_color = 'success';
+        }
+
         @endphp
 
         <div class="col-lg-6">
@@ -33,61 +53,16 @@
                     <span class="fw-semibold">{{$tar['titulo']}}</span>
                     <span class="badge bg-{{$prioridad}}">{{$tar['prioridad']}}</span>
                 </div>
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>45% co</span>
-                    <span><i class="bi bi-calendar3 me-1"></i> {{ $tar['fecha_vencimiento'] }}</span>
+                <div class="progress mb-2" style="height: 6px;">
+                    <div class="progress-bar bg-{{ $prio_color }}" style="width: {{ $progreso }};"></div>
+                </div>
+                <div class="d-flex justify-content-between small text-muted-end">
+                    <span>{{$progreso}}%</span>
+                    <span><i class="bi bi-calendar3 me-1"></i>{{ $fecha }}</span>
                 </div>
             </div>
         </div>
         @endforeach
-
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm rounded-4 p-3 tarea-card">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="fw-semibold">Revisión de código backend</span>
-                    <span class="badge bg-warning text-dark">Media</span>
-                </div>
-                <div class="progress mb-2" style="height: 6px;">
-                    <div class="progress-bar bg-dark" style="width: 70%;"></div>
-                </div>
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>70% completado</span>
-                    <span><i class="bi bi-calendar3 me-1"></i> 22/10/2025</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm rounded-4 p-3 tarea-card">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="fw-semibold">Documentación del proyecto</span>
-                    <span class="badge bg-info text-dark">Baja</span>
-                </div>
-                <div class="progress mb-2" style="height: 6px;">
-                    <div class="progress-bar bg-dark" style="width: 90%;"></div>
-                </div>
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>90% completado</span>
-                    <span><i class="bi bi-calendar3 me-1"></i> 18/10/2025</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm rounded-4 p-3 tarea-card">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="fw-semibold">Pruebas funcionales</span>
-                    <span class="badge bg-success">Completada</span>
-                </div>
-                <div class="progress mb-2" style="height: 6px;">
-                    <div class="progress-bar bg-dark" style="width: 100%;"></div>
-                </div>
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>100% completado</span>
-                    <span><i class="bi bi-calendar3 me-1"></i> 10/10/2025</span>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
@@ -98,4 +73,5 @@
         transition: transform 0.3s, box-shadow 0.3s;
     }
 </style>
+
 @endsection

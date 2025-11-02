@@ -31,10 +31,10 @@
                             <i class="bi bi-pencil-square me-1"></i> Editar proyecto
                         </button>
                         <button type="button"
-        class="btn btn-outline-warning rounded-pill px-4 btn-pausar-proyecto"
-        data-id="{{ $proyecto['id'] }}">
-  <i class="bi bi-pause-circle me-1"></i> Pausar proyecto
-</button>
+                            class="btn btn-outline-warning rounded-pill px-4 btn-pausar-proyecto"
+                            data-id="{{ $proyecto['id'] }}">
+                            <i class="bi bi-pause-circle me-1"></i> Pausar proyecto
+                        </button>
                         <button type="button" class="btn btn-outline-danger rounded-pill px-4">
                             <i class="bi bi-trash3 me-1"></i> Eliminar proyecto
                         </button>
