@@ -296,7 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }); // DOMContentLoaded
 </script>
-@include('lider.nuevo-mensaje')
+@include(view: 'lider.nuevo-mensaje')
 @endsection
 @include('lider.registrar-colab')
 @include('lider.registrar-proyecto')
+

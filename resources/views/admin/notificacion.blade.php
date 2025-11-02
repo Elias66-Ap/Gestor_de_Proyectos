@@ -64,7 +64,7 @@
                         <p>“Buen trabajo con el sprint 2 👏”</p>
                         <span class="fecha">Hace 1 hora</span>
                     </div>
-                    
+
                 <button class="btn-accion">Ver</button>
                 --}}
             </div>
@@ -107,8 +107,39 @@
 </div>
 
 @include('admin.nuevo-mensaje')
+@include('admin.ver-mensaje')
 
-{{-- Bootstrap JS --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const botonesVer = document.querySelectorAll(".btn-accion");
+
+  botonesVer.forEach(boton => {
+    boton.addEventListener("click", function () {
+      const item = this.closest(".notificacion-item");
+      const h5 = item.querySelector("h5");
+
+      // 🔹 Captura solo el nombre y apellido del texto (sin "Mensaje enviado a")
+      let nombreCompleto = h5?.innerText.replace("Mensaje enviado a", "").trim() || "Sin nombre";
+
+      // 🔹 Si quieres mostrar un asunto genérico o lo tomas desde tu backend
+      const asunto = "Mensaje enviado";
+
+      // 🔹 Captura el contenido del mensaje
+      const contenido = item.querySelector("p")?.innerText.trim() || "Sin contenido";
+
+      // 🔹 Inserta los valores en el modal
+      document.getElementById("mensajeNombre").innerText = nombreCompleto;
+      document.getElementById("mensajeAsunto").innerText = asunto;
+      document.getElementById("mensajeContenido").innerText = contenido;
+
+      // 🔹 Muestra el modal de Bootstrap
+      const modal = new bootstrap.Modal(document.getElementById("modalVerMensaje"));
+      modal.show();
+    });
+  });
+});
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 @endsection
