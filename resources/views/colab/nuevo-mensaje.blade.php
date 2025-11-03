@@ -67,7 +67,7 @@
     if (select.dataset.cargado === "true") return;
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/usuarios');
+      const response = await fetch('http://127.0.0.1:8000/api/usuarios-todos');
       const result = await response.json();
 
       if (result.status == 'error') {

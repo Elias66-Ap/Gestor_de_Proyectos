@@ -50,7 +50,21 @@ class LiderController extends Controller
         return view('lider.colaboradores');
     }
     public function notificacion(){
-        return view('lider.notificacion');
+        $usuario = auth()->guard('usuario')->user();
+        $id = $usuario->id;
+
+        $response = Http::get($this->url . "/mensajes-usuario/{$id}");
+
+        if ($response->successful()) {
+            $data = $response->json()['data'] ?? [];
+            // combinamos ambos arrays
+            $enviados = $data['enviados'] ?? [];
+            $recibidos = $data['recibidos'] ?? [];
+
+            return view('lider.notificacion', compact('enviados', 'recibidos'));
+        }
+
+        return redirect()->back()->withErrors(['error' => 'No se pudieron obtener los mensajes.']);
     }
     public function perfil(){
         $usuario = auth()->guard('usuario')->user();

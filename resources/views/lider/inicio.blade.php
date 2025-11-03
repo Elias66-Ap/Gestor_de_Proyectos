@@ -1,5 +1,7 @@
 @extends('layouts.app_lider')
-
+@section('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
 @section('content1')
 <div class="container-fluid bg-light min-vh-100 py-4 px-5">
 
@@ -296,8 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }); // DOMContentLoaded
 </script>
-@include(view: 'lider.nuevo-mensaje')
+@include('lider.nuevo-mensaje')
 @endsection
+
 @include('lider.registrar-colab')
 @include('lider.registrar-proyecto')
 
