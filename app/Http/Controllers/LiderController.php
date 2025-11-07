@@ -28,8 +28,9 @@ class LiderController extends Controller
 
     public function proyectos()
     {
+        $id = auth()->guard('usuario')->user()->id;
 
-        $response = Http::get($this->url . '/proyectos');
+        $response = Http::get($this->url . "/proyectos-lider/{$id}");
 
         if ($response->successful()) {
             $json = $response->json();
@@ -83,7 +84,18 @@ class LiderController extends Controller
     }
 
     public function tareas(){
-        return view('lider.tareas');
+        $id = auth()->guard('usuario')->user()->id;
+
+        $url = env('URL_SERVER_API', 'http://localhost:8000');
+        $response = Http::get($url. "/tareas-lider/{$id}");
+
+        if($response->successful()){
+            $tareas = $response->json()['tareas'] ?? null;
+
+            return view('lider.tareas', compact('tareas'));
+        }
+
+        return redirect()->back()->withErrors('error', 'No se pudo obtener las tareas');
     }
     public function equipo(){
         return view('lider.equipo');

@@ -17,6 +17,7 @@
         </button>
     </div>
 
+    {{-- Tabs Recibidos / Enviados --}}
     <ul class="nav nav-tabs mb-4" id="mensajeTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="recibidos-tab" data-bs-toggle="tab" data-bs-target="#recibidos" type="button" role="tab">
@@ -41,12 +42,12 @@
 
                 $visto = "";
                 if($rec['visto'] == 1){
-                    $visto = "leida";
+                $visto = "leida";
                 }elseif($rec['visto'] == 0){
-                    $visto = "no-leida";
+                $visto = "no-leida";
                 }
                 @endphp
-                <div class="notificacion-item {{ $visto }}"> {{-- leida/no-leida --}}
+                <div class="notificacion-item {{ $visto }}">
                     <div class="icono"><i class="bi bi-envelope-fill"></i></div>
                     <div class="contenido">
                         <h5>{{ $rec['remitente']['nombre'] ?? " "}}
@@ -55,27 +56,13 @@
                         <p>{{ $rec['contenido'] }}</p>
                         <span class="fecha">{{ $fecha->locale('es')->diffForHumans();}}</span>
                     </div>
-                    <button class="btn-accion">Ver</button>
+                    <button class="btn-accion" data-id="{{ $rec['id'] }}">Ver</button>
                 </div>
 
                 @endforeach
-
-                {{--
-                <div class="notificacion-item leida">
-                    <div class="icono"><i class="bi bi-envelope-open-fill"></i></div>
-                    <div class="contenido">
-                        <h5>Mensaje de Sergio</h5>
-                        <p>“Buen trabajo con el sprint 2 👏”</p>
-                        <span class="fecha">Hace 1 hora</span>
-                    </div>
-
-                <button class="btn-accion">Ver</button>
-                --}}
             </div>
         </div>
     </div>
-
-
 
     {{-- Sección Enviados --}}
     <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
@@ -95,55 +82,15 @@
             </div>
             @endforeach
 
-
-            <div class="notificacion-item leida">
-                <div class="icono"><i class="bi bi-send-check-fill"></i></div>
-                <div class="contenido">
-                    <h5>Mensaje enviado a Sergio</h5>
-                    <p>“Subí los cambios al repositorio.”</p>
-                    <span class="fecha">Ayer</span>
-                </div>
-                <button class="btn-accion">Ver</button>
-            </div>
         </div>
     </div>
 </div>
 </div>
 
-@include('admin.nuevo-mensaje')
-@include('admin.ver-mensaje')
+@include('lider.nuevo-mensaje')
+@include('lider.ver-mensaje')
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const botonesVer = document.querySelectorAll(".btn-accion");
+<script src="{{ asset('js/mensajes.js') }}"></script>
 
-  botonesVer.forEach(boton => {
-    boton.addEventListener("click", function () {
-      const item = this.closest(".notificacion-item");
-      const h5 = item.querySelector("h5");
-
-      // 🔹 Captura solo el nombre y apellido del texto (sin "Mensaje enviado a")
-      let nombreCompleto = h5?.innerText.replace("Mensaje enviado a", "").trim() || "Sin nombre";
-
-      // 🔹 Si quieres mostrar un asunto genérico o lo tomas desde tu backend
-      const asunto = "Mensaje enviado";
-
-      // 🔹 Captura el contenido del mensaje
-      const contenido = item.querySelector("p")?.innerText.trim() || "Sin contenido";
-
-      // 🔹 Inserta los valores en el modal
-      document.getElementById("mensajeNombre").innerText = nombreCompleto;
-      document.getElementById("mensajeAsunto").innerText = asunto;
-      document.getElementById("mensajeContenido").innerText = contenido;
-
-      // 🔹 Muestra el modal de Bootstrap
-      const modal = new bootstrap.Modal(document.getElementById("modalVerMensaje"));
-      modal.show();
-    });
-  });
-});
-</script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
+@section('scripts')

@@ -71,38 +71,6 @@
 
 
 <script>
-  async function cargarLideres() {
-    const select = document.getElementById('lider');
-
-    if (select.dataset.cargado === "true") return;
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/lideres");
-      const result = await response.json();
-
-      console.log(result)
-
-      if (result.status === "error") {
-        select.innerHTML = `<option value="">${result.message}</option>`;
-        return;
-      }
-
-      select.innerHTML = '<option value="">Seleccione un líder</option>';
-
-      result.data.forEach(lider => {
-        const option = document.createElement('option');
-        option.value = lider.id;
-        option.textContent = lider.perfil.nombre + " " + lider.perfil.apellido;
-        select.appendChild(option);
-      });
-
-      select.dataset.cargado = "true";
-
-    } catch (error) {
-      console.error("Error cargando líderes:", error);
-      select.innerHTML = '<option value="">Error al cargar líderes</option>';
-    }
-  }
 
   flatpickr("#fecha_entrega", {
     dateFormat: "Y-m-d H:i",
@@ -111,10 +79,5 @@
     time_24hr: true,
     minuteIncrement: 1,
     locale: "es",
-  });
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-    cargarLideres();
   });
 </script>

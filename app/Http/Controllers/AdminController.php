@@ -141,12 +141,14 @@ class AdminController extends Controller
         $response = Http::get($this->url . "/proyectos/{$id}");
 
         if ($response->successful()) {
-            $proyecto = $response->json()['proyecto'] ?? $response->json();
+            $data = $response->json();
+            $proyecto = $data['proyecto'] ?? null;
         } else {
-            $proyecto = [];
+            $proyecto = null;
         }
 
-        return view('/tablero', compact('proyecto'));
+
+        return view('tablero', compact('proyecto'));
     }
 
     public function crearProyecto(Request $request)
@@ -162,10 +164,13 @@ class AdminController extends Controller
             'id_lider' => $request->id_lider,
         ];
 
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ])->post($this->url . '/proyectos', $data);
+
+        dd($response->json());
 
         if ($response->successful()) {
             return redirect()->back()->with('success', 'Proyecto creado exitosamente');
