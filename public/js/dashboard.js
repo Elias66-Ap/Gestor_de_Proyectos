@@ -1,8 +1,8 @@
 async function cargarDashboard() {
     try {
         const res = await fetch('http://127.0.0.1:8000/api/dashboard/inicio');
-        
         const { status, data } = await res.json();
+
         if (status === 'success') {
             document.getElementById('tar_pendientes').textContent = data.tareas.pendientes;
             document.getElementById('tar_completadas').textContent = data.tareas.completadas;
@@ -22,6 +22,8 @@ async function cargarDashboard() {
 
 document.addEventListener('DOMContentLoaded', cargarDashboard);
 setInterval(cargarDashboard, 30000);
+
+
 
 
 // Usuarios por mes
@@ -146,4 +148,6 @@ async function cargarChartProyectos() {
 }
 
 document.addEventListener('DOMContentLoaded', cargarChartProyectos);
+
+
 

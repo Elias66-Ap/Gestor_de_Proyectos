@@ -39,11 +39,13 @@ class AdminController extends Controller
 
         if ($response->successful()) {
             $usuarios = $response->json()['data'] ?? $response->json();
+            $sin_perfil = $response->json()['sin_perfil'] ?? $response->json();
         } else {
             $usuarios = [];
+            $sin_perfil =[];
         }
 
-        return view('admin.colaboradores', compact('usuarios'));
+        return view('admin.colaboradores', compact('usuarios', 'sin_perfil'));
     }
 
     public function equipos()
