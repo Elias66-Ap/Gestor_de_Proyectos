@@ -19,7 +19,7 @@
     </div>
     <p>{{ $tarea['descripcion'] }}</p>
     <div class="kanban-task-footer d-flex justify-content-between">
-        <span><i class="bi bi-person-circle"></i> {{ $tarea['id_asignado'] }}</span>
+        <span><i class="bi bi-person-circle"></i> {{ $tarea['asignado']['nombre'] }}</span>
         <span>{{ \Carbon\Carbon::parse($tarea['fecha_vencimiento'])->format('d-m-Y') }}</span>
     </div>
 </div>

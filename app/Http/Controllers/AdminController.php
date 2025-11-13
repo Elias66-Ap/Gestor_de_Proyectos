@@ -139,18 +139,18 @@ class AdminController extends Controller
 
     public function verProyecto($id)
     {
-
         $response = Http::get($this->url . "/proyectos/{$id}");
 
         if ($response->successful()) {
             $data = $response->json();
             $proyecto = $data['proyecto'] ?? null;
+            $miembros = $data['miembros'] ?? null;
         } else {
             $proyecto = null;
         }
 
 
-        return view('tablero', compact('proyecto'));
+        return view('tablero', compact('proyecto', 'miembros'));
     }
 
     public function crearProyecto(Request $request)

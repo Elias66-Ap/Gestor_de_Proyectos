@@ -275,7 +275,7 @@
               </div>
               <p>{{ $tarea['descripcion'] }}</p>
               <div class="kanban-task-footer d-flex justify-content-between">
-                <span><i class="bi bi-person-circle"></i> {{ $tarea['id_asignado'] }}</span>
+                <span><i class="bi bi-person-circle"></i> {{ $tarea['asignado']['nombre'] }} {{ $tarea['asignado']['apellido'] }}</span>
                 <span>{{ \Carbon\Carbon::parse($tarea['fecha_vencimiento'])->format('d-m-Y') }}</span>
               </div>
             </div>
@@ -337,45 +337,42 @@
   <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form id="taskForm">
           <div class="modal-header">
             <h5 class="modal-title" id="taskModalLabel">Nueva Tarea</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
+        <form id="taskForm" method="POST" action="{{ route('crear.tarea', $proyecto['id']) }}">
+          @csrf
           <div class="modal-body">
             <div class="mb-3">
               <label for="taskTitle" class="form-label">Título</label>
-              <input type="text" class="form-control" id="taskTitle" required>
+              <input type="text" class="form-control" id="taskTitle" name="nombre" required>
             </div>
             <div class="mb-3">
               <label for="taskDesc" class="form-label">Descripción</label>
-              <textarea class="form-control" id="taskDesc" rows="3"></textarea>
+              <textarea class="form-control" id="taskDesc" name="descripcion" rows="3"></textarea>
             </div>
             <div class="mb-3">
               <label for="taskPriority" class="form-label">Prioridad</label>
-              <select class="form-select" id="taskPriority">
-                <option value="alta">Alta</option>
-                <option value="media">Media</option>
-                <option value="baja" selected>Baja</option>
+              <select class="form-select" id="taskPriority" name="prioridad">
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja" selected>Baja</option>
               </select>
             </div>
             <div class="mb-3">
               <label for="taskDueDate" class="form-label">Fecha de entrega</label>
-              <input type="date" class="form-control" id="taskDueDate">
+              <input type="date" class="form-control" id="taskDueDate" name="fecha_vencimiento">
             </div>
             <div class="mb-3">
               <label for="taskAssignee" class="form-label">Responsable</label>
-              <select class="form-select" id="taskAssignee">
-                <option value="Ana Andrade">Ana Andrade</option>
-                <option value="Jose Romero">Jose Romero</option>
-                <option value="Maria Lopez">Maria Lopez</option>
-                <option value="Hugo Hurtado">Hugo Hurtado</option>
-                <option value="Gabriel Romero">Gabriel Romero</option>
-                <option value="Julián Collins">Julián Collins</option>
+              <select class="form-select" id="selectUsuarios" name="id_asignado">
+                <option selected>Seleccione el miembro</option>
+                @foreach ($miembros as $m)
+                <option value={{ $m['id_usu'] }}>{{$m['nombre']}} {{ $m['apellido'] }}</option>
+                @endforeach
               </select>
             </div>
-            <input type="hidden" id="taskColumn">
-            <input type="hidden" id="taskIndex">
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -387,109 +384,7 @@
   </div>
 
   <script>
-    let draggedTask = null;
-
-    function allowDrag(task) {
-      task.setAttribute('draggable', true);
-      task.addEventListener('dragstart', () => draggedTask = task);
-      task.addEventListener('dragend', () => draggedTask = null);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const taskForm = document.getElementById('taskForm');
-      const taskTitle = document.getElementById('taskTitle');
-      const taskDesc = document.getElementById('taskDesc');
-      const taskPriority = document.getElementById('taskPriority');
-      const taskDueDate = document.getElementById('taskDueDate');
-      const taskAssignee = document.getElementById('taskAssignee');
-      const taskColumnInput = document.getElementById('taskColumn');
-      const taskIndexInput = document.getElementById('taskIndex');
-
-      // Configurar columnas para drop
-      document.querySelectorAll('.kanban-tasks').forEach(column => {
-        column.addEventListener('dragover', e => e.preventDefault());
-        column.addEventListener('drop', e => {
-          if (draggedTask) column.appendChild(draggedTask);
-        });
-      });
-
-      document.querySelectorAll('.btn-add-task').forEach(btn => {
-        btn.addEventListener('click', () => {
-          taskForm.reset();
-          taskIndexInput.value = '';
-          taskColumnInput.value = btn.getAttribute('data-column');
-          document.getElementById('taskModalLabel').textContent = 'Nueva Tarea';
-        });
-      });
-
-      taskForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const columnName = taskColumnInput.value;
-        const taskContainer = Array.from(document.querySelectorAll('.kanban-column')).find(col =>
-          col.querySelector('.kanban-column-header span').textContent === columnName
-        ).querySelector('.kanban-tasks');
-
-        const badgeClass = taskPriority.value === 'alta' ? 'danger' : taskPriority.value === 'media' ? 'warning text-dark' : 'success';
-
-        if (taskIndexInput.value !== '') {
-          const taskDiv = taskContainer.children[taskIndexInput.value];
-          taskDiv.querySelector('.kanban-task-title span').textContent = taskTitle.value;
-          const badge = taskDiv.querySelector('.badge');
-          badge.textContent = taskPriority.value;
-          badge.className = `badge bg-${badgeClass}`;
-          taskDiv.querySelector('p').textContent = taskDesc.value;
-          taskDiv.querySelectorAll('.kanban-task-footer span')[0].innerHTML = `<i class="bi bi-person-circle"></i> ${taskAssignee.value}`;
-          taskDiv.querySelectorAll('.kanban-task-footer span')[1].textContent = taskDueDate.value || '--/--/----';
-        } else {
-          const taskDiv = document.createElement('div');
-          taskDiv.classList.add('kanban-task');
-          taskDiv.innerHTML = `
-        <div class="kanban-task-title d-flex justify-content-between align-items-center">
-          <span>${taskTitle.value}</span>
-          <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-${badgeClass}">${taskPriority.value}</span>
-            <div class="dropdown">
-              <button class="btn btn-sm btn-light p-0" type="button" data-bs-toggle="dropdown">
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item edit-task" href="#">Editar</a></li>
-                <li><a class="dropdown-item delete-task" href="#">Eliminar</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <p>${taskDesc.value}</p>
-        <div class="kanban-task-footer d-flex justify-content-between">
-          <span><i class="bi bi-person-circle"></i> ${taskAssignee.value}</span>
-          <span>${taskDueDate.value || '--/--/----'}</span>
-        </div>
-      `;
-          taskContainer.appendChild(taskDiv);
-          allowDrag(taskDiv);
-
-          taskDiv.querySelector('.edit-task').addEventListener('click', e => {
-            e.preventDefault();
-            taskTitle.value = taskDiv.querySelector('.kanban-task-title span').textContent;
-            taskDesc.value = taskDiv.querySelector('p').textContent;
-            const badgeText = taskDiv.querySelector('.badge').textContent;
-            taskPriority.value = badgeText.toLowerCase();
-            taskDueDate.value = taskDiv.querySelectorAll('.kanban-task-footer span')[1].textContent;
-            taskAssignee.value = taskDiv.querySelectorAll('.kanban-task-footer span')[0].textContent.replace('Ana Andrade', 'Ana Andrade').trim();
-            taskColumnInput.value = columnName;
-            taskIndexInput.value = Array.from(taskContainer.children).indexOf(taskDiv);
-            new bootstrap.Modal(document.getElementById('taskModal')).show();
-          });
-
-          taskDiv.querySelector('.delete-task').addEventListener('click', e => {
-            e.preventDefault();
-            taskDiv.remove();
-          });
-        }
-
-        bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
-      });
-    });
+    
   </script>
 
 </body>

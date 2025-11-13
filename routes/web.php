@@ -39,6 +39,9 @@ Route::middleware(['auth:usuario', 'rol:Lider'])->group(function () {
     Route::get('/lider/notificacion', [LiderController::class, 'notificacion'])->name('lider.notificacion');
     Route::get('/lider/tareas', [LiderController::class, 'tareas'])->name('lider.tareas');
     Route::get('/lider/equipo', [LiderController::class, 'equipo'])->name('lider.equipo');
+    Route::get('/lider/miembros/{id}', [LiderController::class, 'detalleProyecto'])->name('lider.miembros');
+    Route::post('/agregar-miembros',[LiderController::class, 'agregarMiembros'])->name('agregar.miembros');
+    Route::post('/crear-tarea/{id}',[LiderController::class, 'crearTarea'])->name('crear.tarea');
 });
 
 //Rutas para el colaborador
