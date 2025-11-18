@@ -40,11 +40,12 @@
                     <i class="bi bi-people me-2"></i> Colaboradores
                 </a>
             </li>-->
-            <!-- <li class="nav-item mb-2">
-                <a href="{{ route('colab.equipo') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.equipo') ? 'active' : '' }}">
-                    <i class="bi bi-kanban me-2"></i> Mi Equipo
+            <li class="nav-item mb-2">
+                <a href="{{route('colab.proyectos')}}"
+                    class="nav-link d-flex align-items-center {{ request()->routeIs('colab.proyectos') ? 'active' : '' }}">
+                    <i class="bi bi-folder me-2"></i> Proyectos
                 </a>
-            </li> -->
+            </li>
             <li class="nav-item mb-2">
                 <a href="{{route('colab.tareas')}}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.tareas') ? 'active' : '' }}">
                     <i class="bi bi-folder me-2"></i> Tareas

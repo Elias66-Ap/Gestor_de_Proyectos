@@ -225,7 +225,7 @@
         <h2>{{ $proyecto['nombre'] }}</h2>
         <small><i class="bi bi-people"></i> {{ $proyecto['miembros_count'] }} miembros &nbsp; | &nbsp; <i
             class="bi bi-calendar-event"></i> Entrega
-          {{ \Carbon\Carbon::parse($proyecto['fecha_entrega'])->format('d-m-Y') }}</small>
+          {{ Carbon::parse($proyecto['fecha_entrega'])->format('d-m-Y') }}</small>
       </div>
     </div>
     <div class="d-flex align-items-center gap-4 mt-3 mt-md-0">

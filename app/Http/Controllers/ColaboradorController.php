@@ -22,19 +22,40 @@ class ColaboradorController extends Controller
 
         $response = Http::get($this->url . "/proyectos-usuario/{$id}");
 
-        if($response->successful()){
+        if ($response->successful()) {
             $proyectos = $response->json()['proyectos'] ?? [];
             $tareas = $response->json()['tareas'] ?? [];
 
             return view('colab.inicio', compact('proyectos', 'tareas'));
         }
-        
+
         return back()->withErrors(['error' => 'No se pudieron obtener los proyectos y tareas.']);
     }
 
     public function equipo()
     {
         return view('colab.equipo');
+    }
+
+    public function proyectos()
+    {
+        $id = auth()->guard('usuario')->user()->id;
+
+        $response = Http::get($this->url . "/proyectos-colaborador/{$id}");
+
+        if ($response->successful()) {
+            $json = $response->json();
+            $proyectos = $json['proyectos'] ?? [];
+
+            /*foreach ($proyectos as $pro) {
+                $pro['miembros_count'] = isset($pro['miembros'])
+                    ? count($pro['miembros'])
+                    : 0;
+            }*/
+        } else {
+            $proyectos = [];
+        }
+        return view('colab.proyecto', compact('proyectos'));
     }
 
     public function notificacion()
@@ -78,7 +99,7 @@ class ColaboradorController extends Controller
 
         $response = Http::get($this->url . "/tareas-usuario/{$id}");
 
-        if($response->successful()) {
+        if ($response->successful()) {
             $tareas = $response->json()['data'] ?? [];
             return view('colab.tareas', compact('tareas'));
         }

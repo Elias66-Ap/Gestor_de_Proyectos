@@ -1,11 +1,15 @@
 @extends('layouts.app_colab')
 
-@section('content')
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/notificaciones.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+@endsection
 
-<head>
-    <link rel="stylesheet" href="{{ asset('css/notificaciones.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
+@section('content')
 
 <div class="notificaciones-wrapper">
     <div class="notificaciones-header">
@@ -33,11 +37,19 @@
         {{-- Sección Recibidos --}}
         <div class="tab-pane fade show active" id="recibidos" role="tabpanel" aria-labelledby="recibidos-tab">
             <div class="notificaciones-lista">
+
                 @foreach ($recibidos as $rec)
                 @php
                 $fecha = \Carbon\Carbon::parse($rec['fecha_envio']);
+
+                $visto = "";
+                if($rec['visto'] == 1){
+                $visto = "leida";
+                }elseif($rec['visto'] == 0){
+                $visto = "no-leida";
+                }
                 @endphp
-                <div class="notificacion-item"> {{-- leida/no-leida --}}
+                <div class="notificacion-item {{ $visto }}">
                     <div class="icono"><i class="bi bi-envelope-fill"></i></div>
                     <div class="contenido">
                         <h5>{{ $rec['remitente']['nombre'] ?? " "}}
@@ -46,40 +58,43 @@
                         <p>{{ $rec['contenido'] }}</p>
                         <span class="fecha">{{ $fecha->locale('es')->diffForHumans();}}</span>
                     </div>
-                    <button class="btn-accion">Ver</button>
+                    <button class="btn-accion" data-id="{{ $rec['id'] }}">Ver</button>
                 </div>
 
-                @endforeach
-
-
-
-
-            </div>
-        </div>
-
-        {{-- Sección Enviados --}}
-        <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
-            <div class="notificaciones-lista">
-                @foreach ( $enviados as $env )
-                @php
-                $fecha = \Carbon\Carbon::parse($env['fecha_envio']);
-                @endphp
-                <div class="notificacion-item leida">
-                    <div class="icono"><i class="bi bi-send-check-fill"></i></div>
-                    <div class="contenido">
-                        <h5>Mensaje enviado a {{ $env['destinatario']['nombre'] }} {{ $env['destinatario']['apellido'] }}</h5>
-                        <p>{{ $env['contenido'] ?? "" }}</p>
-                        <span class="fecha">{{ $fecha->locale('es')->diffForHumans(); }}</span>
-                    </div>
-                    <button class="btn-accion">Ver</button>
-                </div>
                 @endforeach
             </div>
         </div>
     </div>
+
+
+
+    {{-- Sección Enviados --}}
+    <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
+        <div class="notificaciones-lista">
+            @foreach ( $enviados as $env )
+            @php
+            $fecha = \Carbon\Carbon::parse($env['fecha_envio']);
+            @endphp
+            <div class="notificacion-item leida">
+                <div class="icono"><i class="bi bi-send-check-fill"></i></div>
+                <div class="contenido">
+                    <h5>Mensaje enviado a {{ $env['destinatario']['nombre'] }} {{ $env['destinatario']['apellido'] }}</h5>
+                    <p>{{ $env['contenido'] ?? "" }}</p>
+                    <span class="fecha">{{ $fecha->locale('es')->diffForHumans(); }}</span>
+                </div>
+                <button class="btn-accion">Ver</button>
+            </div>
+            @endforeach
+
+        </div>
+    </div>
+</div>
 </div>
 
 @include('colab.nuevo-mensaje')
-{{-- Bootstrap JS --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@include('colab.ver-mensaje')
 @endsection
+
+@yield('scripts')
+<script src="{{ asset('js/mensajes.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

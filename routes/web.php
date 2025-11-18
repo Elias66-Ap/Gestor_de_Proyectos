@@ -51,6 +51,7 @@ Route::middleware(['auth:usuario', 'rol:Colaborador'])->group(function () {
     Route::get('/colab.notificaciones', [ColaboradorController::class, 'notificacion'])->name('colab.notificaciones');
     Route::get('/colab/perfil', [ColaboradorController::class, 'miPerfil'])->name('colab.perfil');
     Route::get('/colab/tareas', [ColaboradorController::class, 'tareas'])->name('colab.tareas');
+    Route::get('/colab/proyectos', [ColaboradorController::class, 'proyectos'])->name('colab.proyectos');
 });
 
 

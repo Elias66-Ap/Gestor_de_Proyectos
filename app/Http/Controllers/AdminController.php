@@ -172,8 +172,6 @@ class AdminController extends Controller
             'Content-Type' => 'application/json',
         ])->post($this->url . '/proyectos', $data);
 
-        dd($response->json());
-
         if ($response->successful()) {
             return redirect()->back()->with('success', 'Proyecto creado exitosamente');
         } else {

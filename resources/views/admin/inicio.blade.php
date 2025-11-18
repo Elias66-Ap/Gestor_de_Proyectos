@@ -10,46 +10,68 @@
     </div>
 
     {{-- ==== RESUMEN SUPERIOR ==== --}}
-    <div class="row gx-1 gy-1 mb-5 justify-content-around">
-      <div class="col-md-2">
-        <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
-          <i class="bi bi-clipboard-check fs-3 text-success mb-2"></i>
-          <h6 class="text-muted">Tareas Completadas</h6>
-          <h4 class="fw-bold text-dark" id="tar_completadas">0</h4>
-          <small class="text-success fw-semibold" id="tar_comp"><i class="bi bi-graph-up"></i> +12% semana</small>
+    <div class="row gx-3 gy-3 mb-5 justify-content-around">
+
+      <!-- Tareas Completadas -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
+          <i class="bi bi-clipboard-check fs-2 text-secondary mb-2"></i>
+          <h6 class="text-uppercase text-muted">Tareas Completadas</h6>
+          <h3 class="fw-bold text-dark" id="tar_completadas">0</h3>
+          <small class="text-muted fw-semibold" id="tar_comp">
+            <i class="bi bi-arrow-up-short text-success"></i> +12% semana
+          </small>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
-          <i class="bi bi-hourglass-split fs-3 text-warning mb-2"></i>
-          <h6 class="text-muted">Tareas Pendientes</h6>
-          <h4 class="fw-bold text-dark" id="tar_pendientes">0</h4>
-          <small class="text-danger fw-semibold" id="tar_pend"><i class="bi bi-graph-down"></i> -</small>
+
+      <!-- Tareas Pendientes -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
+          <i class="bi bi-hourglass-split fs-2 text-secondary mb-2"></i>
+          <h6 class="text-uppercase text-muted">Tareas Pendientes</h6>
+          <h3 class="fw-bold text-dark" id="tar_pendientes">0</h3>
+          <small class="text-muted fw-semibold" id="tar_pend">
+            <i class="bi bi-arrow-down-short text-danger"></i> -
+          </small>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
-          <i class="bi bi-diagram-3 fs-3 text-info mb-2"></i>
-          <h6 class="text-muted">Proyectos Activos</h6>
-          <h4 class="fw-bold text-dark" id="pro_activos">0</h4>
-          <small class="text-success fw-semibold" id="pro_act"><i class="bi bi-graph-up"></i> -</small>
+
+      <!-- Proyectos Activos -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
+          <i class="bi bi-diagram-3 fs-2 text-secondary mb-2"></i>
+          <h6 class="text-uppercase text-muted">Proyectos Activos</h6>
+          <h3 class="fw-bold text-dark" id="pro_activos">0</h3>
+          <small class="text-muted fw-semibold" id="pro_act">
+            <i class="bi bi-arrow-up-short text-muted"></i> -
+          </small>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
-          <i class="bi bi-check2-circle fs-3 text-secondary mb-2"></i>
-          <h6 class="text-muted">Proyectos Terminados</h6>
-          <h4 class="fw-bold text-dark" id="pro_completados">0</h4>
-          <small class="text-success fw-semibold" id="pro_com"><i class="bi bi-graph-up"></i> -</small>
+
+      <!-- Proyectos Terminados -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
+          <i class="bi bi-check2-circle fs-2 text-secondary mb-2"></i>
+          <h6 class="text-uppercase text-muted">Proyectos Terminados</h6>
+          <h3 class="fw-bold text-dark" id="pro_completados">0</h3>
+          <small class="text-muted fw-semibold" id="pro_com">
+            <i class="bi bi-arrow-up-short text-success"></i> -
+          </small>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm border-0 rounded-4 p-4 text-center">
-          <i class="bi bi-lightning-charge fs-3 text-danger mb-2"></i>
-          <h6 class="text-muted">Productividad Promedio</h6>
-          <h4 class="fw-bold text-dark" id="promedio_rendimiento">0%</h4>
+
+      <!-- Productividad Promedio -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
+          <i class="bi bi-speedometer2 fs-2 text-secondary mb-2"></i>
+          <h6 class="text-uppercase text-muted">Productividad Promedio</h6>
+          <h3 class="fw-bold text-dark" id="prod_promedio">0%</h3>
+          <small class="text-muted fw-semibold" id="prod_detalle">
+            Última semana
+          </small>
         </div>
       </div>
+
     </div>
 
     {{-- ==== GRÁFICOS ==== --}}
@@ -65,12 +87,12 @@
               <option value="febrero">Febrero</option>
               <option value="marzo">Marzo</option>
               <option value="abril">Abril</option>
-              <option value="mayo" selected>Mayo</option>
+              <option value="mayo">Mayo</option>
               <option value="junio">Junio</option>
               <option value="julio">Julio</option>
               <option value="agosto">Agosto</option>
               <option value="septiembre">Septiembre</option>
-              <option value="octubre">Octubre</option>
+              <option value="octubre" selected>Octubre</option>
               <option value="noviembre">Noviembre</option>
               <option value="diciembre">Diciembre</option>
             </select>
@@ -94,7 +116,7 @@
               <option value="6">Julio</option>
               <option value="7">Agosto</option>
               <option value="8">Septiembre</option>
-              <option value="9">Octubre</option>
+              <option value="9" selected>Octubre</option>
               <option value="10">Noviembre</option>
               <option value="11">Diciembre</option>
             </select>
@@ -103,29 +125,6 @@
         </div>
       </div>
 
-      {{-- Productividad --}}
-      <div class="col-12 mt-4">
-        <div class="card shadow-sm border-0 rounded-4 p-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="fw-bold mb-0">📊 Productividad Promedio por Rol</h5>
-            <select id="selectProductividad" class="form-select w-auto">
-              <option value="0">Enero</option>
-              <option value="1">Febrero</option>
-              <option value="2">Marzo</option>
-              <option value="3">Abril</option>
-              <option value="4">Mayo</option>
-              <option value="5">Junio</option>
-              <option value="6">Julio</option>
-              <option value="7">Agosto</option>
-              <option value="8">Septiembre</option>
-              <option value="9">Octubre</option>
-              <option value="10">Noviembre</option>
-              <option value="11">Diciembre</option>
-            </select>
-          </div>
-          <canvas id="graficoProductividad" height="130"></canvas>
-        </div>
-      </div>
     </div>
 
     <div class="text-center mb-5">
@@ -155,8 +154,6 @@
 
   </div>
 
-  </div>
-
   <style>
     .resumen-cajas {
       margin-top: 20px;
@@ -183,11 +180,11 @@
       transform: scale(1.05);
     }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Datos de ejemplo por mes (reemplaza con fetch si quieres datos reales)
       const datosPorMes = {
         proyectos: [
           { activos: 5, terminados: 2, pausa: 1 },
@@ -202,188 +199,85 @@
           { activos: 9, terminados: 7, pausa: 1 },
           { activos: 10, terminados: 8, pausa: 1 },
           { activos: 12, terminados: 10, pausa: 0 }
-        ],
-        productividad: [
-          { lider: 80, colaborador: 75 },
-          { lider: 82, colaborador: 78 },
-          { lider: 85, colaborador: 80 },
-          { lider: 86, colaborador: 81 },
-          { lider: 88, colaborador: 83 },
-          { lider: 90, colaborador: 84 },
-          { lider: 92, colaborador: 86 },
-          { lider: 91, colaborador: 85 },
-          { lider: 89, colaborador: 84 },
-          { lider: 88, colaborador: 83 },
-          { lider: 87, colaborador: 82 },
-          { lider: 86, colaborador: 81 }
         ]
       };
 
-      // IDs y elementos
       const tareasEl = document.getElementById('tareasChart');
       const proyEl = document.getElementById('proyectosChart');
-      const prodEl = document.getElementById('graficoProductividad');
 
-      if (!tareasEl || !proyEl || !prodEl) {
-        console.error('Canvas faltante: revisa que existan tareasChart, proyectosChart y graficoProductividad');
+      if (!tareasEl || !proyEl) {
+        console.error('Canvas faltante: revisa que existan tareasChart y proyectosChart');
         return;
       }
 
-      // ---- Chart: Tareas (línea con 2 datasets) ----
-
-
+      // ---- Chart: Tareas ----
       const semanas = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'];
       const chartTareas = new Chart(tareasEl.getContext('2d'), {
         type: 'line',
         data: {
           labels: semanas,
           datasets: [
-            {
-              label: 'Completadas',
-              data: [], // vacío inicialmente
-              borderColor: '#1cc88a',
-              backgroundColor: 'rgba(28,200,138,0.18)',
-              fill: true,
-              tension: 0.4,
-              borderWidth: 2,
-              pointRadius: 4
-            },
-            {
-              label: 'Pendientes',
-              data: [], // vacío inicialmente
-              borderColor: '#f6c23e',
-              backgroundColor: 'rgba(246,194,62,0.2)',
-              fill: true,
-              tension: 0.4,
-              borderWidth: 2,
-              pointRadius: 4
-            }
+            { label: 'Completadas', data: [], borderColor: '#1cc88a', backgroundColor: 'rgba(28,200,138,0.18)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4 },
+            { label: 'Pendientes', data: [], borderColor: '#f6c23e', backgroundColor: 'rgba(246,194,62,0.2)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4 }
           ]
         },
-        options: {
-          responsive: true,
-          plugins: { legend: { position: 'top' } },
-          scales: {
-            y: { beginAtZero: true, ticks: { color: '#444' } },
-            x: { ticks: { color: '#444' } }
-          }
-        }
+        options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { color: '#444' } }, x: { ticks: { color: '#444' } } } }
       });
 
-      // ---- Chart: Proyectos (doughnut) ----
+      // ---- Chart: Proyectos ----
       const chartProy = new Chart(proyEl.getContext('2d'), {
         type: 'doughnut',
-        data: {
-          labels: ['Activos', 'Terminados', 'En pausa'],
-          datasets: [{
-            data: [0, 0, 0], // inicia vacío
-            backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e']
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { position: 'bottom' } }
-        }
+        data: { labels: ['Activos', 'Terminados', 'En pausa'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e'] }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
       });
 
-      // ---- Chart: Productividad (barra líder vs colaborador) ----
-      const chartProd = new Chart(prodEl.getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: ['Líder', 'Colaborador'],
-          datasets: [{
-            label: 'Productividad (%)',
-            data: [datosPorMes.productividad[4].lider, datosPorMes.productividad[4].colaborador],
-            backgroundColor: ['rgba(54,162,235,0.8)', 'rgba(255,206,86,0.8)']
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: { y: { beginAtZero: true, max: 100 } },
-          plugins: { legend: { display: false } }
-        }
-      });
-
-      // ---- Selectores ----
-      const selectTareas = document.getElementById('selectTareas') || document.getElementById('mesSelector'); // admito ambos nombres
+      const selectTareas = document.getElementById('mesSelector');
       const selectProyectos = document.getElementById('selectProyectos');
-      const selectProductividad = document.getElementById('selectProductividad');
 
-      // función segura para convertir value -> índice (si tu select usa 0..11 o usa nombres)
       function valorAIndice(val) {
-        // si es número (0..11) lo devolvemos
         if (!isNaN(parseInt(val))) return parseInt(val);
-        // si es nombre de mes (enero..diciembre)
         const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
         const idx = meses.indexOf(String(val).toLowerCase());
-        return idx >= 0 ? idx : 4; // default mayo
+        return idx >= 0 ? idx : 4;
       }
 
       const baseUrlProy = 'http://127.0.0.1:8000/api/proyectos-mes/';
+      const baseUrlTareas = 'http://127.0.0.1:8000/api/tareas-mes/';
 
       if (selectProyectos) {
         selectProyectos.addEventListener('change', async (e) => {
           const idx = valorAIndice(e.target.value) + 1;
-
           try {
             const res = await fetch(baseUrlProy + idx);
-            
-            if (!res.ok) throw new Error('Error al obtener datos de proyectos');
             const data = await res.json();
-            console.log(data);
-
-            // Actualizamos los datos del gráfico
             chartProy.data.datasets[0].data = [data.activos, data.terminados, data.pausa];
             chartProy.update();
-            
-          } catch (error) {
-            console.error('Error cargando proyectos del mes:', error);
-          }
+          } catch (err) { console.error('Error cargando proyectos del mes:', err); }
         });
-
-        // Dispara el evento de cambio inicial (ej: mayo)
         selectProyectos.dispatchEvent(new Event('change'));
       }
 
-      // listeners
-      // === Fetch dinámico de tareas desde API ===
-      const baseUrl = 'http://127.0.0.1:8000/api/tareas-mes/';
-
       if (selectTareas) {
         selectTareas.addEventListener('change', async (e) => {
-          const idx = valorAIndice(e.target.value) + 1; // +1 porque API espera 1-12
+          const idx = valorAIndice(e.target.value) + 1;
           try {
-            const res = await fetch(baseUrl + idx);
+            const res = await fetch(baseUrlTareas + idx);
             const data = await res.json();
-
             chartTareas.data.labels = data.map(d => d.semana);
             chartTareas.data.datasets[0].data = data.map(d => d.completadas);
             chartTareas.data.datasets[1].data = data.map(d => d.pendientes);
             chartTareas.update();
-          } catch (error) {
-            console.error('Error cargando tareas del mes:', error);
-          }
+          } catch (err) { console.error('Error cargando tareas del mes:', err); }
         });
-
-        // Disparar el cambio inicial para que cargue datos al inicio
         selectTareas.dispatchEvent(new Event('change'));
       }
 
-      if (selectProductividad) {
-        selectProductividad.addEventListener('change', (e) => {
-          const idx = valorAIndice(e.target.value);
-          const d = datosPorMes.productividad[idx];
-          chartProd.data.datasets[0].data = [d.lider, d.colaborador];
-          chartProd.update();
-        });
-      }
-
-    }); // DOMContentLoaded
+    });
   </script>
 
   @include('admin.registrar')
   @include('admin.registrar-proyecto')
-
   <script src="{{ asset('js/dashboard.js') }}"></script>
   @include('admin.nuevo-mensaje')
+
 @endsection
