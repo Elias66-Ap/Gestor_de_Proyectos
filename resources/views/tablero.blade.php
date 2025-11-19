@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Kanban - E-commerce Redesign</title>
+  <title>Tablero</title>
 
   <!-- Bootstrap y Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -236,10 +236,10 @@
         </div>
         <small>{{ $proyecto['progreso'] }}%</small>
       </div>
-      <button class="btn-exit-pro d-flex align-items-center gap-2 px-3">
+      <a href="{{ route('salir.tablero') }}" class="btn-exit-pro d-flex align-items-center gap-2 px-3">
         <i class="bi bi-box-arrow-right fs-5"></i>
         <span>Salir</span>
-      </button>
+      </a>
     </div>
   </div>
 
@@ -269,13 +269,15 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                       <li><a class="dropdown-item edit-task" href="#">Editar</a></li>
                       <li><a class="dropdown-item delete-task" href="#">Eliminar</a></li>
+                      <li><a class="dropdown-item subir-task" href="#">Subir Tarea</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
               <p>{{ $tarea['descripcion'] }}</p>
               <div class="kanban-task-footer d-flex justify-content-between">
-                <span><i class="bi bi-person-circle"></i> {{ $tarea['asignado']['nombre'] }} {{ $tarea['asignado']['apellido'] }}</span>
+                <span><i class="bi bi-person-circle"></i> {{ $tarea['asignado']['nombre'] }}
+                  {{ $tarea['asignado']['apellido'] }}</span>
                 <span>{{ \Carbon\Carbon::parse($tarea['fecha_vencimiento'])->format('d-m-Y') }}</span>
               </div>
             </div>
@@ -337,10 +339,10 @@
   <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="taskModalLabel">Nueva Tarea</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Nueva Tarea</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
         <form id="taskForm" method="POST" action="{{ route('crear.tarea', $proyecto['id']) }}">
           @csrf
           <div class="modal-body">
@@ -369,7 +371,7 @@
               <select class="form-select" id="selectUsuarios" name="id_asignado">
                 <option selected>Seleccione el miembro</option>
                 @foreach ($miembros as $m)
-                <option value={{ $m['id_usu'] }}>{{$m['nombre']}} {{ $m['apellido'] }}</option>
+                  <option value={{ $m['id_usu'] }}>{{$m['nombre']}} {{ $m['apellido'] }}</option>
                 @endforeach
               </select>
             </div>
@@ -383,8 +385,85 @@
     </div>
   </div>
 
+  {{-- Tareas --}}
+  <div class="modal fade" id="verTareaModal" tabindex="-1" aria-labelledby="TareaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+
+        <!-- HEADER -->
+        <div class="modal-header bg-light border-0 py-3 rounded-top-4">
+          <h5 class="modal-title fw-bold" id="TareaModalLabel">
+            <i class="bi bi-journal-text me-2"></i> Título de la Tarea
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- BODY -->
+        <div class="modal-body px-4 pb-4">
+
+          <!-- Descripción -->
+          <div class="mb-4">
+            <label class="fw-semibold text-secondary mb-1">Descripción</label>
+            <div class="p-3 bg-light rounded-3 border">
+              <p class="mb-0 text-muted" id="descripcionTarea">
+                Aquí irá la descripción detallada de la tarea...
+              </p>
+            </div>
+          </div>
+
+          <!-- Estado -->
+          <form action="#" method="POST">
+            <div class="mb-4">
+              <label class="fw-semibold text-secondary mb-2 d-block">Estado</label>
+
+              <div class="d-flex gap-4 flex-wrap">
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="estado" id="estado1" value="Por hacer">
+                  <label class="form-check-label" for="estado1">Por hacer</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="estado" id="estado2" value="En proceso">
+                  <label class="form-check-label" for="estado2">En Proceso</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="estado" id="estado3" value="Revision">
+                  <label class="form-check-label" for="estado3">Revisión</label>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="mb-4">
+              <label class="fw-semibold text-secondary mb-2" for="contenido">Contenido</label>
+              <textarea class="form-control rounded-3 p-3" name="contenido" id="contenido" rows="3"
+                placeholder="Describe el contenido aquí..."></textarea>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="modal-footer border-0 px-4 pb-4">
+          <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary rounded-3 px-4">
+            Guardar Cambios
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   <script>
-    
+
   </script>
 
 </body>

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use App\Models\Usuario;
 use App\Models\Rendimiento;
-
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -149,7 +149,9 @@ class AdminController extends Controller
             $proyecto = null;
         }
 
-
+        session([
+        'ruta_origen' => url()->previous()
+    ]);
         return view('tablero', compact('proyecto', 'miembros'));
     }
 
@@ -178,5 +180,15 @@ class AdminController extends Controller
             $errors = $response->json('errors', []);
             return redirect()->back()->withErrors($errors)->withInput();
         }
+    }
+
+    public function salirTablero(){
+        $ruta = session('ruta_origen', route('inicio'));
+
+        if(!Str::startsWith($ruta, url('/'))){
+            $ruta = route('inicio');
+        }
+
+        return redirect($ruta)->with('success', 'Saliste del tablero');
     }
 }

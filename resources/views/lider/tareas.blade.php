@@ -83,7 +83,6 @@
   </div>
 </div>
 
-{{-- Scripts --}}
 <div id="lider-info" data-id="{{ auth()->guard('usuario')->user()->id }}"></div>
 
 <style>
