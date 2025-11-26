@@ -106,4 +106,48 @@ class ColaboradorController extends Controller
 
         return back()->withErrors(['error' => 'No se pudieron obtener las tareas.']);
     }
+
+    public function subirTarea(Request $request)
+    {
+        $url = env('URL_SERVER_API', 'http://localhost:8000');
+
+        $texto    = $request->input('texto');          // <- string desde el hidden
+        $archivos = $request->file('archivos') ?? [];  // array de archivos
+        $id_tarea = $request->id_tarea;
+
+        $multipartData = [];
+
+        // Agregar archivos
+        foreach ($archivos as $archivo) {
+            $multipartData[] = [
+                'name'     => 'archivos[]',
+                'contents' => fopen($archivo->getRealPath(), 'r'),
+                'filename' => $archivo->getClientOriginalName(),
+            ];
+        }
+
+        // Agregar texto
+        if (!empty($texto)) {
+            $multipartData[] = [
+                'name'     => 'texto',   // <- este mismo nombre usa la API
+                'contents' => $texto,
+            ];
+        }
+
+        // Agregar id_tarea
+        $multipartData[] = [
+            'name'     => 'id_tarea',
+            'contents' => $id_tarea,
+        ];
+
+        $response = Http::asMultipart()->post($url . '/subir-tarea', $multipartData);
+
+        dd($response->json()); // por ahora para ver que ya venga contenido
+
+        if ($response->successful()) {
+            return redirect()->back()->with('success', 'Contenido subido correctamente');
+        } else {
+            return redirect()->back()->with('error', 'Error al subir contenido');
+        }
+    }
 }

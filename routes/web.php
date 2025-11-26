@@ -63,4 +63,5 @@ Route::middleware('auth:usuario')->group(function () {
     Route::get('tablero/{id}', [AdminController::class, 'verProyecto'])->name('tablero.proyecto');
     Route::post('/enviar-mensaje', [MensajeController::class, 'enviarMensaje'])->name('enviar.mensaje');
     Route::get('/salir-tablero', [AdminController::class, 'salirTablero'])->name('salir.tablero');
+    Route::post('/subir-tarea', [ColaboradorController::class, 'subirTarea'])->name('subir.tarea');
 });

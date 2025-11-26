@@ -5,213 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tablero</title>
-
-  <!-- Bootstrap y Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-  <style>
-    body {
-      background: linear-gradient(135deg, #f7f9fc, #eaeef5);
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .kanban-header {
-      background: linear-gradient(90deg, #0d2a5c, #173b8f);
-      color: white;
-      padding: 1.8rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      border-bottom: 4px solid #00b0ff;
-    }
-
-    .kanban-title h2 {
-      font-weight: 800;
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.5px;
-    }
-
-    .kanban-title small i {
-      margin-right: 5px;
-    }
-
-    .progress {
-      height: 12px;
-      border-radius: 8px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .progress-bar {
-      background: #00b0ff;
-    }
-
-    .kanban-board {
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      max-width: 1600px;
-      margin: auto;
-    }
-
-    .kanban-column {
-      background: #fff;
-      border-radius: 15px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      transition: all 0.25s ease;
-      border: 1px solid #e5e7eb;
-    }
-
-    .kanban-column:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .kanban-column-header {
-      padding: 0.9rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .kanban-column-header button {
-      border: none;
-      background: rgba(255, 255, 255, 0.25);
-      color: inherit;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
-    }
-
-    .kanban-column-header button:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .kanban-tasks {
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      max-height: 500px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #cfcfcf transparent;
-    }
-
-    .kanban-tasks::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .kanban-tasks::-webkit-scrollbar-thumb {
-      background: #cfcfcf;
-      border-radius: 6px;
-    }
-
-    .kanban-task {
-      background: #fff;
-      border: 1px solid #e3e3e3;
-      border-radius: 10px;
-      padding: 0.85rem;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-      transition: all 0.25s ease;
-      cursor: grab;
-    }
-
-    .kanban-task:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    .kanban-task-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-
-    .kanban-task p {
-      font-size: 0.87rem;
-      color: #6c757d;
-      margin-bottom: 0.6rem;
-    }
-
-    .kanban-task-footer {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: #6c757d;
-    }
-
-    .kanban-task-footer i {
-      margin-right: 5px;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.4em 0.6em;
-      border-radius: 20px;
-      text-transform: capitalize;
-      letter-spacing: 0.5px;
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .kanban-column,
-    .kanban-task {
-      animation: fadeInUp 0.4s ease both;
-    }
-
-    .btn-exit-pro {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #fff;
-      font-weight: 500;
-      border-radius: 30px;
-      padding: 0.5rem 1rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .btn-exit-pro:hover {
-      background: linear-gradient(90deg, #ff4e50, #f9d423);
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-exit-pro i {
-      font-size: 1.2rem;
-    }
-
-    .btn-exit-pro span {
-      font-size: 0.95rem;
-    }
-  </style>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link href="{{ asset('css/tablero.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -269,7 +66,15 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                       <li><a class="dropdown-item edit-task" href="#">Editar</a></li>
                       <li><a class="dropdown-item delete-task" href="#">Eliminar</a></li>
-                      <li><a class="dropdown-item subir-task" href="#">Subir Tarea</a></li>
+                      <li>
+                        <a class="dropdown-item subir-task" href="#" data-id="{{ $tarea['id'] }}"
+                          data-titulo="{{ $tarea['titulo'] }}" data-descripcion="{{ $tarea['descripcion'] }}"
+                          data-estado="{{ $tarea['estado'] }}" data-contenido='@json($tarea["contenidos"])'
+                          data-bs-toggle="modal">
+                          Subir Tarea
+                        </a>
+                      </li>
+
                     </ul>
                   </div>
                 </div>
@@ -335,6 +140,8 @@
     </div>
   </div>
 
+
+
   <!-- Modal -->
   <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -389,21 +196,19 @@
   <div class="modal fade" id="verTareaModal" tabindex="-1" aria-labelledby="TareaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content shadow-lg border-0 rounded-4">
-
         <!-- HEADER -->
         <div class="modal-header bg-light border-0 py-3 rounded-top-4">
           <h5 class="modal-title fw-bold" id="TareaModalLabel">
-            <i class="bi bi-journal-text me-2"></i> Título de la Tarea
+            <i class="bi bi-journal-text me-2 fw-bold text-dark"></i> Título de la Tarea
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
         <!-- BODY -->
         <div class="modal-body px-4 pb-4">
 
           <!-- Descripción -->
           <div class="mb-4">
-            <label class="fw-semibold text-secondary mb-1">Descripción</label>
+            <label class="fw-semibold text-dark mb-1 fw-bold">Descripción</label>
             <div class="p-3 bg-light rounded-3 border">
               <p class="mb-0 text-muted" id="descripcionTarea">
                 Aquí irá la descripción detallada de la tarea...
@@ -411,10 +216,15 @@
             </div>
           </div>
 
+
+
+
           <!-- Estado -->
-          <form action="#" method="POST">
+          <form action="{{ route('subir.tarea') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="id_tarea" id="id_tarea">
             <div class="mb-4">
-              <label class="fw-semibold text-secondary mb-2 d-block">Estado</label>
+              <label class="fw-semibold text-dark mb-2 d-block fw-bold">Estado</label>
 
               <div class="d-flex gap-4 flex-wrap">
 
@@ -433,38 +243,221 @@
                   <label class="form-check-label" for="estado3">Revisión</label>
                 </div>
 
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="estado" id="estado4" value="Hecho">
+                  <label class="form-check-label" for="estado3">Hecho</label>
+                </div>
+
+                
+
               </div>
             </div>
-
-            <!-- Contenido -->
-            <div class="mb-4">
-              <label class="fw-semibold text-secondary mb-2" for="contenido">Contenido</label>
-              <textarea class="form-control rounded-3 p-3" name="contenido" id="contenido" rows="3"
-                placeholder="Describe el contenido aquí..."></textarea>
+            <div class="mb-3">
+              <label class="fw-bold">Contenido</label>
+              <!-- TOOLBAR -->
+              <div id="toolbar">
+                <span class="ql-formats">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                </span>
+                <!-- Boton para subir archivos-->
+                <span class="ql-formats">
+                  <button class="ql-link" id="btn-upload-archivo"></button>
+                  <input type="file" name="archivos[]" id="file-input-archivos" style="display:none" multiple>
+                </span>
+              </div>
+              <!-- EDITOR -->
+              <div id="descripcionEditor" style="height: 200px; background: white;"></div>
+              <!-- Campo oculto para enviar al backend -->
+              <input type="hidden" name="texto" id="texto">
+            </div>
+            <div class="mt-2 d-none" id="contenedor-lista-archivos">
+              <label class="fw-semibold text-secondary mb-1">Archivos seleccionados</label>
+              <div id="lista-archivos" class="small text-muted"></div>
             </div>
 
-          </form>
+            <div id="contenidosTarea" class="mb-3 d-flex flex-column gap-2">
+              <!-- Aquí se generarán las tarjetas dinámicamente -->
+            </div>
 
         </div>
-
         <!-- FOOTER -->
         <div class="modal-footer border-0 px-4 pb-4">
           <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">
             Cancelar
           </button>
           <button type="submit" class="btn btn-primary rounded-3 px-4">
-            Guardar Cambios
+            Subir Tarea
           </button>
         </div>
-
+        </form>
       </div>
     </div>
   </div>
-
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
 
+      // Escuchar clic en todos los botones .subir-task
+      document.querySelectorAll('.subir-task').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const modal = document.getElementById('verTareaModal');
+
+          // Obtener datos desde data-*
+          const titulo = this.dataset.titulo;
+          const descripcion = this.dataset.descripcion;
+          const estado = this.dataset.estado;
+          const idTarea = this.dataset.id;
+
+          // Colocar en el modal
+          modal.querySelector('#TareaModalLabel').textContent = titulo;
+          modal.querySelector('#descripcionTarea').textContent = descripcion;
+          modal.querySelector('#id_tarea').value = idTarea;
+
+          // Contenedor de tarjetas
+          const contenedor = modal.querySelector('#contenidosTarea');
+          contenedor.innerHTML = ''; // limpiar
+
+          // Obtener contenidos de data-attributes
+          let contenidos = [];
+          try {
+            // data-contenido='@json($tarea["contenidos"])'
+            contenidos = JSON.parse(this.dataset.contenido);
+          } catch (e) {
+            contenidos = [];
+          }
+          if (!Array.isArray(contenidos)) {
+            contenidos = [];
+          }
+
+          // Generar tarjetas
+          contenidos.forEach((item) => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'contenido-card';
+
+            if (item.tipo === 'archivo') {
+              const fileName = item.valor.split('/').pop();
+              const fileUrl = `http://127.0.0.1:8000/storage/${item.valor}`;
+
+              tarjeta.innerHTML = `
+      <div class="d-flex align-items-center gap-3">
+        <div class="contenido-icon contenido-icon-archivo">
+          <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <div>
+          <div class="contenido-meta-label">Archivo adjunto</div>
+          <div class="fw-semibold">${fileName}</div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <a href="${fileUrl}" class="btn btn-sm btn-outline-primary" rel="noopener noreferrer" target="_blank">
+          <i class="bi bi-download me-1"></i> Descargar
+        </a>
+      </div>
+    `;
+            } else if (item.tipo === 'texto') {
+              tarjeta.innerHTML = `
+      <div class="d-flex align-items-start gap-3 w-100">
+        <div class="contenido-icon contenido-icon-texto">
+          <i class="bi bi-card-text"></i>
+        </div>
+        <div>
+          <div class="contenido-meta-label">Comentario / Link</div>
+          <div class="contenido-texto-body">
+            ${item.valor}
+          </div>
+        </div>
+      </div>
+    `;
+            } else if (item.tipo === 'link') {
+              tarjeta.innerHTML = `
+      <div class="d-flex align-items-center gap-3">
+        <div class="contenido-icon contenido-icon-texto">
+          <i class="bi bi-link-45deg"></i>
+        </div>
+        <div>
+          <div class="contenido-meta-label">Enlace</div>
+          <a href="${item.valor}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none">
+            ${item.valor}
+          </a>
+        </div>
+      </div>
+    `;
+            }
+
+            contenedor.appendChild(tarjeta);
+          });
+
+          // Seleccionar el radio correspondiente al estado
+          modal.querySelectorAll('input[name="estado"]').forEach(radio => {
+            radio.checked = (radio.value.toLowerCase() === estado.toLowerCase());
+          });
+
+          const bsModal = new bootstrap.Modal(modal);
+          bsModal.show();
+        });
+      });
+
+      // Inicializar Quill
+      const quill = new Quill('#descripcionEditor', {
+        theme: 'snow',
+        placeholder: 'Sube el contenido...',
+        modules: { toolbar: '#toolbar' }
+      });
+
+      // Abrir selector de archivos al hacer clic en el icono de enlace
+      document.getElementById('btn-upload-archivo').addEventListener('click', (e) => {
+        e.preventDefault(); // Evita el prompt de enlace de Quill
+        document.getElementById('file-input-archivos').click();
+      });
+
+      // Mostrar lista de archivos seleccionados
+      const fileInput = document.getElementById('file-input-archivos');
+      const listaArchivosDiv = document.getElementById('lista-archivos');
+      const contenedorListaArchivos = document.getElementById('contenedor-lista-archivos');
+
+      fileInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        listaArchivosDiv.innerHTML = ''; // limpiamos
+
+        if (files.length > 0) {
+          contenedorListaArchivos.classList.remove('d-none');
+
+          const ul = document.createElement('ul');
+          ul.classList.add('mb-0', 'ps-3');
+
+          Array.from(files).forEach(file => {
+            const li = document.createElement('li');
+            li.textContent = file.name;
+            ul.appendChild(li);
+          });
+
+          listaArchivosDiv.appendChild(ul);
+        } else {
+          contenedorListaArchivos.classList.add('d-none');
+        }
+      });
+
+
+      const form = document.querySelector('#verTareaModal form');
+      form.addEventListener('submit', function () {
+        // Pasar contenido de Quill al input hidden
+        document.getElementById('texto').value = quill.root.innerHTML;
+      });
+
+    });
   </script>
+
+
 
 </body>
 

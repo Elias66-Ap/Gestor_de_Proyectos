@@ -13,7 +13,13 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item edit-task" href="#">Editar</a></li>
                     <li><a class="dropdown-item delete-task" href="#">Eliminar</a></li>
-                    <li><a class="dropdown-item ver-task" href="#">Subir Tarea</a></li>
+                    <li>
+                        <a class="dropdown-item subir-task" href="#" data-id="{{ $tarea['id'] }}"
+                            data-titulo="{{ $tarea['titulo'] }}" data-descripcion="{{ $tarea['descripcion'] }}"
+                            data-estado="{{ $tarea['estado'] }}" data-bs-toggle="modal">
+                            Subir Tarea
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
