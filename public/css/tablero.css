@@ -270,7 +270,7 @@ body {
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
 }
 
-.contenido-card + .contenido-card {
+.contenido-card+.contenido-card {
     margin-top: 0.5rem;
 }
 
@@ -313,3 +313,254 @@ body {
 .contenido-texto-body p {
     margin-bottom: 0.25rem;
 }
+
+/* --- ARCHIVOS --- */
+.archivo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border: 1px solid #e2e2e2;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.archivo-item:hover {
+    background: #f1f3f5;
+}
+
+.archivo-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.archivo-icon {
+    font-size: 22px;
+    color: #5a5a5a;
+}
+
+.archivo-nombre a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.archivo-nombre a:hover {
+    text-decoration: underline;
+}
+
+.archivo-delete {
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
+
+.archivo-delete:hover {
+    color: #d9534f;
+}
+
+/* --- TEXTOS --- */
+.texto-item {
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    padding: 12px 14px;
+    border-radius: 10px;
+}
+
+.texto-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.texto-icon {
+    font-size: 20px;
+    color: #5a5a5a;
+}
+
+.texto-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+.texto-cuerpo {
+    font-size: 14px;
+    color: #333;
+    margin-top: 3px;
+}
+
+/* --- LINKS --- */
+.link-item {
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    padding: 12px 14px;
+    border-radius: 10px;
+}
+
+.link-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.link-icon {
+    font-size: 20px;
+    color: #5a5a5a;
+}
+
+.link-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+.link-url {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 600;
+}
+/* Contenedor de contenidos dentro del modal */
+#contenidosTarea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Fila genérica */
+.contenido-linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Parte izquierda (icono + texto) */
+.contenido-izquierda {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Icono */
+.contenido-icono {
+  font-size: 18px;
+  color: #6b7280; /* gris neutro */
+  margin-top: 2px;
+}
+
+/* Nombre de archivo */
+.contenido-nombre {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+  text-decoration: none;
+}
+
+.contenido-nombre:hover {
+  text-decoration: underline;
+}
+
+/* Label "Comentario" / "Enlace" */
+.contenido-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+/* Texto HTML del comentario */
+.contenido-texto {
+  font-size: 14px;
+  color: #111827;
+}
+
+/* Link dentro del contenido */
+.contenido-link {
+  font-size: 14px;
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.contenido-link:hover {
+  text-decoration: underline;
+}
+
+/* Botón eliminar (icono basura) */
+.contenido-eliminar {
+  color: #9ca3af;
+}
+
+.contenido-eliminar i {
+  font-size: 18px;
+}
+
+.contenido-eliminar:hover {
+  color: #dc3545;
+}
+
+
+/* Contenedor general */
+.estado-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Ocultar radio original */
+.estado-option input {
+  display: none;
+}
+
+/* Botón estilizado */
+.estado-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 2px solid #d6d9e0;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+  color: #444;
+}
+
+/* Hover */
+.estado-btn:hover {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+/* ICONOS */
+.estado-btn i {
+  font-size: 16px;
+}
+
+/* Estado seleccionado */
+.estado-option input:checked + .estado-btn {
+  background: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+  box-shadow: 0 4px 12px rgba(13,110,253,0.25);
+}
+
+.estado-option input:checked + .estado-btn i {
+  color: white;
+}
+
+.task-movida {
+    animation: moverTask 0.6s ease-out;
+}
+
+@keyframes moverTask {
+    0% { transform: scale(0.95); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 1; }
+}
+

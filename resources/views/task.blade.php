@@ -1,4 +1,4 @@
-<div class="kanban-task">
+<div class="kanban-task" data-id="{{ $tarea['id'] }}">
     <div class="kanban-task-title d-flex justify-content-between align-items-center">
         <span>{{ $tarea['titulo'] }}</span>
         <div class="d-flex align-items-center gap-2">

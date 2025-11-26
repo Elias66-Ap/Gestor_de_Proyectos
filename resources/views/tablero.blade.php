@@ -51,7 +51,7 @@
       <div class="kanban-tasks">
         @foreach ($proyecto['tareas'] as $tarea)
           @if (strtolower($tarea['estado']) == 'por hacer')
-            <div class="kanban-task">
+            <div class="kanban-task" data-id="{{ $tarea['id'] }}">
               <div class="kanban-task-title d-flex justify-content-between align-items-center">
                 <span>{{ $tarea['titulo'] }}</span>
                 <div class="d-flex align-items-center gap-2">
@@ -216,9 +216,6 @@
             </div>
           </div>
 
-
-
-
           <!-- Estado -->
           <form action="{{ route('subir.tarea') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -226,31 +223,38 @@
             <div class="mb-4">
               <label class="fw-semibold text-dark mb-2 d-block fw-bold">Estado</label>
 
-              <div class="d-flex gap-4 flex-wrap">
+              <div class="estado-container">
+                <label class="estado-option">
+                  <input type="radio" name="estado" value="Por hacer">
+                  <span class="estado-btn">
+                    <i class="bi bi-circle"></i> Por hacer
+                  </span>
+                </label>
 
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="estado" id="estado1" value="Por hacer">
-                  <label class="form-check-label" for="estado1">Por hacer</label>
-                </div>
+                <label class="estado-option">
+                  <input type="radio" name="estado" value="En proceso">
+                  <span class="estado-btn">
+                    <i class="bi bi-arrow-repeat"></i> En proceso
+                  </span>
+                </label>
 
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="estado" id="estado2" value="En proceso">
-                  <label class="form-check-label" for="estado2">En Proceso</label>
-                </div>
+                <label class="estado-option">
+                  <input type="radio" name="estado" value="Revision">
+                  <span class="estado-btn">
+                    <i class="bi bi-search"></i> Revisión
+                  </span>
+                </label>
 
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="estado" id="estado3" value="Revision">
-                  <label class="form-check-label" for="estado3">Revisión</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="estado" id="estado4" value="Hecho">
-                  <label class="form-check-label" for="estado3">Hecho</label>
-                </div>
-
-                
-
+                <label class="estado-option">
+                  <input type="radio" name="estado" value="Hecho">
+                  <span class="estado-btn">
+                    <i class="bi bi-check2-circle"></i> Hecho
+                  </span>
+                </label>
               </div>
+
+              <input type="hidden" name="estado" value="">
+
             </div>
             <div class="mb-3">
               <label class="fw-bold">Contenido</label>
@@ -280,9 +284,11 @@
               <label class="fw-semibold text-secondary mb-1">Archivos seleccionados</label>
               <div id="lista-archivos" class="small text-muted"></div>
             </div>
-
-            <div id="contenidosTarea" class="mb-3 d-flex flex-column gap-2">
-              <!-- Aquí se generarán las tarjetas dinámicamente -->
+            <div>
+              <label class="fw-semibold text-secondary mb-1">Tareas subidas</label>
+              <div id="contenidosTarea" class="mb-3 d-flex flex-column gap-2">
+                <!-- Aquí se generarán las tarjetas dinámicamente -->
+              </div>
             </div>
 
         </div>
@@ -304,17 +310,25 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-      // Escuchar clic en todos los botones .subir-task
+      // Base de la API (puedes usar tu constante desde Blade si ya la tienes)
+      const apiBase = "http://127.0.0.1:8000/api";
+
+      const modal = document.getElementById('verTareaModal');
+      const form = modal.querySelector('form');
+
+      let cambioPendiente = null;
+
+      // =======================
+      //   ABRIR MODAL "Subir Tarea"
+      // =======================
       document.querySelectorAll('.subir-task').forEach(btn => {
         btn.addEventListener('click', function (e) {
           e.preventDefault();
 
-          const modal = document.getElementById('verTareaModal');
-
-          // Obtener datos desde data-*
+          // Datos desde data-*
           const titulo = this.dataset.titulo;
           const descripcion = this.dataset.descripcion;
-          const estado = this.dataset.estado;
+          const estado = this.dataset.estado || '';
           const idTarea = this.dataset.id;
 
           // Colocar en el modal
@@ -322,7 +336,7 @@
           modal.querySelector('#descripcionTarea').textContent = descripcion;
           modal.querySelector('#id_tarea').value = idTarea;
 
-          // Contenedor de tarjetas
+          // Contenedor de contenidos ya subidos
           const contenedor = modal.querySelector('#contenidosTarea');
           contenedor.innerHTML = ''; // limpiar
 
@@ -338,124 +352,269 @@
             contenidos = [];
           }
 
-          // Generar tarjetas
+          // Limpiar lista de archivos seleccionados del usuario (nuevos)
+          archivosSeleccionados = [];
+          renderListaArchivos();
+
+          // =======================
+          //   GENERAR TARJETAS DE CONTENIDO YA SUBIDO
+          // =======================
           contenidos.forEach((item) => {
             const tarjeta = document.createElement('div');
-            tarjeta.className = 'contenido-card';
+            tarjeta.className = 'contenido-linea';
 
+            // ARCHIVO
             if (item.tipo === 'archivo') {
               const fileName = item.valor.split('/').pop();
               const fileUrl = `http://127.0.0.1:8000/storage/${item.valor}`;
 
               tarjeta.innerHTML = `
-      <div class="d-flex align-items-center gap-3">
-        <div class="contenido-icon contenido-icon-archivo">
-          <i class="bi bi-file-earmark-text"></i>
-        </div>
-        <div>
-          <div class="contenido-meta-label">Archivo adjunto</div>
-          <div class="fw-semibold">${fileName}</div>
-        </div>
-      </div>
+              <div class="contenido-izquierda">
+                <i class="bi bi-file-earmark-text contenido-icono"></i>
+                <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="contenido-nombre">
+                  ${fileName}
+                </a>
+              </div>
+              <button type="button" class="btn btn-link p-0 contenido-eliminar" title="Eliminar archivo">
+                <i class="bi bi-trash"></i>
+              </button>
+            `;
+            }
 
-      <div class="d-flex gap-2">
-        <a href="${fileUrl}" class="btn btn-sm btn-outline-primary" rel="noopener noreferrer" target="_blank">
-          <i class="bi bi-download me-1"></i> Descargar
-        </a>
-      </div>
-    `;
-            } else if (item.tipo === 'texto') {
+            // TEXTO
+            else if (item.tipo === 'texto') {
               tarjeta.innerHTML = `
-      <div class="d-flex align-items-start gap-3 w-100">
-        <div class="contenido-icon contenido-icon-texto">
-          <i class="bi bi-card-text"></i>
-        </div>
-        <div>
-          <div class="contenido-meta-label">Comentario / Link</div>
-          <div class="contenido-texto-body">
-            ${item.valor}
-          </div>
-        </div>
-      </div>
-    `;
-            } else if (item.tipo === 'link') {
+              <div class="contenido-izquierda">
+                <i class="bi bi-card-text contenido-icono"></i>
+                <div>
+                  <div class="contenido-label">Comentario/Link</div>
+                  <div class="contenido-texto">${item.valor}</div>
+                </div>
+              </div>
+            `;
+            }
+
+            // LINK
+            else if (item.tipo === 'link') {
               tarjeta.innerHTML = `
-      <div class="d-flex align-items-center gap-3">
-        <div class="contenido-icon contenido-icon-texto">
-          <i class="bi bi-link-45deg"></i>
-        </div>
-        <div>
-          <div class="contenido-meta-label">Enlace</div>
-          <a href="${item.valor}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none">
-            ${item.valor}
-          </a>
-        </div>
-      </div>
-    `;
+              <div class="contenido-izquierda">
+                <i class="bi bi-link-45deg contenido-icono"></i>
+                <div>
+                  <div class="contenido-label">Enlace</div>
+                  <a href="${item.valor}" target="_blank" rel="noopener noreferrer" class="contenido-link">
+                    ${item.valor}
+                  </a>
+                </div>
+              </div>
+            `;
             }
 
             contenedor.appendChild(tarjeta);
           });
 
-          // Seleccionar el radio correspondiente al estado
+          // =======================
+          //   MARCAR ESTADO ACTUAL EN LOS RADIOS PILL
+          // =======================
+          const normalizarEstado = (str) => {
+            return (str || '')
+              .toLowerCase()
+              .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quitar acentos
+              .trim();
+          };
+
+          const estadoNormalizado = normalizarEstado(estado);
+
           modal.querySelectorAll('input[name="estado"]').forEach(radio => {
-            radio.checked = (radio.value.toLowerCase() === estado.toLowerCase());
+            const valorNormalizado = normalizarEstado(radio.value);
+            radio.checked = (valorNormalizado === estadoNormalizado);
           });
 
+          // Mostrar modal
           const bsModal = new bootstrap.Modal(modal);
           bsModal.show();
         });
       });
 
-      // Inicializar Quill
+      // =======================
+      //   CAMBIAR ESTADO POR JS (LLAMADA A LA API)
+      // =======================
+      modal.addEventListener('change', function (e) {
+        if (e.target.name !== 'estado') return; // solo radios de estado
+
+        const nuevoEstado = e.target.value; // "Por hacer", "En proceso", "En revision", "Hecho"
+        const idTarea = modal.querySelector('#id_tarea').value;
+        console.log("Id de la tarea", idTarea);
+
+        fetch(`${apiBase}/tareas/cambiar-estado/${idTarea}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ estado: nuevoEstado }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+              moverTarjetaKanban(idTarea, nuevoEstado);
+
+              // Actualizar el dataset del botón que abre el modal
+              const boton = document.querySelector(`.subir-task[data-id="${idTarea}"]`);
+              if (boton) {
+                boton.dataset.estado = nuevoEstado;
+              }
+
+              cambioPendiente = {
+                id: idTarea,
+                estado: nuevoEstado
+              };
+
+
+            } else {
+              alert("No se pudo cambiar el estado.");
+            }
+          })
+          .catch(() => alert("Error al conectar con el servidor."));
+
+      });
+
+      function moverTarjetaKanban(idTarea, nuevoEstado) {
+        const normalizar = (str) => {
+          return (str || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .trim();
+        };
+
+        let estadoNorm = normalizar(nuevoEstado);
+        if (estadoNorm === 'revision') {
+          estadoNorm = 'en revision';
+        }
+
+        const tarjeta = document.querySelector(`.kanban-task[data-id="${idTarea}"]`);
+        if (!tarjeta) return;
+
+        const columnas = document.querySelectorAll('.kanban-column');
+        let columnaDestino = null;
+
+        columnas.forEach(col => {
+          const titulo = col.querySelector('.kanban-column-header span').textContent.trim();
+          let tituloNorm = normalizar(titulo);
+          if (tituloNorm === 'revision') {
+            tituloNorm = 'en revision';
+          }
+          if (tituloNorm === estadoNorm) {
+            columnaDestino = col.querySelector('.kanban-tasks');
+          }
+        });
+
+        if (!columnaDestino) return;
+
+        columnaDestino.appendChild(tarjeta);
+        tarjeta.dataset.estado = nuevoEstado;
+      }
+
+
+
+      //   QUILL
       const quill = new Quill('#descripcionEditor', {
         theme: 'snow',
         placeholder: 'Sube el contenido...',
         modules: { toolbar: '#toolbar' }
       });
 
-      // Abrir selector de archivos al hacer clic en el icono de enlace
+      // =======================
+      //   BOTÓN PARA ABRIR INPUT DE ARCHIVOS
+      // =======================
       document.getElementById('btn-upload-archivo').addEventListener('click', (e) => {
         e.preventDefault(); // Evita el prompt de enlace de Quill
         document.getElementById('file-input-archivos').click();
       });
 
-      // Mostrar lista de archivos seleccionados
+      // =======================
+      //   ARCHIVOS SELECCIONADOS (BADGES + MULTIPLES TANDAS)
+      // =======================
       const fileInput = document.getElementById('file-input-archivos');
       const listaArchivosDiv = document.getElementById('lista-archivos');
       const contenedorListaArchivos = document.getElementById('contenedor-lista-archivos');
 
+      let archivosSeleccionados = [];
+
+      // Selección de archivos (puede hacerse en varias tandas)
       fileInput.addEventListener('change', (event) => {
-        const files = event.target.files;
-        listaArchivosDiv.innerHTML = ''; // limpiamos
+        const nuevos = Array.from(event.target.files);
 
-        if (files.length > 0) {
-          contenedorListaArchivos.classList.remove('d-none');
+        // Acumular con los que ya había
+        archivosSeleccionados = archivosSeleccionados.concat(nuevos);
 
-          const ul = document.createElement('ul');
-          ul.classList.add('mb-0', 'ps-3');
+        // Reconstruir FileList para el input
+        const dt = new DataTransfer();
+        archivosSeleccionados.forEach(f => dt.items.add(f));
+        fileInput.files = dt.files;
 
-          Array.from(files).forEach(file => {
-            const li = document.createElement('li');
-            li.textContent = file.name;
-            ul.appendChild(li);
-          });
+        // Limpiar el value del input para poder seleccionar de nuevo los mismos si se quiere
+        event.target.value = '';
 
-          listaArchivosDiv.appendChild(ul);
-        } else {
-          contenedorListaArchivos.classList.add('d-none');
-        }
+        renderListaArchivos();
       });
 
+      function renderListaArchivos() {
+        listaArchivosDiv.innerHTML = '';
 
-      const form = document.querySelector('#verTareaModal form');
+        if (archivosSeleccionados.length === 0) {
+          contenedorListaArchivos.classList.add('d-none');
+          return;
+        }
+
+        contenedorListaArchivos.classList.remove('d-none');
+
+        archivosSeleccionados.forEach((file, index) => {
+          const badge = document.createElement('div');
+          badge.className = 'archivo-badge';
+
+          badge.innerHTML = `
+          <span class="archivo-icono">
+            <i class="bi bi-paperclip"></i>
+          </span>
+          <span class="archivo-nombre" title="${file.name}">
+            ${file.name}
+          </span>
+          <button type="button" class="archivo-eliminar" data-index="${index}">
+            &times;
+          </button>
+        `;
+
+          listaArchivosDiv.appendChild(badge);
+        });
+
+        // Eliminar archivo desde badge
+        listaArchivosDiv.querySelectorAll('.archivo-eliminar').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const i = parseInt(btn.dataset.index, 10);
+
+            // Quitar del array
+            archivosSeleccionados.splice(i, 1);
+
+            // Reconstruir FileList
+            const dt = new DataTransfer();
+            archivosSeleccionados.forEach(f => dt.items.add(f));
+            fileInput.files = dt.files;
+
+            renderListaArchivos();
+          });
+        });
+      }
+
+      // =======================
+      //   SUBMIT FORM (ENVIAR QUILL)
+      // =======================
       form.addEventListener('submit', function () {
         // Pasar contenido de Quill al input hidden
         document.getElementById('texto').value = quill.root.innerHTML;
+        // NO tocamos los radios de estado: el cambio ya se mandó por fetch.
       });
 
     });
   </script>
+
 
 
 
