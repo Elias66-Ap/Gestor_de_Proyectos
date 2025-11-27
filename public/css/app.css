@@ -1,45 +1,150 @@
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
+/* General */
 body {
-            overflow-x: hidden;
-        }
+    background: #f4f6fb;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    overflow-x: hidden;
+}
 
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            background-color: #1f2a57;
-            /* color azul del sidebar */
-            color: white;
-        }
 
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0d1224;
+    color: white;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+/* LOGO estilo Hamid */
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
 
-        .sidebar .profile-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+.logo-box {
+    width: 38px;
+    height: 38px;
+    background: #18213b;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #8ab4ff;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
 
-        .sidebar .nav-link.active {
-            background-color: #0f3689ff;
-            /* color de fondo del activo */
-            color: white;
-            /* color del texto */
-        }
+.logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin-left: 5px;
+}
 
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+/* PERFIL */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.profile-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.profile-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.profile-role {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: -3px;
+}
+
+/* MENÚ */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: 0.25s ease;
+}
+
+.nav-link i {
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+/* ACTIVO */
+.nav-link.active {
+    background: #1a2b6d;
+    color: #fff !important;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* BADGE */
+.badge {
+    margin-left: auto;
+}
+
+/* SALIR */
+.logout {
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.logout a {
+    color: #f87171;
+    padding: 12px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout a:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* CONTENIDO */
+.content {
+    margin-left: 250px;
+    padding: 40px;
+}
+
+.sidebar,
+.sidebar * {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Fix para iconos Phosphor */
+i[class^="ph-"],
+i[class*=" ph-"] {
+    font-family: 'Phosphor' !important;
+    font-style: normal;
+    font-weight: normal;
+    display: inline-block;
+    line-height: 1;
+    font-size: 20px;
+}

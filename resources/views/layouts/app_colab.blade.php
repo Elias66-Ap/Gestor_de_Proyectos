@@ -6,75 +6,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colaboradores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="{{ asset('css/app.css')  }}" rel="stylesheet">
     @yield('styles')
 </head>
 
 <body>
     @if(auth()->guard('usuario')->check())
-    <div class="sidebar d-flex flex-column p-3">
-        <div class="text-center mb-4">
-            <img src="{{ asset('images/logo.png') }}" alt="Hamid" class="img-fluid mb-2" style="max-height:100px;">
-            <div class="mt-3">
-                <a href="{{ route('colab.perfil') }}" class="text-decoration-none ">
-                    <img src="{{ optional(auth()->guard('usuario')->user()->perfil)->imagen_url ?? asset('images/default.jpeg') }}"
-                        alt="Perfil" class="profile-img mb-1" style="width:80px; height:80px; object-fit:cover; border-radius:50%;">
-                    <div>
+        <div class="sidebar">
+
+            {{-- LOGO estilo Hamid --}}
+            <div class="sidebar-logo d-flex align-items-center gap-3 mb-4">
+                <div class="logo-box">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                </div>
+                <span class="logo-text">Hamid</span>
+            </div>
+
+            {{-- Perfil --}}
+            <div class="profile-section d-flex align-items-center gap-3 mb-4">
+                <img class="profile-photo"
+                    src="{{ optional(auth()->guard('usuario')->user()->perfil)->imagen_url ?? asset('images/default.jpeg') }}">
+
+                <div class="text-white">
+                    <div class="profile-name">
                         {{ optional(auth()->guard('usuario')->user()->perfil)->nombre }}
                         {{ optional(auth()->guard('usuario')->user()->perfil)->apellido }}
                     </div>
-                    <small>{{ auth()->guard('usuario')->user()->rol}}</small>
+                    <div class="profile-role">
+                        {{ auth()->guard('usuario')->user()->rol }}
+                    </div>
+                </div>
+            </div>
+
+            <hr class="text-secondary">
+
+            {{-- Menú --}}
+            <ul class="nav flex-column">
+
+                <li class="nav-item">
+                    <a href="{{ route('colab.inicio') }}"
+                        class="nav-link {{ request()->routeIs('colab.inicio') ? 'active' : '' }}">
+                        <i class="ph-house-duotone"></i> Inicio
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('colab.proyectos') }}"
+                        class="nav-link {{ request()->routeIs('colab.proyectos') ? 'active' : '' }}">
+                        <i class="ph-folder"></i> Proyectos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('colab.tareas') }}"
+                        class="nav-link {{ request()->routeIs('colab.tareas') ? 'active' : '' }}">
+                        <i class="ph-list"></i> Tareas
+                    </a>
+                </li>
+                {{-- <i class="ph-house"></i>
+                <i class="ph-folder"></i>
+                <i class="ph-list"></i>
+                <i class="ph-chat-dots"></i>
+                <i class="ph-user"></i>
+                --}}
+
+                <li class="nav-item">
+                    <a href="{{ route('colab.notificaciones') }}"
+                        class="nav-link {{ request()->routeIs('colab.notificaciones') ? 'active' : '' }}">
+                        <i class="ph-chat-dots"></i> Mensajes
+                        <span id="contador-notificaciones" class="badge bg-danger">3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('colab.perfil') }}"
+                        class="nav-link {{ request()->routeIs('colab.perfil') ? 'active' : '' }}">
+                        <i class="ph-user"></i> Perfil
+                    </a>
+                </li>
+
+            </ul>
+
+            {{-- Cerrar sesión --}}
+            <div class="logout">
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('salirForm').submit();">
+                    <i class="ph-sign-out"></i> Cerrar sesión
                 </a>
             </div>
+
+            <form id="salirForm" method="POST" action="{{ route('logout') }}" class="d-none">
+                @csrf
+            </form>
+
         </div>
-        @endif
-        <hr class="text-white">
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item mb-2">
-                <a href="{{ route('colab.inicio') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.inicio') ? 'active' : '' }}">
-                    <i class="bi bi-house-door me-2"></i> Inicio
-                </a>
-            </li>
-            <!--<li class="nav-item mb-2">
-                <a href="{{ route('lider.colaboradores') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('lider.colaboradores*') ? 'active' : '' }}">
-                    <i class="bi bi-people me-2"></i> Colaboradores
-                </a>
-            </li>-->
-            <li class="nav-item mb-2">
-                <a href="{{route('colab.proyectos')}}"
-                    class="nav-link d-flex align-items-center {{ request()->routeIs('colab.proyectos') ? 'active' : '' }}">
-                    <i class="bi bi-folder me-2"></i> Proyectos
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="{{route('colab.tareas')}}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.tareas') ? 'active' : '' }}">
-                    <i class="bi bi-folder me-2"></i> Tareas
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="{{ route('colab.notificaciones') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.notificaciones') ? 'active' : '' }}">
-                    <i class="bi bi-chat-left-dots me-2"></i>Mensajes<span id="contador-notificaciones" class="badge rounded-pill bg-danger ms-auto">
-            3
-        </span>
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="{{ route('colab.perfil') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('colab.perfil') ? 'active' : '' }}">
-                    <i class="bi bi-person me-2"></i> Perfil
-                </a>
-            </li>
-        </ul>
+    @endif
 
-        <form action="{{ route('logout') }}" method="POST" class="d-none" id="salirForm">
-            @csrf
-        </form>
-
-        <hr class="text-white mt-auto">
-        <a href="{{ route('logout') }}" class="nav-link d-flex align-items-center"
-            onclick="event.preventDefault(); document.getElementById('salirForm').submit();">
-            <i class="bi bi-box-arrow-left ms-3 me-2"></i> Cerrar sesión
-        </a>
-    </div>
     <div class="content">
         @yield('content')
     </div>
