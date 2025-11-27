@@ -1,566 +1,1301 @@
+/* ============================================
+   GLOBAL — TIPOGRAFÍA + BACKGROUND
+============================================ */
 body {
-    background: linear-gradient(135deg, #f7f9fc, #eaeef5);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f6f7f9;
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    color: #1f1f1f;
+    margin: 0;
 }
 
-/* HEADER / LAYOUT GENERAL */
+/* Wrapper general */
+.tablero-wrapper {
+    padding-bottom: 40px;
+}
 
+
+/* ============================================
+   HEADER SUPERIOR (Sticky)
+============================================ */
 .kanban-header {
-    background: linear-gradient(90deg, #0d2a5c, #173b8f);
-    color: white;
-    padding: 1.8rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    border-bottom: 4px solid #00b0ff;
-}
-
-.kanban-title h2 {
-    font-weight: 800;
-    margin-bottom: 0.3rem;
-    letter-spacing: 0.5px;
-}
-
-.kanban-title small i {
-    margin-right: 5px;
-}
-
-.progress {
-    height: 12px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.progress-bar {
-    background: #00b0ff;
-}
-
-.kanban-board {
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    max-width: 1600px;
-    margin: auto;
-}
-
-/* COLUMNAS / TARJETAS */
-
-.kanban-column {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
+    padding: 18px 28px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+
+/* Botón volver */
+.btn-exit-left {
+    background: #f3f4f6;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #374151;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-exit-left:hover {
+    background: #e5e7eb;
+    color: #111;
+}
+
+/* Título */
+.kanban-title-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f1f1f;
+}
+
+.kanban-subtitle {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Progreso */
+.kanban-progress-bar {
+    width: 160px;
+    height: 6px;
+    border-radius: 4px;
+    background: #e5e7eb;
+}
+
+.kanban-progress-bar .progress-bar {
+    background: #3b82f6;
+}
+
+/* Botón crear tarea */
+.btn-create-task {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s ease;
+}
+
+.btn-create-task:hover {
+    background: #1d4ed8;
+}
+
+
+/* ============================================
+   KANBAN BOARD
+============================================ */
+.kanban-board {
+    display: flex;
+    gap: 32px;
+    padding: 26px 32px;
+    overflow-x: auto;
+}
+
+/* Scrollbar moderno */
+.kanban-board::-webkit-scrollbar {
+    height: 6px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+/* ============================================
+   COLUMNAS (SIN BORDES)
+============================================ */
+.kanban-column {
+    min-width: 360px;
+    background: transparent;
+    border: none;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: all 0.25s ease;
-    border: 1px solid #e5e7eb;
 }
 
-.kanban-column:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
+/* Header de columna */
 .kanban-column-header {
-    padding: 0.9rem 1rem;
+    background: transparent;
+    border: none;
+    padding: 4px 4px 12px 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 600;
-    font-size: 1rem;
 }
 
-.kanban-column-header button {
+.column-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1f1f1f;
+}
+
+/* Botón + */
+.column-add-btn,
+.btn-add-task {
+    background: transparent;
     border: none;
-    background: rgba(255, 255, 255, 0.25);
-    color: inherit;
-    border-radius: 50%;
+    font-size: 20px;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: 0.15s ease;
+}
+
+.column-add-btn:hover,
+.btn-add-task:hover {
+    background: #f3f4f6;
+    color: #111;
+}
+
+/* Contenedor de tareas */
+.kanban-tasks {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+/* ============================================
+   TARJETAS — ESTILO ASANA/LINEAR
+============================================ */
+.kanban-task {
+    background: white;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.kanban-task:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Prioridad pill */
+.priority-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Alta / Media / Baja */
+.priority-high {
+    background: #ffe2e2;
+    color: #d02128;
+}
+
+.priority-medium {
+    background: #fff4cf;
+    color: #b78100;
+}
+
+.priority-low {
+    background: #e6fbe8;
+    color: #1f8d3b;
+}
+
+/* Título */
+.kanban-task-title-text {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* Descripción */
+.kanban-task-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 14px;
+}
+
+/* Footer */
+.kanban-task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Avatar */
+.task-avatar {
+    background: #e5e7eb;
     width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
 }
 
-.kanban-column-header button:hover {
-    background: rgba(255, 255, 255, 0.5);
+
+/* ============================================
+   DROPDOWN CUSTOM
+============================================ */
+.task-dropdown-wrapper {
+    position: relative;
 }
 
-.kanban-tasks {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    max-height: 500px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #cfcfcf transparent;
-}
-
-.kanban-tasks::-webkit-scrollbar {
-    width: 6px;
-}
-
-.kanban-tasks::-webkit-scrollbar-thumb {
-    background: #cfcfcf;
+.task-dropdown-btn {
+    border: none;
+    background: transparent;
+    padding: 6px;
+    cursor: pointer;
     border-radius: 6px;
 }
 
-.kanban-task {
+.task-dropdown-btn:hover {
+    background: #f3f4f6;
+}
+
+.task-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 26px;
     background: #fff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    padding: 0.85rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    transition: all 0.25s ease;
-    cursor: grab;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    width: 150px;
+    padding: 6px 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 20;
 }
 
-.kanban-task:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+.task-dropdown-menu a {
+    display: block;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
 }
 
-.kanban-task-title {
+.task-dropdown-menu a:hover {
+    background: #f3f4f6;
+}
+
+.task-dropdown-wrapper.open .task-dropdown-menu {
+    display: block;
+}
+
+
+/* ============================================
+   CONTENIDO SUBIDO (modal)
+============================================ */
+.contenido-linea {
+    background: #f7f8fa;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #e0e3e7;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
 }
 
-.kanban-task p {
-    font-size: 0.87rem;
-    color: #6c757d;
-    margin-bottom: 0.6rem;
+.contenido-nombre {
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 500;
 }
 
-.kanban-task-footer {
+.contenido-eliminar:hover {
+    color: #dc3545 !important;
+}
+
+/* ============================================
+   HEADER — ESTILO SAAS PREMIUM
+============================================ */
+.kanban-header {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 14px 28px;
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    font-size: 0.8rem;
-    color: #6c757d;
+    gap: 24px;
+    z-index: 50;
 }
 
-.kanban-task-footer i {
-    margin-right: 5px;
+/* ====== Botón Volver ====== */
+.header-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #374151;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    transition: 0.2s ease;
+    flex-shrink: 0;
 }
 
-.badge {
-    font-size: 0.7rem;
-    padding: 0.4em 0.6em;
-    border-radius: 20px;
-    text-transform: capitalize;
-    letter-spacing: 0.5px;
+.header-back-btn:hover {
+    background: #e5e7eb;
+    color: #111827;
 }
 
-/* ANIMACIÓN ENTRADA */
+/* ====== Centro: Info del proyecto ====== */
+.header-project-info {
+    flex-grow: 1;
+}
 
-@keyframes fadeInUp {
-    0% {
+.project-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.dot-divider {
+    opacity: .7;
+}
+
+/* ====== Derecha: acciones ====== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+/* --- Progreso pequeño y limpio --- */
+.project-progress {
+    text-align: right;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.progress-sm {
+    height: 6px;
+    border-radius: 5px;
+    background: #e5e7eb;
+    width: 160px;
+    margin: 4px 0;
+}
+
+.progress-sm .progress-bar {
+    background: #3b82f6;
+    border-radius: 5px;
+}
+
+.progress-value {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* ====== Botón Crear tarea ====== */
+.btn-create-task {
+    background: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s ease;
+}
+
+.btn-create-task:hover {
+    background: #1d4ed8;
+}
+
+/* Avatar para miembros del proyecto */
+.project-member-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Cuando NO hay foto */
+.project-member-avatar.initials {
+    background: #e5e7eb;
+    color: #374151;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ============================
+   HEADER MODERNO
+============================ */
+.kanban-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffffd9;
+    padding: 18px 26px;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 100;
+}
+
+/* --- Botón Volver --- */
+.header-back-btn {
+    font-size: 15px;
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: .15s;
+}
+
+.header-back-btn:hover {
+    background: #f1f1f1;
+}
+
+/* --- Centro del header --- */
+.header-center {
+    text-align: center;
+}
+
+.project-title {
+    font-weight: 600;
+    font-size: 20px;
+    color: #1e1e1e;
+}
+
+.project-meta {
+    font-size: 13px;
+    margin-top: 2px;
+    color: #6b7280;
+}
+
+/* ============================
+   AVATARES SUPERPUESTOS
+============================ */
+.project-members-stack {
+    display: flex;
+    position: relative;
+    margin-left: 10px;
+}
+
+.member-item {
+    margin-left: -12px;
+}
+
+.member-item:first-child {
+    margin-left: 0;
+}
+
+.project-member-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #00000015;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Imagen */
+.project-member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Iniciales */
+.project-member-avatar.initials {
+    background: var(--color-avatar, #4f46e5);
+}
+
+/* Paleta de colores rotativa */
+.member-item:nth-child(1) .initials {
+    --color-avatar: #2563eb;
+}
+
+.member-item:nth-child(2) .initials {
+    --color-avatar: #10b981;
+}
+
+.member-item:nth-child(3) .initials {
+    --color-avatar: #f59e0b;
+}
+
+.member-item:nth-child(4) .initials {
+    --color-avatar: #ef4444;
+}
+
+.member-item:nth-child(5) .initials {
+    --color-avatar: #8b5cf6;
+}
+
+.member-item:nth-child(6) .initials {
+    --color-avatar: #06b6d4;
+}
+
+.member-item:nth-child(7) .initials {
+    --color-avatar: #f43f5e;
+}
+
+/* ============================
+   PROGRESO
+============================ */
+.progress-box {
+    min-width: 150px;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.progress-value {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.kanban-progress-bar {
+    height: 6px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    margin-bottom: 2px;
+}
+
+.kanban-progress-bar .progress-bar {
+    background: #3b82f6;
+    border-radius: 4px;
+}
+
+/* ============================
+   Create Task Button
+============================ */
+.btn-create-task {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: .15s;
+}
+
+.btn-create-task i {
+    margin-right: 6px;
+}
+
+.btn-create-task:hover {
+    background: #1d4ed8;
+}
+
+/* ===== HEADER ===== */
+.kanban-header {
+    background: #f8f9fb;
+    padding: 16px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 50;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.header-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: .15s;
+}
+
+.header-back-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* ===== CENTRO ===== */
+.header-center {
+    text-align: center;
+}
+
+.project-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.project-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* ===== DERECHA ===== */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* ===== MIEMBROS ===== */
+.project-members-stack {
+    display: flex;
+    align-items: center;
+}
+
+.member-item {
+    margin-left: -10px;
+}
+
+.project-member-avatar-img,
+.project-member-avatar.initials {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 14px;
+}
+
+.more-members {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #475569;
+    font-size: 13px;
+    margin-left: -10px;
+}
+
+/* ===== BOTÓN CREAR TAREA ===== */
+.btn-create-task {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.15s;
+}
+
+.btn-create-task:hover {
+    background: #1d4ed8;
+}
+
+.kanban-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header-left-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-back-btn {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    color: #2563eb;
+    background: #eff6ff;
+    transition: all 0.2s ease;
+}
+
+.header-back-btn:hover {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.header-left h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #111827;
+}
+
+.header-left p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Members */
+.project-members-stack {
+    display: flex;
+    align-items: center;
+    gap: -8px;
+}
+
+.member-item img,
+.project-member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+.more-members {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 6px 10px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Botón Crear tarea */
+.btn-create-task {
+    padding: 10px 18px;
+    background: #2563eb;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s ease;
+}
+
+.btn-create-task:hover {
+    background: #1e40af;
+}
+
+/* --- CONTENEDOR GENERAL --- */
+.kanban-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 26px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* --- IZQUIERDA: Back + Texto --- */
+.header-left-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+/* Botón volver */
+.header-back-btn {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #4f46e5;
+    transition: 0.2s ease;
+}
+
+.header-back-btn:hover {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+/* --- TÍTULO + FECHAS --- */
+.project-title {
+    margin: 0;
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #111827;
+}
+
+.project-subtitle {
+    margin: 4px 0 0;
+    font-size: 15px;
+    color: #6b7280;
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Icono + fechas */
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #e5e7eb;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #374151;
+}
+
+/* --- AVATARES --- */
+.project-members-stack {
+    display: flex;
+    align-items: center;
+}
+
+.member-item img,
+.project-member-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-left: -8px;
+}
+
+.more-members {
+    width: 38px;
+    height: 38px;
+    margin-left: -8px;
+    background: #d1d5db;
+    color: #374151;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* --- BOTÓN CREAR TAREA --- */
+.btn-create-task {
+    margin-left: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s ease;
+}
+
+.btn-create-task:hover {
+    background: #2563eb;
+}
+
+.date-range-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #eef2ff;
+    border: 1px solid #e0e7ff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #3730a3;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.date-range-chip i {
+    font-size: 18px;
+    color: #4f46e5;
+}
+
+.date-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.date-start,
+.date-end {
+    font-weight: 600;
+}
+
+.date-separator {
+    font-weight: 700;
+    opacity: 0.6;
+    font-size: 16px;
+}
+
+.header-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    /* separa cada línea */
+}
+
+.project-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    color: #111827;
+}
+
+.project-subtitle {
+    font-size: 15px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* FECHA DEBAJO */
+.date-range-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #eef2ff;
+    border: 1px solid #dfe3ff;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #4f46e5;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.date-range-chip i {
+    font-size: 16px;
+}
+
+.project-dates {
+    font-size: 14px;
+    color: #9ca3af;
+    /* gris suave */
+    margin: 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.project-dates i {
+    font-size: 16px;
+    color: #6b7280;
+    /* gris más oscuro para contraste */
+}
+
+#custom-alert-container {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    /* Más grande */
+    max-width: 90%;
+    /* Responsive */
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centra los toasts */
+}
+
+.custom-alert {
+    padding: 20px 24px;
+    /* Más grande */
+    font-size: 17px;
+    /* Texto más grande */
+    margin-bottom: 14px;
+    border-radius: 12px;
+    width: 100%;
+    /* Ocupa todo el espacio del contenedor */
+}
+
+.custom-alert-success {
+    background: #22c55e;
+    /* verde éxito */
+}
+
+.custom-alert-error {
+    background: #ef4444;
+    /* rojo error */
+}
+
+@keyframes slideDown {
+    from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-15px);
     }
 
-    100% {
+    to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.kanban-column,
-.kanban-task {
-    animation: fadeInUp 0.4s ease both;
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
 }
 
-/* BOTÓN SALIR */
-
-.btn-exit-pro {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #fff;
-    font-weight: 500;
-    border-radius: 30px;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
+/* Modal estilo glass */
+.glass-modal {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
 
-.btn-exit-pro:hover {
-    background: linear-gradient(90deg, #ff4e50, #f9d423);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+/* Estilo del mensaje */
+.delete-modal .modal-body p {
+    font-size: 15px;
 }
 
-.btn-exit-pro i {
-    font-size: 1.2rem;
+.delete-modal .modal-footer button {
+    padding: 8px 20px;
+    font-size: 15px;
+    border-radius: 10px;
 }
 
-.btn-exit-pro span {
-    font-size: 0.95rem;
+/* Avatar circular genérico */
+#avatarAsignado {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #374151;
+    border: 2px solid white;
+    overflow: hidden;
 }
 
-/* ESTILOS VIEJOS PARA "ARCHIVO-BADGE" (por si aún los usas en otra parte) */
+/* Para cuando es imagen */
+#avatarAsignado img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-group .btn {
+    font-weight: 600;
+    padding: 10px 14px;
+}
+
+.btn-check:checked+.btn {
+    background: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+/* ------------------------------
+   ARCHIVOS SELECCIONADOS (INPUT)
+--------------------------------*/
+#contenedor-lista-archivos {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    padding: 12px 15px;
+    border-radius: 10px;
+}
 
 .archivo-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 12px;
-    margin: 4px 2px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin: 4px;
     font-size: 14px;
-    position: relative;
+    transition: 0.2s ease;
+}
+
+.archivo-badge:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
 }
 
 .archivo-icono {
-    font-size: 18px;
-}
-
-.archivo-nombre {
-    max-width: 160px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #64748b;
 }
 
 .archivo-eliminar {
+    background: none;
     border: none;
-    background: #ff4d4f;
-    color: white;
-    font-weight: bold;
+    font-size: 16px;
+    color: #ef4444;
     cursor: pointer;
-    font-size: 14px;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    line-height: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 8px;
+    transition: 0.2s ease;
 }
 
 .archivo-eliminar:hover {
-    background: #d4380d;
+    color: #b91c1c;
 }
 
-/* ============================== */
-/*  CONTENIDOS DEL MODAL TAREA   */
-/* ============================== */
-
-/* Tarjetas para archivos / textos ya enviados */
-.contenido-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
+/* ------------------------------
+   TAREAS SUBIDAS
+--------------------------------*/
+#contenidosTarea .contenido-linea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.75rem;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
-}
-
-.contenido-card+.contenido-card {
-    margin-top: 0.5rem;
-}
-
-/* Icono redondo al lado izquierdo */
-.contenido-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-}
-
-.contenido-icon-archivo {
-    background: #e0ecff;
-    color: #0d6efd;
-}
-
-.contenido-icon-texto {
-    background: #e7f6ec;
-    color: #198754;
-}
-
-/* Etiqueta pequeña arriba del nombre/título */
-.contenido-meta-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #6c757d;
-    margin-bottom: 0.1rem;
-}
-
-/* Cuerpo del texto (HTML de Quill) */
-.contenido-texto-body {
-    font-size: 0.9rem;
-    color: #374151;
-}
-
-.contenido-texto-body p {
-    margin-bottom: 0.25rem;
-}
-
-/* --- ARCHIVOS --- */
-.archivo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f9fa;
-    border: 1px solid #e2e2e2;
-    padding: 10px 14px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 12px 14px;
     border-radius: 10px;
     transition: 0.2s ease;
 }
 
-.archivo-item:hover {
-    background: #f1f3f5;
+#contenidosTarea .contenido-linea:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
 }
 
-.archivo-info {
+.contenido-izquierda {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.archivo-icon {
-    font-size: 22px;
-    color: #5a5a5a;
+.contenido-icono {
+    font-size: 20px;
+    color: #475569;
 }
 
-.archivo-nombre a {
+.contenido-nombre,
+.contenido-link {
     text-decoration: none;
-    color: #333;
-    font-weight: 600;
+    font-weight: 500;
+    color: #334155;
 }
 
-.archivo-nombre a:hover {
+.contenido-nombre:hover,
+.contenido-link:hover {
     text-decoration: underline;
 }
 
-.archivo-delete {
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-}
-
-.archivo-delete:hover {
-    color: #d9534f;
-}
-
-/* --- TEXTOS --- */
-.texto-item {
-    background: #fafafa;
-    border: 1px solid #e6e6e6;
-    padding: 12px 14px;
-    border-radius: 10px;
-}
-
-.texto-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.texto-icon {
-    font-size: 20px;
-    color: #5a5a5a;
-}
-
-.texto-label {
-    font-size: 12px;
-    color: #666;
-    font-weight: 600;
-}
-
-.texto-cuerpo {
-    font-size: 14px;
-    color: #333;
-    margin-top: 3px;
-}
-
-/* --- LINKS --- */
-.link-item {
-    background: #fafafa;
-    border: 1px solid #e6e6e6;
-    padding: 12px 14px;
-    border-radius: 10px;
-}
-
-.link-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.link-icon {
-    font-size: 20px;
-    color: #5a5a5a;
-}
-
-.link-label {
-    font-size: 12px;
-    color: #666;
-    font-weight: 600;
-}
-
-.link-url {
-    color: #0d6efd;
-    text-decoration: none;
-    font-weight: 600;
-}
-/* Contenedor de contenidos dentro del modal */
-#contenidosTarea {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* Fila genérica */
-.contenido-linea {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background: #f8f9fa;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 8px 12px;
-}
-
-/* Parte izquierda (icono + texto) */
-.contenido-izquierda {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-/* Icono */
-.contenido-icono {
-  font-size: 18px;
-  color: #6b7280; /* gris neutro */
-  margin-top: 2px;
-}
-
-/* Nombre de archivo */
-.contenido-nombre {
-  font-weight: 600;
-  font-size: 14px;
-  color: #111827;
-  text-decoration: none;
-}
-
-.contenido-nombre:hover {
-  text-decoration: underline;
-}
-
-/* Label "Comentario" / "Enlace" */
-.contenido-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #6b7280;
-}
-
-/* Texto HTML del comentario */
-.contenido-texto {
-  font-size: 14px;
-  color: #111827;
-}
-
-/* Link dentro del contenido */
-.contenido-link {
-  font-size: 14px;
-  color: #0d6efd;
-  text-decoration: none;
-}
-
-.contenido-link:hover {
-  text-decoration: underline;
-}
-
-/* Botón eliminar (icono basura) */
-.contenido-eliminar {
-  color: #9ca3af;
-}
-
 .contenido-eliminar i {
-  font-size: 18px;
+    font-size: 18px;
+    color: #ef4444 !important;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-.contenido-eliminar:hover {
-  color: #dc3545;
+.contenido-eliminar i:hover {
+    color: #b91c1c !important;
 }
 
-
-/* Contenedor general */
-.estado-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+/* Grupo contenedor */
+.estado-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 1.2rem;
 }
 
-/* Ocultar radio original */
-.estado-option input {
-  display: none;
+/* Pill base */
+.estado-pill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s ease;
+    user-select: none;
 }
 
-/* Botón estilizado */
-.estado-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border: 2px solid #d6d9e0;
-  border-radius: 25px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: #fff;
-  color: #444;
+/* Hover (suave y elegante) */
+.estado-pill:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
-/* Hover */
-.estado-btn:hover {
-  border-color: #0d6efd;
-  color: #0d6efd;
+/* ESTADO SELECCIONADO */
+.btn-check:checked + .estado-pill {
+    background: #2563eb;
+    color: white;
+    border-color: #1e40af;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    transform: scale(1.02);
 }
 
-/* ICONOS */
-.estado-btn i {
-  font-size: 16px;
-}
+/* Variantes por estado */
+#estado1:checked + .estado-pill { background: #64748b; border-color: #475569; }
+#estado2:checked + .estado-pill { background: #3b82f6; border-color: #1d4ed8; }
+#estado3:checked + .estado-pill { background: #fbbf24; border-color: #f59e0b; color: #000; }
+#estado4:checked + .estado-pill { background: #22c55e; border-color: #15803d; }
 
-/* Estado seleccionado */
-.estado-option input:checked + .estado-btn {
-  background: #0d6efd;
-  color: white;
-  border-color: #0d6efd;
-  box-shadow: 0 4px 12px rgba(13,110,253,0.25);
+/* Si un estado está deshabilitado por roles */
+.estado-pill:has(input:disabled),
+.btn-check:disabled + .estado-pill {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
-
-.estado-option input:checked + .estado-btn i {
-  color: white;
-}
-
-.task-movida {
-    animation: moverTask 0.6s ease-out;
-}
-
-@keyframes moverTask {
-    0% { transform: scale(0.95); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 1; }
-}
-

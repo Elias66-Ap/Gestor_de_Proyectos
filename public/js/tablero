@@ -1,0 +1,265 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // Base de la API
+      const apiBase = "http://127.0.0.1:8000/api";
+
+      const modal = document.getElementById('verTareaModal');
+      const form = modal.querySelector('form');
+
+      // === QUILL ===
+      const quill = new Quill('#descripcionEditor', {
+        theme: 'snow',
+        placeholder: 'Sube el contenido...',
+        modules: { toolbar: '#toolbar' }
+      });
+
+      // =======================
+      //   ARCHIVOS SELECCIONADOS (BADGES + MULTIPLES TANDAS)
+      // =======================
+      const fileInput = document.getElementById('file-input-archivos');
+      const listaArchivosDiv = document.getElementById('lista-archivos');
+      const contenedorListaArchivos = document.getElementById('contenedor-lista-archivos');
+
+      let archivosSeleccionados = [];
+
+      fileInput.addEventListener('change', (event) => {
+        const nuevos = Array.from(event.target.files);
+
+        archivosSeleccionados = archivosSeleccionados.concat(nuevos);
+
+        const dt = new DataTransfer();
+        archivosSeleccionados.forEach(f => dt.items.add(f));
+        fileInput.files = dt.files;
+
+        event.target.value = '';
+
+        renderListaArchivos();
+      });
+
+      function renderListaArchivos() {
+        listaArchivosDiv.innerHTML = '';
+
+        if (archivosSeleccionados.length === 0) {
+          contenedorListaArchivos.classList.add('d-none');
+          return;
+        }
+
+        contenedorListaArchivos.classList.remove('d-none');
+
+        archivosSeleccionados.forEach((file, index) => {
+          const badge = document.createElement('div');
+          badge.className = 'archivo-badge';
+
+          badge.innerHTML = `
+          <span class="archivo-icono">
+            <i class="bi bi-paperclip"></i>
+          </span>
+          <span class="archivo-nombre" title="${file.name}">
+            ${file.name}
+          </span>
+          <button type="button" class="archivo-eliminar" data-index="${index}">
+            &times;
+          </button>
+        `;
+
+          listaArchivosDiv.appendChild(badge);
+        });
+
+        listaArchivosDiv.querySelectorAll('.archivo-eliminar').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const i = parseInt(btn.dataset.index, 10);
+            archivosSeleccionados.splice(i, 1);
+
+            const dt = new DataTransfer();
+            archivosSeleccionados.forEach(f => dt.items.add(f));
+            fileInput.files = dt.files;
+
+            renderListaArchivos();
+          });
+        });
+      }
+
+      // =======================
+      //   ABRIR MODAL "Subir Tarea"
+      // =======================
+      document.querySelectorAll('.subir-task').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const titulo = this.dataset.titulo;
+          const descripcion = this.dataset.descripcion;
+          const estado = this.dataset.estado || '';
+          const idTarea = this.dataset.id;
+
+          modal.querySelector('#TareaModalLabel').textContent = titulo;
+          modal.querySelector('#descripcionTarea').textContent = descripcion;
+          modal.querySelector('#id_tarea').value = idTarea;
+
+          // Limpiar editor y archivos
+          quill.setText('');
+          archivosSeleccionados = [];
+          renderListaArchivos();
+
+          // Contenidos ya subidos
+          const contenedor = modal.querySelector('#contenidosTarea');
+          contenedor.innerHTML = '';
+
+          let contenidos = [];
+          try {
+            contenidos = JSON.parse(this.dataset.contenido);
+          } catch (e) {
+            contenidos = [];
+          }
+          if (!Array.isArray(contenidos)) {
+            contenidos = [];
+          }
+
+          contenidos.forEach((item) => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'contenido-linea';
+
+            if (item.tipo === 'archivo') {
+              const fileName = item.valor.split('/').pop();
+              const fileUrl = `http://127.0.0.1:8000/storage/${item.valor}`;
+
+              tarjeta.innerHTML = `
+              <div class="contenido-izquierda">
+                <i class="bi bi-file-earmark-text contenido-icono"></i>
+                <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="contenido-nombre">
+                  ${fileName}
+                </a>
+              </div>
+              <button type="button" class="btn btn-link p-0 contenido-eliminar" title="Eliminar archivo">
+                <i class="bi bi-trash"></i>
+              </button>
+            `;
+            } else if (item.tipo === 'texto') {
+              tarjeta.innerHTML = `
+              <div class="contenido-izquierda">
+                <i class="bi bi-card-text contenido-icono"></i>
+                <div>
+                  <div class="contenido-label">Comentario/Link</div>
+                  <div class="contenido-texto">${item.valor}</div>
+                </div>
+              </div>
+            `;
+            } else if (item.tipo === 'link') {
+              tarjeta.innerHTML = `
+              <div class="contenido-izquierda">
+                <i class="bi bi-link-45deg contenido-icono"></i>
+                <div>
+                  <div class="contenido-label">Enlace</div>
+                  <a href="${item.valor}" target="_blank" rel="noopener noreferrer" class="contenido-link">
+                    ${item.valor}
+                  </a>
+                </div>
+              </div>
+            `;
+            }
+
+            contenedor.appendChild(tarjeta);
+          });
+
+          // Marcar estado actual en los radios (estado_js)
+          const normalizarEstado = (str) => {
+            return (str || '')
+              .toLowerCase()
+              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .trim();
+          };
+
+          const estadoNormalizado = normalizarEstado(estado);
+
+          modal.querySelectorAll('input[name="estado_js"]').forEach(radio => {
+            const valorNormalizado = normalizarEstado(radio.value);
+            radio.checked = (valorNormalizado === estadoNormalizado);
+          });
+
+          const bsModal = new bootstrap.Modal(modal);
+          bsModal.show();
+        });
+      });
+
+      // =======================
+      //   CAMBIAR ESTADO POR JS (LLAMADA A LA API)
+      // =======================
+      modal.addEventListener('change', function (e) {
+        if (e.target.name !== 'estado_js') return; // solo nuestros radios
+
+        const nuevoEstado = e.target.value; // "Por hacer", "En proceso", "Revision", "Hecho"
+        const idTarea = modal.querySelector('#id_tarea').value;
+
+        fetch(`${apiBase}/tareas/cambiar-estado/${idTarea}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ estado: nuevoEstado }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+              moverTarjetaKanban(idTarea, nuevoEstado);
+
+              const boton = document.querySelector(`.subir-task[data-id="${idTarea}"]`);
+              if (boton) {
+                boton.dataset.estado = nuevoEstado;
+              }
+
+            } else {
+              alert("No se pudo cambiar el estado.");
+            }
+          })
+          .catch(() => alert("Error al conectar con el servidor."));
+      });
+
+      function moverTarjetaKanban(idTarea, nuevoEstado) {
+        const normalizar = (str) => {
+          return (str || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .trim();
+        };
+
+        let estadoNorm = normalizar(nuevoEstado);
+        if (estadoNorm === 'revision') {
+          estadoNorm = 'en revision';
+        }
+
+        const tarjeta = document.querySelector(`.kanban-task[data-id="${idTarea}"]`);
+        if (!tarjeta) return;
+
+        const columnas = document.querySelectorAll('.kanban-column');
+        let columnaDestino = null;
+
+        columnas.forEach(col => {
+          const titulo = col.querySelector('.kanban-column-header span').textContent.trim();
+          let tituloNorm = normalizar(titulo);
+          if (tituloNorm === 'revision') {
+            tituloNorm = 'en revision';
+          }
+          if (tituloNorm === estadoNorm) {
+            columnaDestino = col.querySelector('.kanban-tasks');
+          }
+        });
+
+        if (!columnaDestino) return;
+
+        columnaDestino.appendChild(tarjeta);
+        tarjeta.dataset.estado = nuevoEstado;
+      }
+
+      // BOTÓN para abrir el input file
+      document.getElementById('btn-upload-archivo').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('file-input-archivos').click();
+      });
+
+      // SUBMIT FORM (enviar texto + archivos al backend)
+      form.addEventListener('submit', function () {
+        document.getElementById('texto').value = quill.root.innerHTML;
+        // El estado NO viaja por este form, solo por fetch.
+      });
+
+    });
+  </script>

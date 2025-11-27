@@ -42,7 +42,7 @@ class AdminController extends Controller
             $sin_perfil = $response->json()['sin_perfil'] ?? $response->json();
         } else {
             $usuarios = [];
-            $sin_perfil =[];
+            $sin_perfil = [];
         }
 
         return view('admin.colaboradores', compact('usuarios', 'sin_perfil'));
@@ -137,7 +137,7 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Usuario registrado');
     }
 
-    public function verProyecto($id)
+    public function verProyecto(Request $request, $id)
     {
         $response = Http::get($this->url . "/proyectos/{$id}");
 
@@ -149,9 +149,10 @@ class AdminController extends Controller
             $proyecto = null;
         }
 
-        session([
-        'ruta_origen' => url()->previous()
-    ]);
+        if ($request->has('from')) {
+            session(['ruta_origen' => $request->get('from')]);
+        }
+
         return view('tablero', compact('proyecto', 'miembros'));
     }
 
@@ -182,12 +183,12 @@ class AdminController extends Controller
         }
     }
 
-    public function salirTablero(){
+    public function salirTablero()
+    {
         $ruta = session('ruta_origen', route('inicio'));
 
-        if(!Str::startsWith($ruta, url('/'))){
-            $ruta = route('inicio');
-        }
+        // limpiar para evitar loops
+        session()->forget('ruta_origen');
 
         return redirect($ruta)->with('success', 'Saliste del tablero');
     }

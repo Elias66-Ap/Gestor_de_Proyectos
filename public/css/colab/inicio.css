@@ -1,0 +1,174 @@
+/* General */
+body {
+    background-color: #f4f6fa;
+}
+
+.card {
+    border-radius: 1rem;
+}
+
+/* Tarjetas de dashboard */
+.card .fs-2 {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Proyectos */
+.project-card {
+    background: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.project-card .fw-semibold {
+    font-size: 1.05rem;
+}
+
+/* Progreso */
+.progress {
+    height: 10px;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    transition: width 0.8s ease;
+}
+
+/* Tareas */
+.task-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.task-card .badge {
+    font-size: 0.75rem;
+}
+
+/* Scroll tareas */
+.task-list {
+    max-height: 400px;
+    /* Ajustable */
+    overflow-y: auto;
+    padding-right: 5px;
+    /* Espacio para scrollbar */
+}
+
+/* Scrollbar moderno */
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Encabezado */
+h2,
+h5 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Responsivo */
+@media(max-width: 768px) {
+    .task-list {
+        max-height: 300px;
+    }
+}
+
+/* ===============================================
+   TARJETAS ESTILO DASHBOARD PREMIUM
+================================================ */
+
+/* Contenedor de la tarjeta */
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.6rem 1.8rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+/* Hover */
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Icono circular */
+.stat-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+    margin-bottom: 1rem;
+}
+
+/* Numero grande */
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: .3rem;
+}
+
+/* Texto debajo */
+.stat-label {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Badge superior derecho */
+.stat-badge {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: #e7fbe7;
+    color: #2e9b42;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+/* Colores de iconos */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.icon-orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.icon-green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.icon-pink {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}

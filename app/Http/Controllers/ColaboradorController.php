@@ -109,15 +109,44 @@ class ColaboradorController extends Controller
 
     public function subirTarea(Request $request)
     {
+        // ===========================
+        // LIMPIAR TEXTO DE QUILL
+        // ===========================
+        $quillTexto = trim(strip_tags($request->texto));
+
+        if ($quillTexto === '' || $quillTexto === '&nbsp;' || $quillTexto === '<br>') {
+            $request->merge(['texto' => null]);
+        }
+
+        // ===========================
+        // VALIDACIÓN
+        // ===========================
+        $request->validate([
+            'archivos.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,7z,sql,txt,jpg,jpeg,png,webp',
+            'texto'      => 'nullable|string',
+            'id_tarea'   => 'required'
+        ], [
+            'archivos.*.mimes' => 'Uno o más archivos tienen un formato no permitido.',
+            'id_tarea.required' => 'La tarea seleccionada no es válida.',
+        ]);
+
+        // Validación adicional: necesita archivo O texto
+        if (!$request->hasFile('archivos') && empty($request->texto)) {
+            return redirect()->back()
+                ->with('error', 'Debes subir al menos un archivo o escribir un texto.');
+        }
+
+        // ===========================
+        // ENVÍO A API
+        // ===========================
         $url = env('URL_SERVER_API', 'http://localhost:8000');
 
-        $texto    = $request->input('texto');          // <- string desde el hidden
-        $archivos = $request->file('archivos') ?? [];  // array de archivos
+        $texto    = $request->input('texto');
+        $archivos = $request->file('archivos') ?? [];
         $id_tarea = $request->id_tarea;
 
         $multipartData = [];
 
-        // Agregar archivos
         foreach ($archivos as $archivo) {
             $multipartData[] = [
                 'name'     => 'archivos[]',
@@ -126,15 +155,13 @@ class ColaboradorController extends Controller
             ];
         }
 
-        // Agregar texto
         if (!empty($texto)) {
             $multipartData[] = [
-                'name'     => 'texto',   // <- este mismo nombre usa la API
+                'name'     => 'texto',
                 'contents' => $texto,
             ];
         }
 
-        // Agregar id_tarea
         $multipartData[] = [
             'name'     => 'id_tarea',
             'contents' => $id_tarea,
@@ -142,12 +169,10 @@ class ColaboradorController extends Controller
 
         $response = Http::asMultipart()->post($url . '/subir-tarea', $multipartData);
 
-        dd($response->json()); // por ahora para ver que ya venga contenido
-
         if ($response->successful()) {
-            return redirect()->back()->with('success', 'Contenido subido correctamente');
-        } else {
-            return redirect()->back()->with('error', 'Error al subir contenido');
+            return redirect()->back()->with('success', 'Tarea enviada con éxito.');
         }
+
+        return redirect()->back()->with('error', 'Error al subir contenido: ' . $response->body());
     }
 }
