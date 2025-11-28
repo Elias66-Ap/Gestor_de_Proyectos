@@ -39,21 +39,20 @@
             {{-- Sección Recibidos --}}
             <div class="tab-pane fade show active" id="recibidos" role="tabpanel" aria-labelledby="recibidos-tab">
                 <div class="notificaciones-lista">
-
                     @foreach ($recibidos as $rec)
                         @php
                             $fecha = \Carbon\Carbon::parse($rec['fecha_envio']);
                             $visto = $rec['visto'] ? "leida" : "no-leida";
                         @endphp
-
-                        {{-- 🔁 NUEVO BLOQUE MODERNO AQUÍ --}}
                         <div class="notificacion-item {{ $visto }}">
-
                             @php
                                 $img = $rec['remitente']['imagen'] ?? null;
-                                $inicial = strtoupper(substr($rec['remitente']['nombre'] ?? "U", 0, 1));
-                            @endphp
 
+                                $nombre = $rec['remitente']['nombre'] ?? '';
+                                $apellido = $rec['remitente']['apellido'] ?? '';
+
+                                $inicial = strtoupper(substr($nombre, 0, 1) . substr($apellido, 0, 1));
+                            @endphp
                             <div class="avatar-wrapper">
                                 @if ($img)
                                     <img class="avatar-mini" src="{{ asset('storage/' . $img) }}">
@@ -61,7 +60,6 @@
                                     <div class="avatar-text">{{ $inicial }}</div>
                                 @endif
                             </div>
-
                             <div class="contenido">
                                 <h5>{{ $rec['remitente']['nombre'] ?? "" }} {{ $rec['remitente']['apellido'] ?? "" }}</h5>
                                 <p>{{ $rec['contenido'] }}</p>
@@ -75,22 +73,23 @@
 
                 </div>
             </div>
-
-
-
             {{-- Sección Enviados --}}
             <div class="tab-pane fade" id="enviados" role="tabpanel" aria-labelledby="enviados-tab">
                 <div class="notificaciones-lista">
+
                     @foreach ($enviados as $env)
                         @php
                             $fecha = \Carbon\Carbon::parse($env['fecha_envio']);
-                        @endphp
-                        <div class="notificacion-item leida">
-                            @php
-                                $img = $env['remitente']['imagen'] ?? null;
-                                $inicial = strtoupper(substr($env['remitente']['nombre'] ?? "U", 0, 1));
-                            @endphp
 
+                            $img = $env['destinatario']['imagen'] ?? null;
+
+                            $nombre = $env['destinatario']['nombre'] ?? '';
+                            $apellido = $env['destinatario']['apellido'] ?? '';
+
+                            $inicial = strtoupper(substr($nombre, 0, 1) . substr($apellido, 0, 1));
+                        @endphp
+
+                        <div class="notificacion-item leida">
                             <div class="avatar-wrapper">
                                 @if ($img)
                                     <img class="avatar-mini" src="{{ asset('storage/' . $img) }}">
@@ -103,15 +102,17 @@
                                 <h5>Mensaje enviado a {{ $env['destinatario']['nombre'] }}
                                     {{ $env['destinatario']['apellido'] }}
                                 </h5>
-                                <p>{{ $env['contenido'] ?? "" }}</p>
+                                <p>{{ $env['contenido'] }}</p>
                                 <span class="fecha">{{ $fecha->locale('es')->diffForHumans() }}</span>
                             </div>
 
                             <button class="btn-accion" data-id="{{ $env['id'] }}">Ver</button>
                         </div>
                     @endforeach
+
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -119,6 +120,7 @@
     @include('admin.ver-mensaje')
 @endsection
 
-@yield('scripts')
+@section('scrsection: ipts')
 <script src="{{ asset('js/mensajes.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@endsection

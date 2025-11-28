@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <a href="{{ route('colab.usuarios') }}"
                         class="nav-link {{ request()->routeIs('colab.usuarios') ? 'active' : '' }}">
-                        <i class="ph ph-folder"></i> Proyectos
+                        <i class="ph ph-users"></i> Colaboradores
                     </a>
                 </li>
 

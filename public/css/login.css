@@ -1,125 +1,186 @@
-body,
-html {
-    height: 100%;
-    font-family: 'Prompt', sans-serif;
+/* =============================
+   LOGIN MODERNO – PALETA DEL SISTEMA
+   Sidebar: #0F172A — Azul acento: #3b82f6
+============================= */
+
+body {
     margin: 0;
+    background: #f1f5f9;
+    font-family: "Inter", sans-serif;
+    color: #1f2937;
 }
 
+/* Contenedor principal */
 .login-container {
     display: flex;
     height: 100vh;
 }
 
-/* Panel izquierdo */
+/* ------------------------------
+   PANEL IZQUIERDO
+------------------------------ */
 .left-panel {
     flex: 1;
-    background: linear-gradient(135deg, #162C6A, #1E3A8A);
-    color: #FFFFFF;
+    background: #0F172A;
+    color: white;
+    padding: 70px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
     text-align: center;
 }
 
-.left-panel h1 {
-    font-weight: 700;
-    font-size: 2.5rem;
+/* Animación suave SOLO para los textos */
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.left-panel h1,
+.left-panel p {
+    opacity: 0;
+    animation: fadeSlideIn 0.8s ease forwards;
 }
 
 .left-panel p {
-    font-size: 1.1rem;
-    opacity: 0.9;
+    animation-delay: 0.15s;
 }
 
-/* Panel derecho */
+.left-panel h1 {
+    font-size: 44px;
+    font-weight: 800;
+}
+
+.left-panel p {
+    margin-top: 10px;
+    font-size: 17px;
+    opacity: 0.85;
+}
+
+/* ------------------------------
+   PANEL DERECHO
+------------------------------ */
 .right-panel {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F3F4F6;
+    padding: 40px;
 }
 
+/* ------------------------------
+   TARJETA LOGIN
+------------------------------ */
 .login-card {
-    background: #FFFFFF;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    padding: 2rem;
     width: 100%;
-    max-width: 400px;
-    animation: fadeIn 1s ease-in-out;
+    max-width: 380px;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+    /* Animación suave sin moverse lateralmente */
+    opacity: 0;
+    animation: fadeSlideIn 0.7s ease forwards;
+    animation-delay: .2s;
 }
 
 .login-card h2 {
-    color: #162C6A;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    text-align: center;
+    margin-bottom: 22px;
+    font-size: 26px;
+    color: #0F172A;
+}
+
+/* ------------------------------
+   INPUTS
+------------------------------ */
+.input-group-text {
+    background: #ffffff !important;
+    border: 1px solid #d1d5db;
+    border-right: none;
+    color: #475569;
 }
 
 .form-control {
-    border-radius: 12px;
-    padding-left: 2.5rem;
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    border-left: none !important;
+    padding: 11px 14px;
+    transition: all 0.25s ease;
 }
 
-.input-group-text {
-    background: transparent;
-    border: none;
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6B7280;
+.form-control::placeholder {
+    color: #94a3b8;
 }
 
-.input-group {
-    position: relative;
+/* Focus azul */
+.form-control:focus {
+    background: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
 }
 
+/* ------------------------------
+   BOTÓN LOGIN — COLOR SIDEBAR
+------------------------------ */
 .btn-login {
-    background: linear-gradient(90deg, #2563EB, #1E3A8A);
+    background-color: #0F172A !important;
     border: none;
-    border-radius: 12px;
-    padding: 0.75rem;
+    padding: 12px;
+    border-radius: 10px;
     font-weight: 600;
-    color: #FFFFFF;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: white;
+    font-size: 16px;
+    transition: 0.2s ease;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
 }
 
 .btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+    background-color: #1E293B !important;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.35);
 }
 
-.forgot {
-    text-align: center;
-    margin-top: 1rem;
-}
-
+/* ------------------------------
+   LINKS
+------------------------------ */
 .forgot a {
-    text-decoration: none;
-    color: #2563EB;
-    font-weight: 500;
-}
-
-footer {
+    display: block;
+    margin-top: 15px;
     text-align: center;
-    padding: 1rem;
-    font-size: 0.85rem;
-    color: #6B7280;
+    color: #3b82f6;
+    font-size: 14px;
+    text-decoration: none;
+    transition: .2s;
 }
 
-/* Animación */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+.forgot a:hover {
+    text-decoration: underline;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+/* ------------------------------
+   FOOTER
+------------------------------ */
+footer {
+    background: #fff;
+    padding: 14px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .left-panel {
+        display: none;
     }
 }

@@ -57,7 +57,7 @@
                         <i class="bi bi-calendar-event"></i>
                     </div>
                     <div class="stat-value" id="tar_hoy">0</div>
-                    <div class="stat-label">Próximas Entregas</div>
+                    <div class="stat-label">Entrega hoy</div>
                 </div>
             </div>
         </div>

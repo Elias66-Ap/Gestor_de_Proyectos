@@ -56,7 +56,15 @@ class LiderController extends Controller
 
     public function colaboradores()
     {
-        return view('lider.colaboradores');
+        $response = Http::get($this->url . "/usuarios-todos");
+
+        if ($response->successful()) {
+            $json = $response->json();
+            $usuarios = $json['data'] ?? [];
+        } else {
+            $usuarios = [];
+        }
+        return view('lider.colaboradores', compact('usuarios'));
     }
     public function notificacion()
     {
@@ -154,5 +162,18 @@ class LiderController extends Controller
             $errors = $response->json('errors', []);
             return redirect()->back()->withErrors($errors)->withInput();
         }
+    }
+
+    public function completarProyecto($id)
+    {
+        $url = env('URL_SERVER_API', 'http://localhost:8000');
+        $response = Http::patch($url . "/completar-proyecto/{$id}");
+
+        if ($response->successful()) {
+            return redirect()->back()->with('success', 'Proyecto marcado como completado');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'No se pudo completar el proyecto']);
+        }
+
     }
 }

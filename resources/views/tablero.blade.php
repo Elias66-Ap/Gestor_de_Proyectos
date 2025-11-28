@@ -82,10 +82,18 @@
           @endif
 
         </div>
+        @if (auth()->guard('usuario')->user()->rol != 'Colaborador')
 
-        <button class="btn-create-task" data-bs-toggle="modal" data-bs-target="#taskModal">
-          <i class="bi bi-plus-lg"></i> Add Task
-        </button>
+          <button class="btn-create-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <i class="bi bi-plus-lg"></i> Agregar Tarea
+          </button>
+
+          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmFinalizarModal">
+            <i class="bi bi-check-circle"></i> Completado
+          </button>
+
+        @endif
+
 
       </div>
     </div>
@@ -160,6 +168,39 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="confirmFinalizarModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar completado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          ¿Estás seguro de marcar este proyecto como <strong>COMPLETADO</strong>?
+        </div>
+
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+          <form action="{{ route('completar.proyecto', $proyecto['id']) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <button type="submit" class="btn btn-success">
+              Sí, completar proyecto
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- Modal -->
   <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
@@ -409,7 +450,6 @@
           // Obtener contenidos de data-attributes
           let contenidos = [];
           try {
-            // data-contenido='@json($tarea["contenidos"])'
             contenidos = JSON.parse(this.dataset.contenido);
           } catch (e) {
             contenidos = [];

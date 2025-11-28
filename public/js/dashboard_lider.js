@@ -10,8 +10,8 @@ async function cargarDashboard() {
         if (status === 'success') {
             document.getElementById('tar_creadas').textContent = data.tareas.creadas;
             document.getElementById('var_creadas').textContent = data.tareas.creadasSemana;
-            document.getElementById('tar_pendientes').textContent = data.tareas.pendientes;
-            document.getElementById('var_pendientes').textContent = data.tareas.pendientesHoy;
+            //document.getElementById('tar_pendientes').textContent = data.tareas.pendientes;
+            //document.getElementById('var_pendientes').textContent = data.tareas.pendientesHoy;
             document.getElementById('tar_asignadas').textContent = data.tareas.asignadas;
             document.getElementById('var_asignadas').textContent = data.tareas.asignadasSemana;
 
@@ -19,8 +19,8 @@ async function cargarDashboard() {
             document.getElementById('pro_activos_var').textContent = data.proyectos.activosMes;
             document.getElementById('pro_completados').textContent = data.proyectos.completados;
             document.getElementById('pro_completados_var').textContent = data.proyectos.completadosMes;
-            document.getElementById('pro_creados').textContent = data.proyectos.creados;
-            document.getElementById('pro_creados_var').textContent = data.proyectos.creadosMes;
+            //document.getElementById('pro_creados').textContent = data.proyectos.creados;
+            //document.getElementById('pro_creados_var').textContent = data.proyectos.creadosMes;
         }
     } catch (error) {
         console.error("Error al cargar el dashboard", error);

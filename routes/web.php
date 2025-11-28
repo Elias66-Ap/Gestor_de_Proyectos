@@ -42,6 +42,8 @@ Route::middleware(['auth:usuario', 'rol:Lider'])->group(function () {
     Route::get('/lider/miembros/{id}', [LiderController::class, 'detalleProyecto'])->name('lider.miembros');
     Route::post('/agregar-miembros',[LiderController::class, 'agregarMiembros'])->name('agregar.miembros');
     Route::post('/crear-tarea/{id}',[LiderController::class, 'crearTarea'])->name('crear.tarea');
+    Route::patch('/completar-proyecto/{id}', [LiderController::class, 'completarProyecto'])->name('completar.proyecto');
+
 });
 
 //Rutas para el colaborador

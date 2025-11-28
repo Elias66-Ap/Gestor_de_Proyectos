@@ -1,197 +1,145 @@
 @extends('layouts.app_lider')
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<style>
-  .icon-circle {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
-
-  .hover-shadow:hover {
-    transform: translateY(-5px);
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
-  }
-
-  
-</style>
+<link rel="stylesheet" href="{{ asset('css/lider/inicio.css') }}">
 @endsection
 @section('content1')
 
-<div class="container-fluid bg-white min-vh-100 py-4 px-5">
+  <main>
 
-  {{-- Tareas creadas --}}
 
-  {{-- Tareas creadas --}}
-  <div class="container-fluid py-4">
-    <div class="row g-4">
-
-      {{-- ===== PRIMERA FILA ===== --}}
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-success mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-clipboard-check fs-3 text-white"></i>
+    {{-- -NUEVOSOS --}}
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="var_creadas">+2 esta semana</span>
+          <div class="stat-icon icon-blue">
+            <i class="bi bi-kanban-fill"></i>
           </div>
-          <h6 class="text-muted mb-1">Tareas Creadas</h6>
-          <h3 class="fw-bold mb-2" id="tar_creadas">0</h3>
-          <small class="text-success fw-semibold" id="var_creadas"><i class="bi bi-graph-up"></i></small>
+          <div class="stat-value" id="tar_creadas">12</div>
+          <div class="stat-label">Tareas Creadas</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="var_asignadas">+1 desde ayer</span>
+          <div class="stat-icon icon-orange">
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+          <div class="stat-value" id="tar_asignadas">2</div>
+          <div class="stat-label">Tareas asignadas</div>
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-warning mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-hourglass-split fs-3 text-white"></i>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="pro_activos_var">+4 este mes</span>
+          <div class="stat-icon icon-green">
+            <i class="bi bi-trophy-fill"></i>
           </div>
-          <h6 class="text-muted mb-1">Tareas Pendientes</h6>
-          <h3 class="fw-bold mb-2" id="tar_pendientes">0</h3>
-          <small class="text-danger fw-semibold" id="var_pendientes"><i class="bi bi-graph-down"></i></small>
+          <div class="stat-value" id="pro_activos">4</div>
+          <div class="stat-label">Proyectos activos</div>
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-primary mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-person-badge fs-3 text-white"></i>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon icon-pink">
+            <span class="stat-badge" id="pro_completados_var">+4 este mes</span>
+            <i class="bi bi-speedometer2"></i>
           </div>
-          <h6 class="text-muted mb-1">Tareas Asignadas</h6>
-          <h3 class="fw-bold mb-2" id="tar_asignadas">0</h3>
-          <small class="text-info fw-semibold" id="var_asignadas"><i class="bi bi-graph-up"></i></small>
+          <div class="stat-value" id="pro_completados">70%</div>
+          <div class="stat-label">Proyectos completados</div>
         </div>
-      </div>
-
-      {{-- ===== SEGUNDA FILA ===== --}}
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-info mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-diagram-3 fs-3 text-white"></i>
-          </div>
-          <h6 class="text-muted mb-1">Proyectos Creados</h6>
-          <h3 class="fw-bold mb-2" id="pro_creados">0</h3>
-          <small class="text-success fw-semibold" id="pro_creados_var"><i class="bi bi-graph-up"></i></small>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-primary mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-diagram-3 fs-3 text-white"></i>
-          </div>
-          <h6 class="text-muted mb-1">Proyectos Activos</h6>
-          <h3 class="fw-bold mb-2" id="pro_activos">0</h3>
-          <small class="text-success fw-semibold" id="pro_activos_var"><i class="bi bi-graph-up"></i></small>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 text-center hover-shadow" style="background: #f8f9fa;">
-          <div class="icon-circle bg-secondary mb-3 mx-auto" style="width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
-            <i class="bi bi-check2-circle fs-3 text-white"></i>
-          </div>
-          <h6 class="text-muted mb-1">Proyectos Completados</h6>
-          <h3 class="fw-bold mb-2" id="pro_completados">0</h3>
-          <small class="text-success fw-semibold" id="pro_completados_var"><i class="bi bi-graph-up"></i> 0 mes</small>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-
-  {{-- ==== GRÁFICOS ==== --}}
-  <div class="row g-4 justify-content-center">
-
-    {{-- === Tareas (gráfico de líneas con cambio de mes) === --}}
-    <div class="col-lg-7 col-md-10">
-      <div class="card shadow-sm border-0 rounded-4 p-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold mb-0">📈 Tareas Completadas vs Pendientes</h5>
-          <select id="mesSelector" class="form-select w-auto">
-            <option value="enero">Enero</option>
-            <option value="febrero">Febrero</option>
-            <option value="marzo">Marzo</option>
-            <option value="abril">Abril</option>
-            <option value="mayo" selected>Mayo</option>
-            <option value="junio">Junio</option>
-            <option value="julio">Julio</option>
-            <option value="agosto">Agosto</option>
-            <option value="septiembre">Septiembre</option>
-            <option value="octubre">Octubre</option>
-            <option value="noviembre">Noviembre</option>
-            <option value="diciembre">Diciembre</option>
-          </select>
-        </div>
-        <canvas id="tareasChart" width="230" height="130"></canvas>
       </div>
     </div>
 
-    {{-- Proyectos (doughnut) --}}
-    <div class="col-lg-4 col-md-6">
-      <div class="card shadow-sm border-0 rounded-4 p-3 h-100">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h6 class="fw-bold mb-0">📊 Proyectos Activos vs Terminados</h6>
-          <select id="selectProyectos" class="form-select w-auto">
-            <option value="0">Enero</option>
-            <option value="1">Febrero</option>
-            <option value="2">Marzo</option>
-            <option value="3">Abril</option>
-            <option value="4">Mayo</option>
-            <option value="5">Junio</option>
-            <option value="6">Julio</option>
-            <option value="7">Agosto</option>
-            <option value="8">Septiembre</option>
-            <option value="9">Octubre</option>
-            <option value="10">Noviembre</option>
-            <option value="11">Diciembre</option>
-          </select>
+
+
+    {{-- ==== GRÁFICOS ==== --}}
+    <div class="row g-4 justify-content-center">
+
+      {{-- === Tareas (gráfico de líneas con cambio de mes) === --}}
+      <div class="col-lg-7 col-md-10">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">📈 Tareas Completadas vs Pendientes</h5>
+            <select id="mesSelector" class="form-select w-auto">
+              <option value="enero">Enero</option>
+              <option value="febrero">Febrero</option>
+              <option value="marzo">Marzo</option>
+              <option value="abril">Abril</option>
+              <option value="mayo" selected>Mayo</option>
+              <option value="junio">Junio</option>
+              <option value="julio">Julio</option>
+              <option value="agosto">Agosto</option>
+              <option value="septiembre">Septiembre</option>
+              <option value="octubre">Octubre</option>
+              <option value="noviembre">Noviembre</option>
+              <option value="diciembre">Diciembre</option>
+            </select>
+          </div>
+          <canvas id="tareasChart" width="230" height="130"></canvas>
         </div>
-        <canvas id="proyectosChart" height="200"></canvas>
       </div>
+
+      {{-- Proyectos (doughnut) --}}
+      <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm border-0 rounded-4 p-3 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">📊 Proyectos Activos vs Terminados</h6>
+            <select id="selectProyectos" class="form-select w-auto">
+              <option value="0">Enero</option>
+              <option value="1">Febrero</option>
+              <option value="2">Marzo</option>
+              <option value="3">Abril</option>
+              <option value="4">Mayo</option>
+              <option value="5">Junio</option>
+              <option value="6">Julio</option>
+              <option value="7">Agosto</option>
+              <option value="8">Septiembre</option>
+              <option value="9">Octubre</option>
+              <option value="10">Noviembre</option>
+              <option value="11">Diciembre</option>
+            </select>
+          </div>
+          <canvas id="proyectosChart" height="200"></canvas>
+        </div>
+      </div>
+
+      {{-- Productividad --}}
+
     </div>
 
-    {{-- Productividad --}}
+    </div>
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Accesos rápidos</h2>
+    </div>
+    <div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
 
-  </div>
+      <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
+        <button id="boton" class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#modalProyecto">
+          <i class="bi bi-plus-circle me-2"></i>Nuevo proyecto
+        </button>
+      </div>
 
-</div>
-<div class="text-center mb-5">
-  <h2 class="fw-bold">Accesos rápidos</h2>
-</div>
-<div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
-  <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-    <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#modalAddColab">
-      <i class="bi bi-person-plus me-2"></i>Añadir colaboradores
-    </button>
-  </div>
+      <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
+        <button class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#modalMensaje">
+          <i class="bi bi-envelope-plus me-2"></i>Nuevo mensaje
+        </button>
+      </div>
+    </div>
+    <!-- Obtenemos el Id-->
+    <div id="lider-info" data-id="{{ auth()->guard('usuario')->user()->id }}"></div>
+  </main>
+  {{-- ==== LIBRERÍAS ==== --}}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-    <button id="boton" class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#modalProyecto">
-      <i class="bi bi-plus-circle me-2"></i>Nuevo proyecto
-    </button>
-  </div>
-
-  <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-    <button class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#modalMensaje">
-      <i class="bi bi-envelope-plus me-2"></i>Nuevo mensaje
-    </button>
-  </div>
-</div>
-<!-- Obtenemos el Id-->
-<div id="lider-info" data-id="{{ auth()->guard('usuario')->user()->id }}"></div>
-{{-- ==== LIBRERÍAS ==== --}}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-{{-- ==== SCRIPT: NUEVO GRÁFICO DE TAREAS ==== --}}
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Datos de ejemplo por mes (reemplaza con fetch si quieres datos reales)
-    const datosPorMes = {
-      tareas: [{
+  {{-- ==== SCRIPT: NUEVO GRÁFICO DE TAREAS ==== --}}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Datos de ejemplo por mes (reemplaza con fetch si quieres datos reales)
+      const datosPorMes = {
+        tareas: [{
           completadas: [100, 120, 150, 180, 160, 170],
           pendientes: [60, 55, 70, 65, 60, 50]
         },
@@ -239,8 +187,8 @@
           completadas: [300, 330, 380, 420, 470, 520],
           pendientes: [30, 45, 50, 40, 45, 35]
         }
-      ],
-      proyectos: [{
+        ],
+        proyectos: [{
           activos: 5,
           terminados: 2,
           pausa: 1
@@ -300,8 +248,8 @@
           terminados: 10,
           pausa: 0
         }
-      ],
-      productividad: [{
+        ],
+        productividad: [{
           lider: 80,
           colaborador: 75
         },
@@ -349,25 +297,25 @@
           lider: 86,
           colaborador: 81
         }
-      ]
-    };
+        ]
+      };
 
-    // IDs y elementos
-    const tareasEl = document.getElementById('tareasChart');
-    const proyEl = document.getElementById('proyectosChart');
+      // IDs y elementos
+      const tareasEl = document.getElementById('tareasChart');
+      const proyEl = document.getElementById('proyectosChart');
 
-    if (!tareasEl || !proyEl) {
-      console.error('Canvas faltante: revisa que existan tareasChart, proyectosChart y graficoProductividad');
-      return;
-    }
+      if (!tareasEl || !proyEl) {
+        console.error('Canvas faltante: revisa que existan tareasChart, proyectosChart y graficoProductividad');
+        return;
+      }
 
-    // ---- Chart: Tareas (línea con 2 datasets) ----
-    const semanas = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'];
-    const chartTareas = new Chart(tareasEl.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: semanas,
-        datasets: [{
+      // ---- Chart: Tareas (línea con 2 datasets) ----
+      const semanas = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'];
+      const chartTareas = new Chart(tareasEl.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: semanas,
+          datasets: [{
             label: 'Completadas',
             data: datosPorMes.tareas[4].completadas, // Mayo por defecto (índice 4)
             borderColor: '#1cc88a',
@@ -387,104 +335,104 @@
             borderWidth: 2,
             pointRadius: 4
           }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
-          }
+          ]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#444'
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
             }
           },
-          x: {
-            ticks: {
-              color: '#444'
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#444'
+              }
+            },
+            x: {
+              ticks: {
+                color: '#444'
+              }
             }
           }
         }
-      }
-    });
+      });
 
-    // ---- Chart: Proyectos (doughnut) ----
-    const chartProy = new Chart(proyEl.getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Activos', 'Terminados', 'En pausa'],
-        datasets: [{
-          data: [datosPorMes.proyectos[4].activos, datosPorMes.proyectos[4].terminados, datosPorMes.proyectos[4].pausa],
-          backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e']
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom'
+      // ---- Chart: Proyectos (doughnut) ----
+      const chartProy = new Chart(proyEl.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Activos', 'Terminados', 'En pausa'],
+          datasets: [{
+            data: [datosPorMes.proyectos[4].activos, datosPorMes.proyectos[4].terminados, datosPorMes.proyectos[4].pausa],
+            backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
           }
         }
+      });
+
+      // ---- Chart: Productividad (barra líder vs colaborador) ----
+
+
+      // ---- Selectores ----
+      const selectTareas = document.getElementById('selectTareas') || document.getElementById('mesSelector'); // admito ambos nombres
+      const selectProyectos = document.getElementById('selectProyectos');
+      const selectProductividad = document.getElementById('selectProductividad');
+
+      // función segura para convertir value -> índice (si tu select usa 0..11 o usa nombres)
+      function valorAIndice(val) {
+        // si es número (0..11) lo devolvemos
+        if (!isNaN(parseInt(val))) return parseInt(val);
+        // si es nombre de mes (enero..diciembre)
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const idx = meses.indexOf(String(val).toLowerCase());
+        return idx >= 0 ? idx : 4; // default mayo
       }
-    });
 
-    // ---- Chart: Productividad (barra líder vs colaborador) ----
+      // listeners
+      if (selectTareas) {
+        selectTareas.addEventListener('change', (e) => {
+          const idx = valorAIndice(e.target.value);
+          const d = datosPorMes.tareas[idx];
+          chartTareas.data.datasets[0].data = d.completadas;
+          chartTareas.data.datasets[1].data = d.pendientes;
+          chartTareas.update();
+        });
+      }
 
+      if (selectProyectos) {
+        selectProyectos.addEventListener('change', (e) => {
+          const idx = valorAIndice(e.target.value);
+          const d = datosPorMes.proyectos[idx];
+          chartProy.data.datasets[0].data = [d.activos, d.terminados, d.pausa];
+          chartProy.update();
+        });
+      }
 
-    // ---- Selectores ----
-    const selectTareas = document.getElementById('selectTareas') || document.getElementById('mesSelector'); // admito ambos nombres
-    const selectProyectos = document.getElementById('selectProyectos');
-    const selectProductividad = document.getElementById('selectProductividad');
+      if (selectProductividad) {
+        selectProductividad.addEventListener('change', (e) => {
+          const idx = valorAIndice(e.target.value);
+          const d = datosPorMes.productividad[idx];
+          chartProd.data.datasets[0].data = [d.lider, d.colaborador];
+          chartProd.update();
+        });
+      }
 
-    // función segura para convertir value -> índice (si tu select usa 0..11 o usa nombres)
-    function valorAIndice(val) {
-      // si es número (0..11) lo devolvemos
-      if (!isNaN(parseInt(val))) return parseInt(val);
-      // si es nombre de mes (enero..diciembre)
-      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      const idx = meses.indexOf(String(val).toLowerCase());
-      return idx >= 0 ? idx : 4; // default mayo
-    }
-
-    // listeners
-    if (selectTareas) {
-      selectTareas.addEventListener('change', (e) => {
-        const idx = valorAIndice(e.target.value);
-        const d = datosPorMes.tareas[idx];
-        chartTareas.data.datasets[0].data = d.completadas;
-        chartTareas.data.datasets[1].data = d.pendientes;
-        chartTareas.update();
-      });
-    }
-
-    if (selectProyectos) {
-      selectProyectos.addEventListener('change', (e) => {
-        const idx = valorAIndice(e.target.value);
-        const d = datosPorMes.proyectos[idx];
-        chartProy.data.datasets[0].data = [d.activos, d.terminados, d.pausa];
-        chartProy.update();
-      });
-    }
-
-    if (selectProductividad) {
-      selectProductividad.addEventListener('change', (e) => {
-        const idx = valorAIndice(e.target.value);
-        const d = datosPorMes.productividad[idx];
-        chartProd.data.datasets[0].data = [d.lider, d.colaborador];
-        chartProd.update();
-      });
-    }
-
-  }); // DOMContentLoaded
-</script>
-@include('lider.nuevo-mensaje')
+    }); // DOMContentLoaded
+  </script>
+  @include('lider.nuevo-mensaje')
+  @include('lider.registrar-proyecto')
 @endsection
-@include('lider.registrar-colab')
-@include('lider.registrar-proyecto')
+
 
 @section('scripts')
 <script src="{{ asset('js/dashboard_lider.js') }}"></script>

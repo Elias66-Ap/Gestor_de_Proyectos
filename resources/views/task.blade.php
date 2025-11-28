@@ -32,9 +32,6 @@
                     data-contenido='@json($tarea["contenidos"])' data-asignado='@json($tarea["asignado"])'>
                     Subir contenido
                 </a>
-                <a href="#" class="cambiar-estado" data-id="{{ $tarea['id'] }}">
-                    Cambiar estado
-                </a>
 
             </div>
         </div>

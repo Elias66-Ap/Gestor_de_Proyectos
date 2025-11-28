@@ -14,25 +14,42 @@
     <div class="alert alert-danger">{{ session('error') }}</div>
   @endif
 
-  <main class="container py-4">
-    <!-- TARJETAS DE RESUMEN -->
-    <div class="resumen-cajas d-flex justify-content-between flex-wrap mb-4">
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos activos</h6>
-        <h2 id="proy_activos" class="fw-bold text-primary">0</h2>
-        <p class="text-secondary small mb-0">En desarrollo</p>
+  <main>
+    <div class="row g-4 mb-5">
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card">
+          <span class="stat-badge">+1 este mes</span>
+          <div class="stat-icon icon-blue">
+            <i class="bi bi-kanban-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_activos">12</div>
+          <div class="stat-label">Proyectos activos</div>
+        </div>
       </div>
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos en pausa</h6>
-        <h2 id="proy_pausa" class="fw-bold text-warning">0</h2>
-        <p class="text-secondary small mb-0">Pausado</p>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card">
+          <span class="stat-badge">+0 este mes</span>
+          <div class="stat-icon icon-orange">
+            <i class="bi bi-pause-circle-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_pausa">2</div>
+          <div class="stat-label">Proyectos pausados</div>
+        </div>
       </div>
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos completados</h6>
-        <h2 id="proy_completados" class="fw-bold text-success">0</h2>
-        <p class="text-secondary small mb-0">Finalizados</p>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card">
+          <span class="stat-badge">+4 este mes</span>
+          <div class="stat-icon icon-green">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_completados">4</div>
+          <div class="stat-label">Proyectos completados</div>
+        </div>
       </div>
     </div>
+
 
     <!-- CONTENEDOR PRINCIPAL -->
     <div class="contenedor">
@@ -76,7 +93,8 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item btn-ver-tablero" href="{{ route('tablero.proyecto', $proyecto['id']) }}">
+                      <a class="dropdown-item btn-ver-tablero"
+                        href="{{ route('tablero.proyecto', ['id' => $proyecto['id'], 'from' => url()->current()]) }}">
                         <i class="bi bi-clipboard"></i> Ver tablero
                       </a>
                     </li>
@@ -131,7 +149,6 @@
 
 @endsection
 @section('scripts')
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const modal = new bootstrap.Modal(document.getElementById('modalDetalleProyecto'));
@@ -162,9 +179,9 @@
                 const li = document.createElement('li');
                 li.className = 'd-flex align-items-center gap-2 py-2';
                 li.innerHTML = `
-                              <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                              ${m.nombre} ${m.apellido ?? ''}
-                            `;
+                                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                                    ${m.nombre} ${m.apellido ?? ''}
+                                  `;
                 lista.appendChild(li);
               });
             }
@@ -249,7 +266,7 @@
           const li = document.createElement('li');
           li.className = 'list-group-item d-flex justify-content-between align-items-center';
           li.innerHTML = `${s.nombre}
-              <span class="badge bg-danger cursor-pointer" onclick="quitarSeleccion('${s.id}')">x</span>`;
+                    <span class="badge bg-danger cursor-pointer" onclick="quitarSeleccion('${s.id}')">x</span>`;
           listaSeleccionados.appendChild(li);
         });
       }

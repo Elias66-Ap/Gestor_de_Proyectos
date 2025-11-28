@@ -190,6 +190,6 @@ class AdminController extends Controller
         // limpiar para evitar loops
         session()->forget('ruta_origen');
 
-        return redirect($ruta)->with('success', 'Saliste del tablero');
+        return redirect($ruta);
     }
 }

@@ -1,0 +1,210 @@
+/* ================================
+   VARIABLES DE COLOR (ÚTILES)
+================================ */
+:root {
+    --color-primario: #2563eb;
+    --color-secundario: #16a34a;
+    --color-warning: #f59e0b;
+    --color-pink: #db2777;
+
+    --color-card: #ffffff;
+    --color-texto: #1f2937;
+    --color-muted: #6b7280;
+}
+
+
+/* ================================
+   TARJETAS KPI
+================================ */
+
+.stat-card {
+    background: var(--color-card);
+    border-radius: 18px;
+    padding: 22px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: .25s ease;
+    position: relative;
+    text-align: left;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+}
+
+/* Badge */
+.stat-badge {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    padding: 4px 12px;
+    font-size: .75rem;
+    border-radius: 12px;
+    background: #eef2ff;
+    color: var(--color-primario);
+    font-weight: 600;
+}
+
+/* Icono KPI */
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+/* Colores */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.icon-orange {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.icon-green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.icon-pink {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* Valores */
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.stat-label {
+    font-size: .95rem;
+    color: var(--color-muted);
+    font-weight: 500;
+}
+
+
+/* ================================
+   TARJETAS DE GRÁFICOS
+================================ */
+
+.card {
+    border-radius: 18px !important;
+}
+
+.card select {
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.card select:hover {
+    border-color: var(--color-primario);
+}
+
+/* Canvas */
+.card canvas {
+    background: #ffffff !important;
+    max-height: 230px !important;
+}
+
+/* Doughnut */
+#proyectosChart {
+    margin-top: 10px !important;
+}
+
+
+/* ================================
+   ACCESOS RÁPIDOS
+================================ */
+
+.resumen-cajas {
+    margin-top: 25px;
+    gap: 20px;
+}
+
+.card-resumen {
+    width: 260px;
+    background: var(--color-card);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+    transition: .25s ease;
+}
+
+.card-resumen:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+
+.card-resumen button {
+    width: 100%;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px;
+    transition: .25s ease;
+}
+
+.card-resumen button:hover {
+    transform: scale(1.05);
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+    .stat-card {
+        text-align: center;
+    }
+
+    .stat-icon {
+        margin: 0 auto 10px auto;
+    }
+}
+/* ===== FILTRO ===== */
+.filter-bar select {
+    background: #f8f9fc;
+    border: 1px solid #e4e6ef;
+    font-size: 0.9rem;
+}
+
+/* ===== ESTADO PILL ===== */
+.estado-pill {
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.estado-porhacer { background:#fee2e2; color:#b91c1c; }
+.estado-enproceso { background:#fef9c3; color:#92400e; }
+.estado-revision { background:#dbeafe; color:#1d4ed8; }
+.estado-hecho { background:#dcfce7; color:#166534; }
+
+/* ===== TARJETAS DE TAREA ===== */
+.tarea-card {
+    background: #fff;
+    border-radius: 20px;
+    transition: 0.25s ease;
+}
+
+.tarea-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+

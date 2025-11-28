@@ -1,0 +1,140 @@
+body {
+    background: #f1f5f9;
+    font-family: "Inter", sans-serif;
+    padding: 40px 0;
+}
+
+/* Contenedor general */
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* Tarjeta */
+.profile-card {
+    background: #ffffff;
+    border-radius: 24px;
+    width: 95%;
+    max-width: 1200px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* =======================
+   LADO FOTO
+======================= */
+.profile-photo-section {
+    width: 32%;
+    background: #0F172A;
+    padding: 55px 30px;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-wrapper img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+}
+
+.btn-upload {
+    margin-top: 14px;
+    padding: 8px 20px;
+    background: white;
+    color: #0F172A;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-title {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.profile-desc {
+    opacity: 0.8;
+}
+
+/* =======================
+   LADO FORMULARIO
+======================= */
+.profile-form-section {
+    width: 68%;
+    padding: 45px 50px;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    transition: .2s;
+}
+
+.form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+}
+
+/* Skills */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.skill-title {
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.skill-check {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Botón */
+.btn-save {
+    margin-top: 30px;
+    width: 100%;
+    padding: 14px;
+    background: #0F172A;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.btn-save:hover {
+    background: #1E293B;
+}
+
+/* Resposive */
+@media (max-width: 900px) {
+    .profile-card {
+        flex-direction: column;
+    }
+    .profile-photo-section,
+    .profile-form-section {
+        width: 100%;
+    }
+}
