@@ -6,14 +6,14 @@ async function cargarDashboard() {
         console.log({status,data});
 
         if (status === 'success') {
-            document.getElementById('tar_pendientes').textContent = data.tareas.pendientes;
+            /*document.getElementById('tar_pendientes').textContent = data.tareas.pendientes;*/
             document.getElementById('tar_completadas').textContent = data.tareas.completadas;
             document.getElementById('pro_activos').textContent = data.proyectos.activos;
             document.getElementById('pro_completados').textContent = data.proyectos.completados;
-            /*document.getElementById('promedio_rendimiento').textContent = data.rendimiento.promedio;*/
+            document.getElementById('promedio_rendimiento').textContent = data.rendimiento.promedio;
 
             document.getElementById('tar_comp').textContent = data.tareas.nuevas;
-            document.getElementById('tar_pend').textContent = data.tareas.hoy;
+            /*document.getElementById('tar_pend').textContent = data.tareas.hoy;*/
             document.getElementById('pro_act').textContent = data.proyectos.nuevos;
             document.getElementById('pro_com').textContent = data.proyectos.mes;
         }

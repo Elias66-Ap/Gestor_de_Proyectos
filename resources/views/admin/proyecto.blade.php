@@ -12,42 +12,49 @@
   @if (session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
   @endif
-  <main class="container py-4">
+  <main>
 
-
-
-    {{-- TARJETAS DE RESUMEN --}}
-    <div class="resumen-cajas d-flex justify-content-between flex-wrap mb-4">
-      {{-- Proyectos activos --}}
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos activos</h6>
-        <h2 id="proy_activos" class="fw-bold text-primary">0</h2>
-        <p class="text-secondary small mb-0">En desarrollo</p>
-        <small id="proy_activos_cambio" class="text-success small"><i class="bi bi-graph-up"></i> +0%</small>
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="proy_activos_cambio">+2 esta semana</span>
+          <div class="stat-icon icon-blue">
+            <i class="bi bi-kanban-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_activos">12</div>
+          <div class="stat-label">Proyectos Activos</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="proy_pausa_cambio">+1 desde ayer</span>
+          <div class="stat-icon icon-orange">
+            <i class="bi bi-pause-circle-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_pausa">2</div>
+          <div class="stat-label">Proyectos en pausa</div>
+        </div>
       </div>
 
-      {{-- Proyectos en pausa --}}
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos en pausa</h6>
-        <h2 id="proy_pausa" class="fw-bold text-warning">0</h2>
-        <p class="text-secondary small mb-0">Pausado</p>
-        <small id="proy_pausa_cambio" class="text-warning small"><i class="bi bi-graph-down"></i> -0%</small>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="proy_completados_cambio">+4 este mes</span>
+          <div class="stat-icon icon-green">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <div class="stat-value" id="proy_completados">4</div>
+          <div class="stat-label">Proyectos completados</div>
+        </div>
       </div>
 
-      {{-- Proyectos completados --}}
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Proyectos completados</h6>
-        <h2 id="proy_completados" class="fw-bold text-success">0</h2>
-        <p class="text-secondary small mb-0">Finalizados</p>
-        <small id="proy_completados_cambio" class="text-success small"><i class="bi bi-graph-up"></i> +0%</small>
-      </div>
-
-      {{-- Productividad Promedio --}}
-      <div class="card-resumen shadow-sm border-0 rounded-4 p-3 flex-fill mx-2 text-center bg-light">
-        <h6 class="text-muted">Productividad Promedio</h6>
-        <h2 id="promedio_rendimiento" class="fw-bold text-danger">0%</h2>
-        <p class="text-secondary small mb-0">Según roles</p>
-        <small id="promedio_rendimiento_cambio" class="text-danger small"><i class="bi bi-graph-up"></i> +0%</small>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon icon-pink">
+            <i class="bi bi-speedometer2"></i>
+          </div>
+          <div class="stat-value" id="promedio_rendimiento">70%</div>
+          <div class="stat-label">Promedio rendimiento</div>
+        </div>
       </div>
     </div>
 

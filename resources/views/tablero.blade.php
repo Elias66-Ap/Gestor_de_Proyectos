@@ -44,12 +44,8 @@
           <p class="project-dates">
             <i class="bi bi-calendar-event"></i>{{ $inicio }} a {{ $fin }}
           </p>
-
-
         </div>
       </div>
-
-
 
       <!-- DERECHA: Miembros + Crear tarea -->
       <div class="header-right">

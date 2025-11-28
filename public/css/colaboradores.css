@@ -1,196 +1,625 @@
+/* ============================================================
+   VARIABLES Y BASE GLOBAL
+============================================================ */
 :root {
-    --color-primario: #4a6cf7;
+    --color-primario: #2563eb;
     --color-secundario: #16a34a;
-    --color-texto: #2d2d2d;
+    --color-texto: #1e293b;
+    --color-muted: #6b7280;
     --color-bg: #f4f6fa;
     --color-card: #ffffff;
-    --color-borde: #e2e8f0;
-    --sombra: 0 4px 20px rgba(0, 0, 0, 0.07);
-    --radio: 16px;
-    --transicion: all 0.3s ease;
-    --fuente: 'Segoe UI', Tahoma, sans-serif;
+    --color-borde: #e5e7eb;
+    --radio: 14px;
+    --radio-lg: 20px;
+    --sombra: 0 8px 25px rgba(0, 0, 0, 0.05);
+    --fuente: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
 }
 
-/* =========================================================
-   BASE
-========================================================= */
 body {
-    font-family: var(--fuente);
     background: var(--color-bg);
+    font-family: var(--fuente);
     color: var(--color-texto);
 }
 
-/* =========================================================
-   CARDS
-========================================================= */
-.card-resumen {
-    flex: 1 1 250px;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-radius: var(--radio);
-    background: linear-gradient(135deg, #fff, #f9faff);
+/* ============================================================
+   CONTENEDOR PAGE ADMIN
+============================================================ */
+.admin-colaboradores {
+    padding: 30px;
+}
+
+/* ============================================================
+   DASHBOARD STATS (stat-card)
+============================================================ */
+.stat-card {
+    background: var(--color-card);
+    border-radius: var(--radio-lg);
+    padding: 1.7rem;
+    position: relative;
     box-shadow: var(--sombra);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: .25s ease;
 }
 
-.card-resumen:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-.icon-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
-}
-
-.card-resumen:hover .icon-circle {
-    transform: scale(1.1);
-}
-
-/* =========================================================
-   BOTONES GRADIENTE
-========================================================= */
-.btn-gradient {
-    background: linear-gradient(135deg, #4a6cf7, #6b8eff);
-    color: #fff;
-    transition: var(--transicion);
-}
-
-.btn-gradient:hover {
-    background: linear-gradient(135deg, #6b8eff, #4a6cf7);
-}
-
-/* =========================================================
-   FILTROS
-========================================================= */
-.filter-bar .btn {
+.stat-badge {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: #e7fbe7;
+    color: #2e9b42;
+    font-size: .75rem;
+    padding: 4px 10px;
     border-radius: 50px;
-    transition: var(--transicion);
-}
-
-.filter-bar .btn.active {
-    background: var(--color-primario);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.filter-bar .btn:not(.active):hover {
-    background: #e9f0ff;
-    color: var(--color-primario);
-}
-
-/* =========================================================
-   TABLAS
-========================================================= */
-.table-wrapper {
-    border-radius: var(--radio);
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-    transition: box-shadow 0.3s ease;
-    background: #fff;
-}
-
-.table-wrapper:hover {
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.07);
-}
-
-.table-wrapper table thead {
-    background: linear-gradient(90deg, #4a6cf7, #6b8eff);
-    color: #fff;
     font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
 }
 
-.table-wrapper table tbody tr {
-    transition: all 0.25s ease;
+.stat-icon {
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    margin-bottom: 1rem;
 }
 
-.table-wrapper table tbody tr:hover {
-    background-color: #f1f5fb;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+/* Icon colors */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
 }
 
-.table-wrapper table td {
-    vertical-align: middle;
+.icon-orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-/* =========================================================
-   AVATAR
-========================================================= */
-.avatar {
-    width: 50px;
-    height: 50px;
+.icon-green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: .95rem;
+    color: var(--color-muted);
+}
+
+/* ============================================================
+   BUSCADOR + ACCIONES
+============================================================ */
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.buscador {
+    background: white;
+    border: 1px solid var(--color-borde);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: var(--radio);
+    width: 280px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.buscador input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: .95rem;
+}
+
+/* Botones */
+.btn-filtrar {
+    background: #f3f4f6;
+    border: none;
+    padding: 10px 16px;
+    border-radius: var(--radio);
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-filtrar:hover {
+    background: #e5e7eb;
+}
+
+/* ============================================================
+   TABLA GENERAL DE USUARIOS
+============================================================ */
+.tabla-usuarios {
+    background: var(--color-card);
+    border-radius: var(--radio);
+    border: 1px solid var(--color-borde);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+.tabla-header {
+    display: grid;
+    grid-template-columns: 2fr 1.3fr 2fr 2fr 1fr;
+    padding: 16px 22px;
+    background: #f9fafb;
+    font-weight: 600;
+    color: var(--color-muted);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+/* FILAS */
+.fila-usuario {
+    display: grid;
+    grid-template-columns: 2fr 1.3fr 2fr 2fr 1fr;
+    padding: 18px 22px;
+    align-items: center;
+    border-bottom: 1px solid var(--color-borde);
+    transition: .2s ease;
+}
+
+.fila-usuario:hover {
+    background: #f8fbff;
+}
+
+/* Ocultar sin romper diseño */
+.fila-usuario.oculto {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* ============================================================
+   AVATAR USUARIO
+============================================================ */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar,
+.user-avatar-inicial {
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e3e7f0;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 2px solid white;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
 }
 
-tr:hover .avatar {
-    transform: scale(1.05);
-    border-color: #4a6cf7;
+.user-avatar-inicial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
 }
 
-/* =========================================================
-   BADGES
-========================================================= */
-.badge-role {
-    padding: 0.35em 0.65em;
-    font-size: 0.75rem;
-    border-radius: 12px;
-    font-weight: 500;
+/* ============================================================
+   TEXTO DENTRO DE LA TABLA
+============================================================ */
+.user-name {
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.user-role,
+.user-email {
+    color: var(--color-muted);
+    font-size: .9rem;
+}
+
+/* ============================================================
+   PROGRESO / RENDIMIENTO
+============================================================ */
+.user-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    height: 6px;
+    width: 100px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar div {
+    height: 100%;
+    background: var(--color-primario);
+    transition: .4s;
+}
+
+/* ============================================================
+   BOTÓN VER PERFIL
+============================================================ */
+.btn-ver {
+    background: #f3f4f6;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: .9rem;
+    text-decoration: none;
+    color: var(--color-texto);
+    transition: .2s;
+}
+
+.btn-ver:hover {
+    background: #e5e7eb;
+}
+
+/* ============================================================
+   PAGINACIÓN
+============================================================ */
+.paginacion {
+    margin-top: 18px;
+    display: flex;
+    justify-content: end;
+    gap: 8px;
+}
+
+.paginacion button {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 992px) {
+
+    .fila-usuario,
+    .tabla-header {
+        grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .fila-usuario,
+    .tabla-header {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 10px;
+    }
+
+    .btn-ver {
+        justify-self: end;
+    }
+}
+
+/* ============================
+   BOTÓN NUEVO USUARIO
+============================ */
+.btn-nuevo {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
     color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radio);
+    font-weight: 600;
+    font-size: .95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: .25s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
-.badge-colaborador {
-    background-color: #4a6cf7;
+.btn-nuevo i {
+    font-size: 1rem;
 }
 
-.badge-lider {
-    background-color: #16a34a;
+.btn-nuevo:hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    transform: translateY(-2px);
 }
 
-/* =========================================================
-   PROGRESO
-========================================================= */
-.progress-container {
+.btn-nuevo:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+/* Contenedor de acciones */
+.acciones-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    /* 🔥 evita que se baje el botón */
+}
+
+/* Evitar que el botón se aplaste o salte */
+.btn-filtrar,
+.btn-nuevo {
+    white-space: nowrap;
+    /* 🔥 evita salto de línea dentro del botón */
+}
+
+.icon-pink {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* ============================
+   DASHBOARDS PREMIUM AMPLIADOS
+============================ */
+
+.stat-row .col-md-4 {
+    display: flex;
+}
+
+.stat-card.stat-big {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 2rem 2.2rem;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+    transition: 0.25s ease;
+    position: relative;
+    min-height: 160px;
+}
+
+.stat-card.stat-big:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Icono */
+.stat-card .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+/* Iconos por color */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.icon-yellow {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+}
+
+.icon-red {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+/* Número grande */
+.stat-card .stat-value {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+/* Texto */
+.stat-card .stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+/* BADGES */
+.stat-badge {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-positive {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.stat-warning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.stat-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ============================
+   DASHBOARDS PREMIUM ANCHOS
+============================ */
+
+/* Contenedor flex para permitir que se expandan horizontalmente */
+.stat-row {
+    display: flex;
+    gap: 25px;
+}
+
+.stat-row .col-md-4 {
+    flex: 1;
+    /* Todas ocupan el mismo ancho */
+    min-width: 280px;
+    /* Evita que se hagan muy pequeñas */
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.5rem 1.8rem;
+    min-height: 130px;
+    /* <--- Altura controlada */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    /* Centrado vertical más limpio */
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: 0.25s ease;
+}
+
+/* Hover */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.09);
+}
+
+/* Icono */
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
     align-items: center;
-    gap: 0.3rem;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    margin-bottom: 0.4rem;
 }
 
-.progress {
-    width: 100%;
-    height: 8px;
-    border-radius: 8px;
-    background-color: #edf1f7;
+/* Colores */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
 }
 
-.progress-bar.bg-primary {
-    background-color: #4a6cf7 !important;
+.icon-yellow {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
 }
 
-.progress-bar.bg-success {
-    background-color: #2eb85c !important;
+.icon-red {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
-.progress-bar.bg-danger {
-    background-color: #f04438 !important;
+/* Valor */
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 3px;
 }
 
-.progress-container small {
-    font-size: 0.75rem;
+/* Texto */
+.stat-card .stat-label {
+    font-size: 0.9rem;
+    font-weight: 600;
     color: #6b7280;
+}
+
+/* Badge superior */
+.stat-badge {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.stat-positive {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.stat-warning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.stat-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ============================
+   SELECTS DE FILTRO MODERNOS
+============================ */
+
+.filter-select {
+    background: #ffffff;
+    border: 1px solid var(--color-borde);
+    padding: 8px 12px;
+    border-radius: var(--radio);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-select i {
+    color: var(--color-muted);
+    font-size: 18px;
+}
+
+.filter-select select {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: var(--color-texto);
+    cursor: pointer;
+}
+
+/* Botones filtro */
+.btn-filtrar {
+    background: #eef1f6;
+    border: 1px solid var(--color-borde);
+    padding: 10px 16px;
+    border-radius: var(--radio);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-filtrar:hover {
+    background: #e2e8f0;
+}
+
+/* Botón nuevo usuario */
+.btn-nuevo {
+    background: var(--color-primario);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: var(--radio);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-nuevo:hover {
+    filter: brightness(0.95);
+}
+
+/* Alinear todo en una fila */
+.acciones-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }

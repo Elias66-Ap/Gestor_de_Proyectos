@@ -1,140 +1,340 @@
-    :root {
-        --color-primario: #2563eb;
-        --color-secundario: #16a34a;
-        --color-bg: #f4f6fa;
-        --color-card: #ffffff;
-        --color-borde: #e2e8f0;
-        --color-texto: #2d2d2d;
-        --sombra: 0 4px 12px rgba(0,0,0,0.05);
-        --radio: 12px;
-        --transicion: all 0.3s ease;
-    }
+/* ===================================
+   VARIABLES GENERALES
+=================================== */
+:root {
+    --primary: #2563eb;
+    --secondary: #16a34a;
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #6b7280;
+    --radius: 14px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.09);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
-    /* Asegura que el contenido principal no quede debajo del sidebar */
+/* ===================================
+   CONTENEDOR GENERAL
+=================================== */
+.mensajes-container,
+.notificaciones-wrapper {
+    margin-left: 150px;
+    padding: 25px 40px;
+}
+
+/* ===================================
+   HEADER
+=================================== */
+.mensajes-header,
+.notificaciones-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.titulo-modulo,
+.notificaciones-header h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.subtitulo-modulo {
+    color: var(--text-muted);
+    margin-top: -5px;
+}
+
+/* ===================================
+   BOTÓN NUEVO MENSAJE
+=================================== */
+.btn-nuevo,
+.btn-marcar-leidas {
+    background: var(--primary);
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: none;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn-nuevo:hover,
+.btn-marcar-leidas:hover {
+    background: #1d4ed8;
+}
+
+/* ===================================
+   TABS
+=================================== */
+.tabs-custom {
+    display: flex;
+    gap: 12px;
+}
+
+.tab-btn {
+    padding: 10px 18px;
+    background: #f3f4f6;
+    border-radius: var(--radius);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #374151;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* ===================================
+   LISTA DE MENSAJES
+=================================== */
+.lista-mensajes,
+.notificaciones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ===================================
+   TARJETA DE MENSAJE
+=================================== */
+.mensaje-card,
+.notificacion-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    padding: 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.mensaje-card:hover,
+.notificacion-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Estado no leído */
+.mensaje-card.no-leido,
+.notificacion-item.no-leida {
+    background: #f0f7ff;
+    border-left: 5px solid var(--primary);
+}
+
+/* Estado leído */
+.mensaje-card.leido,
+.notificacion-item.leida {
+    opacity: 0.85;
+}
+
+/* ===================================
+   AVATAR
+=================================== */
+.msg-avatar img,
+.avatar-wrapper img,
+.avatar-mini {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-wrapper,
+.msg-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+
+.avatar-text {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===================================
+   CONTENIDO DEL MENSAJE
+=================================== */
+.msg-content,
+.contenido {
+    flex: 1;
+}
+
+.msg-header,
+.contenido h5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.msg-header h5,
+.contenido h5 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.msg-preview,
+.contenido p {
+    margin: 4px 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.msg-fecha,
+.fecha {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+/* ===================================
+   BOTÓN VER
+=================================== */
+.btn-ver,
+.btn-accion {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+    color: #374151;
+}
+
+.btn-ver:hover,
+.btn-accion:hover {
+    background: #e5e7eb;
+}
+
+/* ===================================
+   MODAL
+=================================== */
+.modal-content {
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    background: var(--primary);
+    color: white;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+.modal-footer {
+    border: none;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 768px) {
+
+    .mensajes-container,
     .notificaciones-wrapper {
-        margin-left: 150px; /* ajusta esto al ancho de tu sidebar */
-        padding: 30px;
-        position: relative;
-        z-index: 1;
-        max-width: 800px;
-    }
-
-    .notificaciones-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .notificaciones-header h2 {
-        font-size: 1.6rem;
-        color: var(--color-primario);
-        margin: 0;
-    }
-
-    .btn-marcar-leidas {
-        background-color: var(--color-secundario);
-        color: #fff;
-        padding: 8px 16px;
-        border: none;
-        border-radius: var(--radio);
-        font-weight: 500;
-        cursor: pointer;
-        transition: var(--transicion);
-    }
-
-    .btn-marcar-leidas:hover {
-        filter: brightness(0.9);
-    }
-
-    .notificaciones-lista {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .notificacion-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: var(--color-card);
-        border: 1px solid var(--color-borde);
-        border-radius: var(--radio);
+        margin-left: 0;
         padding: 15px;
-        box-shadow: var(--sombra);
-        transition: var(--transicion);
     }
 
-    .notificacion-item.no-leida {
-        border-left: 5px solid var(--color-primario);
-        background-color: #f0f6ff;
+    .mensaje-card,
+    .notificacion-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .notificacion-item.leida {
-        opacity: 0.85;
-    }
-
-    .notificacion-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-    }
-
-    .notificacion-item .icono {
-        font-size: 1.8rem;
-        color: var(--color-primario);
-        margin-right: 15px;
-        display: flex;
-        align-items: center;
-    }
-
-    .notificacion-item .contenido {
-        flex: 1;
-    }
-
-    .notificacion-item .contenido h5 {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--color-texto);
-    }
-
-    .notificacion-item .contenido p {
-        margin: 4px 0;
-        font-size: 0.9rem;
-        color: #666;
-    }
-
-    .notificacion-item .contenido .fecha {
-        font-size: 0.8rem;
-        color: #888;
-    }
-
+    .btn-ver,
     .btn-accion {
-        background: var(--color-primario);
-        color: #fff;
-        border: none;
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+}
+
+/* ================================
+   TABS SUPER ELEGANTES
+================================ */
+
+.nav-tabs {
+    border-bottom: none !important;
+    margin-bottom: 25px;
+}
+
+.nav-tabs .nav-item {
+    margin-right: 10px;
+}
+
+.nav-tabs .nav-link {
+    background: #f1f5f9;
+    border: none !important;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-weight: 600;
+    color: #475569;
+    transition: 0.25s ease;
+    font-size: 0.95rem;
+}
+
+/* Hover bonito */
+.nav-tabs .nav-link:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* ACTIVE: similar al dashboard */
+.nav-tabs .nav-link.active {
+    background: #2563eb !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    font-weight: 700;
+    transform: translateY(-2px);
+}
+
+/* Íconos dentro del tab (emoji) */
+.nav-tabs .nav-link.active::before {
+    opacity: 1;
+}
+
+.nav-tabs .nav-link::before {
+    content: "";
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .nav-tabs {
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 0.85rem;
         padding: 8px 14px;
-        border-radius: var(--radio);
-        cursor: pointer;
-        transition: var(--transicion);
     }
-
-    .btn-accion:hover {
-        filter: brightness(0.9);
-    }
-
-    @media (max-width: 768px) {
-        .notificaciones-wrapper {
-            margin-left: 0;
-        }
-
-        .notificacion-item {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .btn-accion {
-            align-self: flex-end;
-        }
-    }
+}

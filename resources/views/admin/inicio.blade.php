@@ -1,85 +1,64 @@
 @extends('layouts.app')
+@section('styles')
+  <script></script>
+  <link rel="stylesheet" href="{{ asset('css/admin/inicio.css') }}">
+@endsection
 @section('content')
 
-  <div class="container-fluid bg-light min-vh-100 py-4 px-5">
+  <main>
+    {{-- -NUEVOSOS --}}
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="tar_comp">+2 esta semana</span>
+          <div class="stat-icon icon-blue">
+            <i class="bi bi-kanban-fill"></i>
+          </div>
+          <div class="stat-value" id="tar_completadas">12</div>
+          <div class="stat-label">Tareas Completados</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="pro_com">+1 desde ayer</span>
+          <div class="stat-icon icon-orange">
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+          <div class="stat-value" id="pro_completados">2</div>
+          <div class="stat-label">Proyectos completados</div>
+        </div>
+      </div>
 
-    {{-- ==== CABECERA ==== --}}
-    <div class="text-center mb-5">
-      <h2 class="fw-bold">📊 Panel General del Administrador</h2>
-      <p class="text-muted">Monitorea usuarios, tareas y proyectos en tiempo real</p>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <span class="stat-badge" id="pro_act">+4 este mes</span>
+          <div class="stat-icon icon-green">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <div class="stat-value" id="pro_activos">4</div>
+          <div class="stat-label">Proyectos activos</div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon icon-pink">
+            <i class="bi bi-speedometer2"></i>
+          </div>
+          <div class="stat-value" id="promedio_rendimiento">70%</div>
+          <div class="stat-label">Rendimiento promedio</div>
+        </div>
+      </div>
     </div>
 
-    {{-- ==== RESUMEN SUPERIOR ==== --}}
-    <div class="row gx-3 gy-3 mb-5 justify-content-around">
-
-      <!-- Tareas Completadas -->
-      <div class="col-12 col-md-3 col-lg-2">
-        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
-          <i class="bi bi-clipboard-check fs-2 text-secondary mb-2"></i>
-          <h6 class="text-uppercase text-muted">Tareas Completadas</h6>
-          <h3 class="fw-bold text-dark" id="tar_completadas">0</h3>
-          <small class="text-muted fw-semibold" id="tar_comp">
-            <i class="bi bi-arrow-up-short text-success"></i> +12% semana
-          </small>
-        </div>
-      </div>
-
-      <!-- Tareas Pendientes -->
-      <div class="col-12 col-md-3 col-lg-2">
-        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
-          <i class="bi bi-hourglass-split fs-2 text-secondary mb-2"></i>
-          <h6 class="text-uppercase text-muted">Tareas Pendientes</h6>
-          <h3 class="fw-bold text-dark" id="tar_pendientes">0</h3>
-          <small class="text-muted fw-semibold" id="tar_pend">
-            <i class="bi bi-arrow-down-short text-danger"></i> -
-          </small>
-        </div>
-      </div>
-
-      <!-- Proyectos Activos -->
-      <div class="col-12 col-md-3 col-lg-2">
-        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
-          <i class="bi bi-diagram-3 fs-2 text-secondary mb-2"></i>
-          <h6 class="text-uppercase text-muted">Proyectos Activos</h6>
-          <h3 class="fw-bold text-dark" id="pro_activos">0</h3>
-          <small class="text-muted fw-semibold" id="pro_act">
-            <i class="bi bi-arrow-up-short text-muted"></i> -
-          </small>
-        </div>
-      </div>
-
-      <!-- Proyectos Terminados -->
-      <div class="col-12 col-md-3 col-lg-2">
-        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
-          <i class="bi bi-check2-circle fs-2 text-secondary mb-2"></i>
-          <h6 class="text-uppercase text-muted">Proyectos Terminados</h6>
-          <h3 class="fw-bold text-dark" id="pro_completados">0</h3>
-          <small class="text-muted fw-semibold" id="pro_com">
-            <i class="bi bi-arrow-up-short text-success"></i> -
-          </small>
-        </div>
-      </div>
-
-      <!-- Productividad Promedio -->
-      <div class="col-12 col-md-3 col-lg-2">
-        <div class="card border-0 rounded-4 shadow-sm p-3 text-center" style="background: #ffffff;">
-          <i class="bi bi-speedometer2 fs-2 text-secondary mb-2"></i>
-          <h6 class="text-uppercase text-muted">Productividad Promedio</h6>
-          <h3 class="fw-bold text-dark" id="prod_promedio">0%</h3>
-          <small class="text-muted fw-semibold" id="prod_detalle">
-            Última semana
-          </small>
-        </div>
-      </div>
-
-    </div>
 
     {{-- ==== GRÁFICOS ==== --}}
     <div class="row g-4 justify-content-center">
 
       {{-- === Tareas (gráfico de líneas con cambio de mes) === --}}
+      {{-- === Tareas (gráfico de líneas) === --}}
       <div class="col-lg-7 col-md-10">
-        <div class="card shadow-sm border-0 rounded-4 p-4">
+        <div class="chart-card">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="fw-bold mb-0">📈 Tareas Completadas vs Pendientes</h5>
             <select id="mesSelector" class="form-select w-auto">
@@ -101,9 +80,9 @@
         </div>
       </div>
 
-      {{-- Proyectos (doughnut) --}}
+      {{-- === Proyectos (doughnut) === --}}
       <div class="col-lg-4 col-md-6">
-        <div class="card shadow-sm border-0 rounded-4 p-3 h-100">
+        <div class="chart-card h-100">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h6 class="fw-bold mb-0">📊 Proyectos Activos vs Terminados</h6>
             <select id="selectProyectos" class="form-select w-auto">
@@ -125,63 +104,71 @@
         </div>
       </div>
 
+
     </div>
 
-    <div class="text-center mb-5">
-      <h2 class="fw-bold">Accesos rápidos</h2>
+    <div class="accesos-rapidos-container mb-4">
+      <h5 class="fw-bold mb-3">Accesos Rápidos</h5>
+
+      <div class="accesos-grid">
+
+        <!-- Añadir Colaborador -->
+        <div class="acceso-item" data-bs-toggle="modal" data-bs-target="#modalAddColab">
+          <div class="acceso-icon acceso-blue">
+            <i class="bi bi-person-plus"></i>
+          </div>
+          <div class="acceso-title">Añadir Colaborador</div>
+          <div class="acceso-sub">Registrar nuevo miembro</div>
+        </div>
+
+        <!-- Nuevo Proyecto -->
+        <div class="acceso-item" data-bs-toggle="modal" data-bs-target="#modalProyecto">
+          <div class="acceso-icon acceso-green">
+            <i class="bi bi-file-earmark-plus"></i>
+          </div>
+          <div class="acceso-title">Nuevo Proyecto</div>
+          <div class="acceso-sub">Crear proyecto</div>
+        </div>
+
+        <!-- Nuevo Mensaje -->
+        <div class="acceso-item" data-bs-toggle="modal" data-bs-target="#modalMensaje">
+          <div class="acceso-icon acceso-pink">
+            <i class="bi bi-envelope-plus"></i>
+          </div>
+          <div class="acceso-title">Nuevo Mensaje</div>
+          <div class="acceso-sub">Enviar aviso interno</div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="resumen-cajas d-flex justify-content-center flex-wrap gap-4">
-      <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-        <button class="btn btn-outline-primary" style="width: 200px;" data-bs-toggle="modal"
-          data-bs-target="#modalAddColab">
-          <i class="bi bi-person-plus me-2"></i>Añadir colaborador
-        </button>
-      </div>
 
-      <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-        <button id="boton" class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#modalProyecto">
-          <i class="bi bi-plus-circle me-2"></i>Nuevo proyecto
-        </button>
-      </div>
 
-      <div class="card-resumen text-center shadow-sm border-0 rounded-4 p-4">
-        <button class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#modalMensaje">
-          <i class="bi bi-envelope-plus me-2"></i>Nuevo mensaje
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <style>
-    .resumen-cajas {
-      margin-top: 20px;
-    }
-
-    .card-resumen {
-      width: 240px;
-      transition: all 0.3s ease;
-    }
-
-    .card-resumen:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-resumen button {
-      border-radius: 12px;
-      font-weight: 600;
-      padding: 10px 15px;
-      transition: all 0.3s ease;
-    }
-
-    .card-resumen button:hover {
-      transform: scale(1.05);
-    }
-  </style>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    Chart.defaults.font.family = "Plus Jakarta Sans, Segoe UI, sans-serif";
+    Chart.defaults.color = "#4b5563"; // gris suave
+    Chart.defaults.borderColor = "rgba(0,0,0,0.05)";
+
+    /* Líneas más suaves */
+    Chart.defaults.elements.line.borderWidth = 3;
+    Chart.defaults.elements.line.tension = 0.35;
+
+    /* Puntos pequeños */
+    Chart.defaults.elements.point.radius = 4;
+    Chart.defaults.elements.point.hoverRadius = 5;
+
+    /* Leyenda estilo compacto */
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.boxHeight = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 12 };
+
+    /* Doughnut estilo premium */
+    Chart.defaults.plugins.legend.position = 'bottom';
+    Chart.defaults.plugins.legend.labels.padding = 16;
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -217,19 +204,65 @@
         data: {
           labels: semanas,
           datasets: [
-            { label: 'Completadas', data: [], borderColor: '#1cc88a', backgroundColor: 'rgba(28,200,138,0.18)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4 },
-            { label: 'Pendientes', data: [], borderColor: '#f6c23e', backgroundColor: 'rgba(246,194,62,0.2)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 4 }
+            {
+              label: 'Completadas',
+              data: [],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59,130,246,0.15)',
+              fill: true
+            },
+            {
+              label: 'Pendientes',
+              data: [],
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245,158,11,0.15)',
+              fill: true
+            }
           ]
         },
-        options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { color: '#444' } }, x: { ticks: { color: '#444' } } } }
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              grid: {
+                color: "rgba(0,0,0,0.04)",
+              },
+              ticks: { color: "#6b7280" }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: "#6b7280" }
+            }
+          }
+        }
       });
+
 
       // ---- Chart: Proyectos ----
       const chartProy = new Chart(proyEl.getContext('2d'), {
         type: 'doughnut',
-        data: { labels: ['Activos', 'Terminados', 'En pausa'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#36b9cc', '#1cc88a', '#f6c23e'] }] },
-        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        data: {
+          labels: ['Activos', 'Terminados', 'En pausa'],
+          datasets: [{
+            data: [0, 0, 0],
+            backgroundColor: [
+              '#3b82f6', // azul
+              '#22c55e', // verde
+              '#f59e0b'  // naranja
+            ],
+            borderWidth: 4,
+            spacing: 6,
+            cutout: '65%', // hace el centro más grande = estilo premium
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
       });
+
 
       const selectTareas = document.getElementById('mesSelector');
       const selectProyectos = document.getElementById('selectProyectos');

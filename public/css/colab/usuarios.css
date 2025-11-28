@@ -1,0 +1,243 @@
+:root {
+    --color-primario: #2563eb;
+    --color-bg: #f4f6fa;
+    --color-card: #ffffff;
+    --color-borde: #e5e7eb;
+    --color-texto: #1e293b;
+    --color-muted: #6b7280;
+    --radio: 12px;
+}
+
+/* Wrapper */
+.usuarios-wrapper {
+    padding: 20px 30px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Header */
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Buscador */
+.buscador {
+    background: white;
+    border: 1px solid var(--color-borde);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: var(--radio);
+    width: 280px;
+}
+
+.buscador input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+.buscador i {
+    color: var(--color-muted);
+}
+
+/* Botones Header */
+.btn-filtrar {
+    background: #f3f4f6;
+    border: none;
+    padding: 10px 16px;
+    border-radius: var(--radio);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-nuevo {
+    background: var(--color-primario);
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: var(--radio);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Tabla */
+.tabla-usuarios {
+    background: var(--color-card);
+    border-radius: var(--radio);
+    border: 1px solid var(--color-borde);
+    overflow: hidden;
+}
+
+.tabla-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr 2fr 1fr;
+    padding: 16px 20px;
+    font-weight: 600;
+    color: var(--color-muted);
+    background: #f9fafb;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.fila-usuario {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr 2fr 1fr;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-borde);
+    transition: 0.2s;
+}
+
+.fila-usuario:hover {
+    background: #f8fbff;
+}
+
+/* User info */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.user-role {
+    color: var(--color-muted);
+}
+
+/* Email */
+.user-email {
+    color: var(--color-muted);
+}
+
+/* Progreso */
+.user-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    width: 90px;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar div {
+    height: 100%;
+    background: var(--color-primario);
+    border-radius: 4px;
+}
+
+/* Acciones */
+.btn-ver {
+    color: var(--color-primario);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Paginación */
+.paginacion {
+    margin-top: 15px;
+    display: flex;
+    justify-content: end;
+    gap: 6px;
+}
+
+.paginacion button {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Avatar con imagen */
+.user-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Avatar con iniciales */
+.user-avatar-inicial {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    text-transform: uppercase;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    user-select: none;
+}
+
+/* Contenedor del usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Nombre */
+.user-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1e293b;
+}
+
+.user-avatar-inicial {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    text-transform: uppercase;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    user-select: none;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Ocultar filas sin romper diseño */
+.fila-usuario.oculto {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, height .2s ease, padding .2s ease, margin .2s ease;
+}
+
+/* Asegurar diseño estable */
+.fila-usuario {
+    transition: opacity .2s ease, height .2s ease;
+}

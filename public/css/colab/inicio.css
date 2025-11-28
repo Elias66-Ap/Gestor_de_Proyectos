@@ -172,3 +172,359 @@ h5 {
 .icon-pink {
     background: linear-gradient(135deg, #ec4899, #db2777);
 }
+
+/* ============================
+   CARDS DE PROYECTOS
+============================ */
+
+.project-smart-card {
+    background: #fff;
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    margin-bottom: 20px;
+    transition: .25s ease;
+}
+
+.project-smart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+}
+
+.psc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.psc-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.psc-title {
+    font-weight: 600;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.psc-progress-label {
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.psc-bar {
+    background: #edf1f7;
+    height: 8px;
+    border-radius: 10px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.psc-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: .35s ease;
+}
+
+.psc-footer {
+    font-size: .85rem;
+    color: #6c7a90;
+    margin-top: 8px;
+}
+
+
+/* ============================
+   CARDS DE TAREAS
+============================ */
+
+.task-smart-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 18px;
+    transition: .25s ease;
+}
+
+.task-smart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+}
+
+.ts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ts-title {
+    font-weight: 600;
+}
+
+.ts-priority {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.priority-high {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.priority-medium {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.priority-low {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.ts-meta {
+    font-size: .85rem;
+    color: #6b7280;
+    margin: 10px 0;
+}
+
+.ts-bar {
+    background: #e5e7eb;
+    height: 7px;
+    border-radius: 10px;
+}
+
+.ts-bar-fill {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 10px;
+    transition: .4s;
+}
+
+.ts-footer {
+    margin-top: 8px;
+    font-size: .85rem;
+    color: #6b7280;
+}
+
+/* Sección título */
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* ===================== */
+/* ESTILO GENERAL PRO    */
+/* ===================== */
+
+.section-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 2px;
+}
+
+.section-sub {
+    color: #6b7280;
+    font-size: .9rem;
+}
+
+.section-head {
+    margin-bottom: 18px;
+}
+
+/* ===================== */
+/* PROYECTOS PRO         */
+/* ===================== */
+
+.pro-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pro-card {
+    display: block;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    transition: .25s ease;
+    text-decoration: none;
+}
+
+.pro-card:hover {
+    transform: translateY(-3px);
+    border-color: #d1d5db;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.pro-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pro-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.pro-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #111827;
+}
+
+.pro-progress {
+    margin: 12px 0 8px;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+}
+
+.pro-progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    transition: .35s ease;
+}
+
+.pro-footer {
+    display: flex;
+    justify-content: space-between;
+    color: #6b7280;
+    font-size: .85rem;
+}
+
+/* ===================== */
+/* TAREAS PRO            */
+/* ===================== */
+
+.task-pro-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.task-pro-card {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    transition: .25s ease;
+}
+
+.task-pro-card:hover {
+    transform: translateY(-3px);
+    border-color: #d1d5db;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.tp-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tp-title {
+    font-weight: 600;
+    color: #111827;
+}
+
+.tp-info {
+    font-size: .85rem;
+    color: #6b7280;
+    margin: 6px 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Prioridades PRO */
+.tp-priority {
+    padding: 2px 10px;
+    border-radius: 14px;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.tp-priority.hi {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.tp-priority.md {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.tp-priority.lo {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.tp-progress {
+    background: #e5e7eb;
+    height: 7px;
+    border-radius: 10px;
+}
+
+.tp-progress-bar {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 10px;
+    transition: .35s;
+}
+
+/* Ver más */
+.see-more {
+    color: #4f46e5;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: .9rem;
+}
+
+.see-more:hover {
+    text-decoration: underline;
+}
+
+.pro-avatars {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-img,
+.avatar-inicial,
+.avatar-extra {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: -8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #fff;
+    background: #4F46E5;
+    object-fit: cover;
+}
+
+/* Imagen */
+.avatar-img {
+    object-fit: cover;
+}
+
+/* Inicial */
+.avatar-inicial {
+    background: #6474f7;
+}
+
+/* Contador +N */
+.avatar-extra {
+    background: #e5e7eb;
+    color: #111;
+}

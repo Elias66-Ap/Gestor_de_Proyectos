@@ -1,0 +1,376 @@
+/* ================================
+   DASHBOARD ADMIN - TARJETAS KPIs
+================================ */
+
+:root {
+    --color-primario: #2563eb;
+    --color-secundario: #16a34a;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-success: #22c55e;
+    --color-pink: #db2777;
+    --color-bg: #f4f6fa;
+    --color-card: #ffffff;
+    --color-texto: #1f2937;
+    --color-muted: #6b7280;
+}
+
+/* Tarjeta principal */
+.stat-card {
+    background: var(--color-card);
+    border-radius: 18px;
+    padding: 26px 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transition: all .25s ease;
+    position: relative;
+    cursor: default;
+    text-align: left;
+}
+
+/* Hover */
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, .08);
+}
+
+/* Badge */
+.stat-badge {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    padding: 4px 12px;
+    font-size: .75rem;
+    border-radius: 30px;
+    background: #e8f5ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* Icon container */
+.stat-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 14px;
+    font-size: 28px;
+}
+
+/* Icon colors */
+.icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.icon-orange {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.icon-green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.icon-pink {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* Número */
+.stat-value {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    margin-bottom: 4px;
+}
+
+/* Texto inferior */
+.stat-label {
+    font-size: .95rem;
+    color: var(--color-muted);
+    font-weight: 500;
+}
+
+
+/* ================================
+   GRÁFICOS
+================================ */
+
+.card {
+    border-radius: 18px !important;
+}
+
+.card h5,
+.card h6 {
+    color: var(--color-texto);
+}
+
+/* Selects */
+.form-select {
+    border-radius: 12px;
+    padding: 6px 10px;
+}
+
+
+/* ================================
+   ACCESOS RÁPIDOS
+================================ */
+
+.resumen-cajas {
+    margin-top: 25px;
+    gap: 20px;
+}
+
+.card-resumen {
+    width: 260px;
+    background: var(--color-card);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+    transition: .25s ease;
+}
+
+.card-resumen:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+
+.card-resumen button {
+    width: 100%;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px;
+    transition: .25s ease;
+}
+
+.card-resumen button:hover {
+    transform: scale(1.05);
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 992px) {
+    .stat-value {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .stat-card {
+        text-align: center;
+    }
+
+    .stat-icon {
+        margin: 0 auto 10px auto;
+    }
+}
+
+/* ===============================
+   ACCESOS RÁPIDOS - ADMIN
+================================ */
+.accesos-rapidos-container {
+    background: #ffffff;
+    /* FONDO BLANCO */
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 25px;
+    /* MÁS ESPACIO con charts */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
+}
+
+.accesos-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 25px;
+    flex-wrap: wrap;
+    padding-top: 5px;
+}
+
+/* Item */
+.acceso-item {
+    text-align: center;
+    cursor: pointer;
+    width: 170px;
+    transition: .2s ease;
+}
+
+.acceso-item:hover {
+    transform: translateY(-3px);
+}
+
+/* Icono */
+.acceso-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    margin: 0 auto 10px auto;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Colores corporativos */
+.acceso-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.acceso-green {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.acceso-pink {
+    background: linear-gradient(135deg, #db2777, #e11d48);
+}
+
+/* Texto */
+.acceso-title {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: .95rem;
+}
+
+.acceso-sub {
+    font-size: .80rem;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+/* ============================
+   TARJETAS DE GRÁFICAS
+============================ */
+.chart-card {
+    background: #ffffff;
+    padding: 18px 22px;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: 0.25s ease;
+    border: 1px solid #f1f1f1;
+    min-height: 280px;
+}
+
+.chart-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Títulos */
+.chart-card h5,
+.chart-card h6 {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Select dentro del encabezado */
+.chart-card select {
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.chart-card select:hover {
+    border-color: #2563eb;
+}
+
+/* Doughnut centrado */
+#proyectosChart {
+    margin-top: 10px !important;
+}
+
+/* Ajustar alto general */
+.chart-card canvas {
+    max-height: 220px !important;
+}
+
+/* Sombras del contenedor row */
+.row.g-4.justify-content-center {
+    margin-bottom: 15px;
+}
+/* === ESTILO PREMIUM PARA CHARTS === */
+
+.chart-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    padding: 22px;
+    border: 1px solid #eef0f4;
+}
+
+/* Títulos dentro de card */
+.chart-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1f2937;
+}
+
+/* Select superior */
+.chart-select {
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* Leyendas */
+.chart-legend {
+    font-size: 0.75rem !important;
+}
+
+/* Limpia el fondo del chart */
+canvas {
+    background: #ffffff !important;
+}
+
+/* Espacio interior */
+.chart-container {
+    padding: 10px;
+}
+/* ======== CHART CARDS (mejor tamaño y diseño) ======== */
+.chart-card {
+    height: 340px;            /* más alto */
+    min-height: 320px;
+    padding: 20px 30px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* El canvas debe llenar el contenedor */
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 230px !important;   /* altura ideal de gráfico */
+}
+
+/* Leyenda más elegante */
+.chart-legend {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Título del chart */
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* Selector más pequeño y elegante */
+.chart-select {
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
+/* Doughnut más grande */
+.chart-doughnut canvas {
+    width: 100% !important;
+    height: 260px !important;
+}

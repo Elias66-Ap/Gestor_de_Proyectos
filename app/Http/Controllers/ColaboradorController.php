@@ -37,25 +37,19 @@ class ColaboradorController extends Controller
         return view('colab.equipo');
     }
 
-    public function proyectos()
+    public function usuarios()
     {
         $id = auth()->guard('usuario')->user()->id;
 
-        $response = Http::get($this->url . "/proyectos-colaborador/{$id}");
+        $response = Http::get($this->url . "/usuarios-todos");
 
         if ($response->successful()) {
             $json = $response->json();
-            $proyectos = $json['proyectos'] ?? [];
-
-            /*foreach ($proyectos as $pro) {
-                $pro['miembros_count'] = isset($pro['miembros'])
-                    ? count($pro['miembros'])
-                    : 0;
-            }*/
+            $usuarios = $json['data'] ?? [];
         } else {
-            $proyectos = [];
+            $usuarios = [];
         }
-        return view('colab.proyecto', compact('proyectos'));
+        return view('colab.usuarios', compact('usuarios'));
     }
 
     public function notificacion()

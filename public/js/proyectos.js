@@ -3,6 +3,8 @@ async function cargarProyectos() {
         const res = await fetch('http://127.0.0.1:8000/api/dashboard/proyectos');
         const { status, data } = await res.json();
 
+        console.log({ status, data });
+
         if (status === 'success') {
             document.getElementById('proy_activos').textContent = data.activos;
             document.getElementById('proy_completados').textContent = data.completados;

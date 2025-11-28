@@ -1,153 +1,186 @@
 @extends('layouts.app')
 @section('styles')
-  <link rel="stylesheet" href="{{ asset('css/colaboradores.css') }}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="{{ asset('css/colaboradores.css') }}">
 @endsection
 
 @section('content')
-  <main class="bg-light min-vh-100 py-5">
+  <main>
 
     <!-- ===== RESUMEN USUARIOS ===== -->
-    <div class="resumen-cajas d-flex flex-wrap justify-content-between gap-4 mb-5">
-      @php
-        $cards = [
-          ['title' => 'Usuarios Totales', 'id' => 'usuarios_total', 'icon' => 'bi-people-fill', 'bg' => 'primary', 'desc' => 'Usuarios registrados en el sistema'],
-          ['title' => 'Usuarios Sin Perfil', 'id' => 'usuarios_sin_perfil', 'icon' => 'bi-person-x', 'bg' => 'warning', 'desc' => 'Pendientes de completar información'],
-          ['title' => 'Usuarios Inactivos', 'id' => 'usuarios_inactivos', 'icon' => 'bi-person-slash', 'bg' => 'danger', 'desc' => 'Usuarios desactivados o pausados']
-        ];
-      @endphp
 
-      @foreach($cards as $card)
-        <div class="card-resumen shadow-sm border-0 rounded-4 p-4 flex-fill bg-white hover-card d-flex align-items-center">
-          <div class="icon-circle bg-{{ $card['bg'] }} me-3">
-            <i class="bi {{ $card['icon'] }} fs-3"></i>
+    <div class="row g-4 mb-5 stat-row">
+
+      <div class="col-md-4">
+        <div class="stat-card stat-big">
+          <span class="stat-badge stat-positive">+2 esta semana</span>
+          <div class="stat-icon icon-blue">
+            <i class="bi bi-people-fill"></i>
           </div>
-          <div class="flex-grow-1">
-            <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
-            <h2 id="{{ $card['id'] }}" class="fw-bold text-dark">0</h2>
-            <p class="text-secondary small mb-0">{{ $card['desc'] }}</p>
-          </div>
+          <div class="stat-value" id="usuarios_total">12</div>
+          <div class="stat-label">Usuarios Totales</div>
         </div>
-      @endforeach
+      </div>
+
+      <div class="col-md-4">
+        <div class="stat-card stat-big">
+          <span class="stat-badge stat-warning">-1 desde ayer</span>
+          <div class="stat-icon icon-yellow">
+            <i class="bi bi-person-exclamation"></i>
+          </div>
+          <div class="stat-value" id="usuario_sin_perfil">2</div>
+          <div class="stat-label">Usuarios sin Perfil</div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="stat-card stat-big">
+          <span class="stat-badge stat-danger">+4 este mes</span>
+          <div class="stat-icon icon-red">
+            <i class="bi bi-person-dash-fill"></i>
+          </div>
+          <div class="stat-value" id="usuarios_inactivos">4</div>
+          <div class="stat-label">Usuarios Inactivos</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="container">
 
-      <!-- ===== CONTROLES ===== -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div>
-          <h4 class="fw-bold text-primary mb-1">Usuarios Registrados</h4>
-          <p class="text-muted small mb-0">Visualiza todos los usuarios del sistema</p>
+    <div class="usuarios-wrapper">
+
+      <!-- Header con búsqueda y botones -->
+      <div class="usuarios-header">
+        <div class="buscador">
+          <i class="bi bi-search"></i>
+          <input type="text" id="buscadorUsuarios" placeholder="Buscar usuario...">
         </div>
 
-        <div class="d-flex gap-1 flex-wrap">
-          <button class="btn btn-gradient px-4 py-2 rounded-pill btn-primary" data-bs-toggle="modal"
-            data-bs-target="#modalAddColab">
-            <i class="bi bi-person-plus-fill me-2"></i> Nuevo usuario
+        <div class="acciones-header">
+
+          <!-- FILTRO DE ROLES -->
+          <div class="filter-select">
+            <i class="bi bi-people"></i>
+            <select id="filtroRol">
+              <option value="">Roles</option>
+              <option value="Lider">Líderes</option>
+              <option value="Colaborador">Colaboradores</option>
+            </select>
+          </div>
+
+          <!-- FILTRO DE RENDIMIENTO -->
+          <div class="filter-select">
+            <i class="bi bi-bar-chart"></i>
+            <select id="filtroRend">
+              <option value="">Rendimiento</option>
+              <option value="80">80% o más</option>
+              <option value="50">50% a 79%</option>
+              <option value="0">Menos de 50%</option>
+            </select>
+          </div>
+
+          <!-- BOTÓN SIN PERFIL -->
+          <button class="btn-filtrar" id="btnSinPerfil">
+            <i class="bi bi-person-exclamation"></i> Sin perfil
           </button>
+
+          <!-- RESTABLECER -->
+          <button class="btn-filtrar" id="btnTodos">
+            <i class="bi bi-ui-checks"></i> Todos
+          </button>
+
+          <!-- BOTÓN NUEVO USUARIO -->
+          <button class="btn-nuevo" data-bs-toggle="modal" data-bs-target="#modalAddColab">
+            <i class="bi bi-person-plus"></i> Nuevo Usuario
+          </button>
+          @include('admin.registrar')
         </div>
 
-        <div class="d-flex gap-2 flex-wrap">
-          <button id="btnVerTodos" class="btn btn-gradient-primary rounded-pill px-3 btn-primary">
-            <i class="bi bi-people-fill me-1"></i> Todos
-          </button>
-          <button id="btnVerSinPerfil" class="btn btn-gradient-warning rounded-pill px-3 btn-outline-secondary">
-            <i class="bi bi-person-x-fill me-1"></i> Sin perfil
-          </button>
-        </div>
       </div>
 
-      <!-- ===== FILTROS ===== -->
-      <div class="filter-bar mb-4 p-3 bg-white shadow-sm rounded-4 d-flex flex-wrap justify-content-center gap-2">
-        @php
-          $filtros = [
-            ['label' => 'Todos', 'icon' => 'bi-list-ul', 'data' => 'todos', 'active' => true],
-            ['label' => 'Líderes', 'icon' => 'bi-person-gear', 'data' => 'lider'],
-            ['label' => 'Colaboradores', 'icon' => 'bi-person-workspace', 'data' => 'colaborador'],
-            ['label' => 'Mejores', 'icon' => 'bi-graph-up-arrow', 'data' => 'mejor']
-          ];
-        @endphp
+      <!-- Tabla moderna -->
+      <div class="tabla-usuarios">
 
-        @foreach($filtros as $filtro)
-          <button class="btn filtro {{ $filtro['active'] ?? false ? 'active' : '' }}" data-filtro="{{ $filtro['data'] }}">
-            <i class="bi {{ $filtro['icon'] }} me-1"></i> {{ $filtro['label'] }}
-          </button>
-        @endforeach
+        <div class="tabla-header">
+          <span>Usuario</span>
+          <span>Rol</span>
+          <span>Correo</span>
+          <span>Rendimiento</span>
+          <span>Acciones</span>
+        </div>
 
-      </div>
+        <!-- FILA -->
+        @foreach ($usuarios as $index => $u)@php
+            $rendimiento = ($u['rendimiento']['rendimiento'] ?? 0) * 100;
 
-      <!-- ===== TABLA USUARIOS ===== -->
-      <div id="tablaUsuarios" class="table-wrapper shadow-sm rounded-4 bg-white overflow-hidden mb-5">
-        <table id="tablaColaboradores" class="table align-middle table-hover mb-0">
-          <thead class="table-header">
-            <tr>
-              <th>Foto</th>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Rendimiento</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($usuarios as $user)
-              @if(isset($user['rol']) && in_array($user['rol'], ['Colaborador', 'Lider']))
-                @php
-                  $porcentaje = isset($user['rendimiento']['rendimiento']) ? $user['rendimiento']['rendimiento'] * 100 : 0;
-                  $color = $porcentaje <= 25 ? 'bg-danger' : ($porcentaje <= 75 ? 'bg-primary' : 'bg-success');
-                @endphp
-                <tr>
-                  <td>
-                    <div class="avatar-container">
-                      <img
-                        src="{{ isset($user['perfil']['imagen']) ? asset('storage/' . $user['perfil']['imagen']) : asset('images/default.jpeg') }}"
-                        alt="Foto" class="avatar shadow-sm">
-                    </div>
-                  </td>
-                  <td>
-                    <strong class="text-dark">{{ $user['perfil']['nombre'] ?? 'N/A' }}</strong><br>
-                    <small class="text-muted">{{ $user['perfil']['apellido'] ?? '' }}</small>
-                  </td>
-                  <td class="text-muted">{{ $user['correo'] ?? 'N/A' }}</td>
-                  <td><small class="text-muted">{{ $user['rol'] }}</small></td>
-                  <td>
-                    <div class="progress-container">
-                      <div class="progress">
-                        <div class="progress-bar {{ $color }}" style="width: {{ $porcentaje }}%;"></div>
-                      </div>
-                      <small class="text-muted">{{ $porcentaje }}%</small>
-                    </div>
-                  </td>
-                </tr>
+            $foto = $u['perfil']['imagen'] ?? null;
+            $nombre = $u['perfil']['nombre'];
+            $apellido = $u['perfil']['apellido'];
+            $iniciales = strtoupper(substr($nombre, 0, 1) . substr($apellido, 0, 1));
+
+            $colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#a855f7'];
+            $color = $colors[$index % count($colors)];
+          @endphp
+          <div class="fila-usuario"
+            data-busqueda="{{ strtolower($u['perfil']['nombre'] . ' ' . $u['perfil']['apellido'] . ' ' . $u['correo']) }}">
+            <div class="user-info">
+              @if($foto)
+                <img src="{{ asset('storage/' . $foto) }}" class="user-avatar">
+              @else
+                <div class="user-avatar-inicial" style="background-color: {{ $color }};">
+                  {{ $iniciales }}
+                </div>
               @endif
-            @endforeach
-          </tbody>
-        </table>
+              <span class="user-name">{{ $u['perfil']['nombre'] }} {{ $u['perfil']['apellido'] }} </span>
+            </div>
+
+            <span class="user-role">{{ $u['rol'] }} </span>
+            <span class="user-email">{{ $u['correo'] }} </span>
+
+            <div class="user-progress">
+              <div class="progress-bar">
+                <div style="width: {{ $rendimiento }}%"></div>
+              </div>
+              <span>{{ $rendimiento }}%</span>
+            </div>
+
+            <a href="#" class="btn-ver">Ver Perfil</a>
+          </div>
+        @endforeach
       </div>
 
-      <!-- ===== TABLA SIN PERFIL ===== -->
-      <div id="tablaSinPerfilContainer" class="table-wrapper shadow-sm rounded-4 bg-white overflow-hidden d-none">
-        <table id="tablaSinPerfil" class="table align-middle table-hover mb-0">
-          <thead class="table-header bg-warning">
-            <tr>
-              <th>Correo</th>
-              <th>Rol</th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse($sin_perfil as $usuario)
-              <tr>
-                <td>{{ $usuario['correo'] ?? 'N/A' }}</td>
-                <td><small class="text-muted">{{ $user['rol'] }}</small></td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="2" class="text-muted py-4">No hay usuarios sin perfil 🎉</td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
+      <!-- Paginación -->
+      <div class="paginacion">
+        <button><i class="bi bi-chevron-left"></i></button>
+        <button><i class="bi bi-chevron-right"></i></button>
       </div>
+
+    </div>
+
+
+    <!-- ===== TABLA SIN PERFIL ===== -->
+    <div id="tablaSinPerfilContainer" class="table-wrapper shadow-sm rounded-4 bg-white overflow-hidden d-none">
+      <table id="tablaSinPerfil" class="table align-middle table-hover mb-0">
+        <thead class="table-header bg-warning">
+          <tr>
+            <th>Correo</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse($sin_perfil as $user)
+            <tr>
+              <td>{{ $usuario['correo'] ?? 'N/A' }}</td>
+              <td><small class="text-muted">{{ $user['rol'] }}</small></td>
+            </tr>
+          @empty
+            <tr>
+              <td colspan="2" class="text-muted py-4">No hay usuarios sin perfil 🎉</td>
+            </tr>
+          @endforelse
+        </tbody>
+      </table>
+    </div>
 
     </div>
   </main>
@@ -158,7 +191,110 @@
 @section('scripts')
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
   <script src="{{ asset('js/admin_usuarios.js') }}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const buscador = document.getElementById("buscadorUsuarios");
+      const filas = document.querySelectorAll(".fila-usuario");
+
+      const filtroRol = document.getElementById("filtroRol");
+      const filtroRend = document.getElementById("filtroRend");
+      const btnSinPerfil = document.getElementById("btnSinPerfil");
+      const btnTodos = document.getElementById("btnTodos");
+
+      /* ====================================================
+         FUNCIÓN GENERAL QUE APLICA TODOS LOS FILTROS
+      ======================================================= */
+      function aplicarFiltros() {
+
+        let texto = buscador.value.toLowerCase().trim();
+        let rol = filtroRol.value;
+        let rendimiento = filtroRend.value;
+
+        filas.forEach(fila => {
+
+          let contenido = fila.dataset.busqueda;
+          let filaRol = fila.querySelector(".user-role").innerText.trim();
+          let correo = fila.querySelector(".user-email").innerText.trim();
+
+          let porcentaje = parseInt(
+            fila.querySelector(".user-progress span").innerText.replace("%", "")
+          );
+
+          let mostrar = true;
+
+          /* ===== FILTRO BUSCADOR ===== */
+          if (!contenido.includes(texto)) {
+            mostrar = false;
+          }
+
+          /* ===== FILTRO ROL ===== */
+          if (rol && filaRol !== rol) {
+            mostrar = false;
+          }
+
+          /* ===== FILTRO RENDIMIENTO ===== */
+          if (rendimiento !== "") {
+            if (rendimiento == 80 && porcentaje < 80) mostrar = false;
+            if (rendimiento == 50 && (porcentaje < 50 || porcentaje > 79)) mostrar = false;
+            if (rendimiento == 0 && porcentaje >= 50) mostrar = false;
+          }
+
+          /* ===== APLICAR ===== */
+          if (mostrar) {
+            fila.classList.remove("oculto");
+          } else {
+            fila.classList.add("oculto");
+          }
+
+        });
+
+      }
+
+      /* ====================================================
+         EVENTO BUSCADOR
+      ======================================================= */
+      buscador.addEventListener("input", aplicarFiltros);
+
+      /* ====================================================
+         EVENTOS FILTROS
+      ======================================================= */
+      filtroRol.addEventListener("change", aplicarFiltros);
+      filtroRend.addEventListener("change", aplicarFiltros);
+
+      /* ====================================================
+         BOTÓN SIN PERFIL
+      ======================================================= */
+      btnSinPerfil.addEventListener("click", () => {
+        filas.forEach(fila => {
+          const correo = fila.querySelector(".user-email").innerText.trim();
+
+          if (!correo) {
+            fila.classList.remove("oculto");
+          } else {
+            fila.classList.add("oculto");
+          }
+        });
+
+        // Limpiar selects, pero no el buscador
+        filtroRol.value = "";
+        filtroRend.value = "";
+      });
+
+      /* ====================================================
+         BOTÓN MOSTRAR TODOS
+      ======================================================= */
+      btnTodos.addEventListener("click", () => {
+
+        filtroRol.value = "";
+        filtroRend.value = "";
+        buscador.value = "";
+
+        filas.forEach(fila => fila.classList.remove("oculto"));
+      });
+
+    });
+  </script>
+
 @endsection
